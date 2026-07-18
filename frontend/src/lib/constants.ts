@@ -22,15 +22,15 @@ export const APP_TAGLINE = "Ask. Analyze. Act.";
 
 /** Risk level colors for consistent theming */
 export const RISK_COLORS = {
-  High: "#ef4444",    // red-500
-  Medium: "#f59e0b",  // amber-500
-  Low: "#22c55e",     // green-500
+  High: "#A85448",    // Burnt Sienna / clay-red
+  Medium: "#C18C5D",  // Terracotta / clay-orange
+  Low: "#5D7052",     // Moss Green
 } as const;
 
 /** Crime severity colors */
 export const SEVERITY_COLORS = {
-  Critical: "#dc2626", // red-600
-  High: "#ef4444",     // red-500
-  Medium: "#f59e0b",   // amber-500
-  Low: "#3b82f6",      // blue-500
+  Critical: "#A85448", // Burnt Sienna
+  High: "#C18C5D",     // Terracotta
+  Medium: "#E6DCCD",   // Sand
+  Low: "#5D7052",      // Moss Green
 } as const;

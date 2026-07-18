@@ -22,9 +22,9 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
 
   const nodeColor = useCallback((node: any) => {
     const graphNode = node as GraphNode;
-    if (graphNode.type === "crime") return "#f59e0b";
-    if (graphNode.type === "location") return "#3b82f6";
-    return RISK_COLORS[graphNode.riskLevel as keyof typeof RISK_COLORS] || "#6366f1";
+    if (graphNode.type === "crime") return "#C18C5D"; // Terracotta
+    if (graphNode.type === "location") return "#949484"; // Slate Bark
+    return RISK_COLORS[graphNode.riskLevel as keyof typeof RISK_COLORS] || "#5D7052";
   }, []);
 
   const nodeLabel = useCallback((node: any) => {
@@ -37,7 +37,7 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
 
   if (!data || data.nodes.length === 0) {
     return (
-      <div className="panel flex h-full flex-col">
+      <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
         <div className="panel-header">
           <span>🕸️ Criminal Network</span>
         </div>
@@ -49,20 +49,20 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
   }
 
   return (
-    <div className="panel flex h-full flex-col" ref={containerRef}>
+    <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden" ref={containerRef}>
       <div className="panel-header">
         <span>🕸️ Criminal Network</span>
-        <span className="text-[10px] font-normal normal-case tracking-normal text-[var(--color-text-dim)]">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-white px-2 py-0.5 rounded-full border border-[var(--color-border)]/50 shadow-soft">
           {data.nodes.length} nodes · {data.links.length} links
         </span>
       </div>
 
       {/* Legend */}
-      <div className="flex gap-4 px-4 py-2 border-b border-[var(--color-border-subtle)]">
-        <LegendItem color="#ef4444" label="High Risk" />
-        <LegendItem color="#f59e0b" label="Crime / Medium" />
-        <LegendItem color="#22c55e" label="Low Risk" />
-        <LegendItem color="#3b82f6" label="Location" />
+      <div className="flex gap-4 px-5 py-2.5 border-b border-[var(--color-border)]/50 bg-white/50">
+        <LegendItem color="#A85448" label="High Risk" />
+        <LegendItem color="#C18C5D" label="Crime / Medium" />
+        <LegendItem color="#5D7052" label="Low Risk" />
+        <LegendItem color="#949484" label="Location" />
       </div>
 
       {/* Graph */}
@@ -76,20 +76,20 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
           nodeColor={nodeColor}
           nodeLabel={nodeLabel}
           nodeRelSize={6}
-          linkColor={() => "rgba(99, 102, 241, 0.3)"}
+          linkColor={() => "rgba(93, 112, 82, 0.2)"}
           linkWidth={(link: any) => Math.max(1, (link.strength || 1) / 3)}
           linkDirectionalParticles={2}
           linkDirectionalParticleSpeed={0.005}
-          linkDirectionalParticleColor={() => "rgba(99, 102, 241, 0.6)"}
+          linkDirectionalParticleColor={() => "rgba(193, 140, 93, 0.5)"}
           backgroundColor="transparent"
           nodeCanvasObjectMode={() => "after"}
           nodeCanvasObject={(node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
             const label = node.name || "";
             const fontSize = Math.max(10 / globalScale, 3);
-            ctx.font = `${fontSize}px Inter, sans-serif`;
+            ctx.font = `${fontSize}px Nunito, sans-serif`;
             ctx.textAlign = "center";
             ctx.textBaseline = "top";
-            ctx.fillStyle = "rgba(226, 232, 240, 0.8)";
+            ctx.fillStyle = "rgba(44, 44, 36, 0.85)";
             ctx.fillText(label, node.x!, node.y! + 8);
           }}
           cooldownTicks={100}
@@ -104,8 +104,8 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
 function LegendItem({ color, label }: { color: string; label: string }) {
   return (
     <div className="flex items-center gap-1.5">
-      <div className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: color }} />
-      <span className="text-[10px] text-[var(--color-text-dim)]">{label}</span>
+      <div className="h-2.5 w-2.5 rounded-full shadow-sm" style={{ backgroundColor: color }} />
+      <span className="text-[10px] font-bold text-[var(--color-text-muted)]">{label}</span>
     </div>
   );
 }

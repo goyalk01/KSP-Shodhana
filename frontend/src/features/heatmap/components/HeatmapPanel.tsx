@@ -20,7 +20,7 @@ function MapUpdater({ center, zoom }: { center: { lat: number; lng: number }; zo
 export default function HeatmapPanel({ data }: HeatmapPanelProps) {
   if (!data || data.points.length === 0) {
     return (
-      <div className="panel flex h-full flex-col">
+      <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
         <div className="panel-header">
           <span>🗺️ Crime Heatmap</span>
         </div>
@@ -35,10 +35,10 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
   const zoom = data.zoom || MAP_DEFAULT_ZOOM;
 
   return (
-    <div className="panel flex h-full flex-col">
+    <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
       <div className="panel-header">
         <span>🗺️ Crime Heatmap</span>
-        <span className="text-[10px] font-normal normal-case tracking-normal text-[var(--color-text-dim)]">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-white px-2 py-0.5 rounded-full border border-[var(--color-border)]/50 shadow-soft">
           {data.points.length} incidents
         </span>
       </div>
@@ -52,7 +52,7 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
           attributionControl={false}
         >
           <TileLayer
-            url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             attribution='&copy; <a href="https://carto.com/">CARTO</a>'
           />
           <MapUpdater center={center} zoom={zoom} />

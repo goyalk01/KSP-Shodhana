@@ -22,25 +22,25 @@ export default function ChatMessage({ message, index }: ChatMessageProps) {
       >
         {/* Avatar */}
         <div
-          className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold ${
+          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[10px] font-bold shadow-soft ${
             isUser
-              ? "bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-hover)] text-white"
+              ? "bg-gradient-to-br from-[var(--color-secondary)] to-[var(--color-warning)] text-white"
               : isSystem
-                ? "bg-[var(--color-danger)]/20 text-[var(--color-danger)]"
-                : "bg-gradient-to-br from-[var(--color-accent)] to-emerald-500 text-white"
+                ? "bg-[var(--color-danger)]/15 text-[var(--color-danger)]"
+                : "bg-gradient-to-br from-[var(--color-primary)] to-[#7e9672] text-white"
           }`}
         >
           {isUser ? "You" : isSystem ? "!" : "AI"}
         </div>
 
-        {/* Message Bubble */}
+         {/* Message Bubble */}
         <div
-          className={`max-w-[85%] rounded-xl px-3.5 py-2.5 text-sm leading-relaxed ${
+          className={`max-w-[85%] px-4 py-2.5 text-xs font-semibold leading-relaxed shadow-soft ${
             isUser
-              ? "bg-[var(--color-primary)] text-white rounded-br-sm"
+              ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)] rounded-[20px] rounded-tr-[4px]"
               : isSystem
-                ? "bg-[var(--color-danger)]/10 text-[var(--color-danger)] border border-[var(--color-danger)]/20 rounded-bl-sm"
-                : "bg-[var(--color-surface)] text-[var(--color-text)] border border-[var(--color-border)] rounded-bl-sm"
+                ? "bg-[var(--color-danger)]/10 text-[var(--color-danger)] border border-[var(--color-danger)]/20 rounded-[20px] rounded-tl-[4px]"
+                : "bg-white text-[var(--color-text)] border border-[var(--color-border)]/50 rounded-[20px] rounded-tl-[4px]"
           }`}
         >
           {isLoading ? (
@@ -48,8 +48,8 @@ export default function ChatMessage({ message, index }: ChatMessageProps) {
               <span className="typing-dot" />
               <span className="typing-dot" />
               <span className="typing-dot" />
-              <span className="ml-2 text-xs text-[var(--color-text-muted)]">
-                Analyzing your query...
+              <span className="ml-2 text-[10px] text-[var(--color-text-dim)]">
+                Analyzing...
               </span>
             </div>
           ) : (

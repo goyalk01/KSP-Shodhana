@@ -16,19 +16,19 @@ export default function ChatPanel() {
   }, [messages]);
 
   return (
-    <div className="flex flex-1 flex-col overflow-hidden bg-[var(--color-background)]">
+    <div className="flex flex-col h-full rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/25 shadow-soft overflow-hidden">
       {/* Chat Header */}
-      <div className="border-b border-[var(--color-border)] px-4 py-3">
-        <h2 className="text-xs font-semibold uppercase tracking-wider text-[var(--color-text-muted)]">
+      <div className="border-b border-[var(--color-border)]/50 px-6 py-4">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--color-primary)]">
           💬 Investigation Chat
         </h2>
       </div>
 
       {/* Messages List */}
-      <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4">
+      <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
         {messages.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-full gap-3 text-center">
-            <p className="text-sm text-[var(--color-text-dim)]">
+          <div className="flex flex-col items-center justify-center h-full gap-3 text-center p-6">
+            <p className="text-xs font-semibold text-[var(--color-text-muted)] leading-relaxed">
               Ask anything about crimes, criminals, or investigations.
             </p>
           </div>

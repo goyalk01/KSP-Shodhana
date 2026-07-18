@@ -10,7 +10,7 @@ interface EvidencePanelProps {
 export default function EvidencePanel({ data }: EvidencePanelProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="panel flex h-full flex-col">
+      <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
         <div className="panel-header">
           <span>📊 Evidence Panel</span>
         </div>
@@ -22,15 +22,15 @@ export default function EvidencePanel({ data }: EvidencePanelProps) {
   }
 
   return (
-    <div className="panel flex h-full flex-col">
+    <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
       <div className="panel-header">
         <span>📊 Explainable Evidence</span>
-        <span className="text-[10px] font-normal normal-case tracking-normal text-[var(--color-text-dim)]">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-white px-2 py-0.5 rounded-full border border-[var(--color-border)]/50 shadow-soft">
           {data.length} items
         </span>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-3 space-y-2">
+      <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {data.map((item, idx) => (
           <EvidenceCard key={item.id} item={item} index={idx} />
         ))}
@@ -49,9 +49,9 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
 
   const confidenceBarColor =
     item.confidence >= 0.7
-      ? "bg-[var(--color-success)]"
+      ? "bg-[var(--color-primary)]"
       : item.confidence >= 0.5
-        ? "bg-[var(--color-warning)]"
+        ? "bg-[var(--color-secondary)]"
         : "bg-[var(--color-danger)]";
 
   const typeLabel =
@@ -64,30 +64,39 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
       system: "⚙️ System",
     }[item.type] || "📌 General";
 
+  // Asymmetric wabi-sabi card shapes
+  const shapes = [
+    "rounded-[1.5rem] rounded-tr-[3rem]",
+    "rounded-[1.5rem] rounded-bl-[3rem]",
+    "rounded-[1.5rem] rounded-tl-[3rem]",
+    "rounded-[1.5rem] rounded-br-[3rem]",
+  ];
+  const shapeClass = shapes[index % shapes.length];
+
   return (
     <div
-      className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 transition-all hover:bg-[var(--color-surface-hover)] hover:border-[var(--color-primary)]/30 animate-fade-in"
+      className={`border border-[var(--color-border)]/50 bg-white p-4 shadow-soft transition-all duration-300 hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-md hover:border-[var(--color-primary)]/30 ${shapeClass} animate-fade-in`}
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Header: Type + Confidence */}
       <div className="flex items-center justify-between mb-2">
-        <span className="text-[10px] font-medium uppercase tracking-wider text-[var(--color-text-dim)]">
+        <span className="text-[9px] font-extrabold uppercase tracking-widest text-[var(--color-primary)]">
           {typeLabel}
         </span>
         <div className="flex items-center gap-2">
-          <span className={`text-xs font-semibold ${confidenceClass}`}>
+          <span className={`text-[11px] font-bold ${confidenceClass}`}>
             {formatConfidence(item.confidence)}
           </span>
         </div>
       </div>
 
       {/* Claim */}
-      <p className="text-xs text-[var(--color-text)] leading-relaxed mb-2">
+      <p className="text-xs font-bold leading-relaxed text-[var(--color-text)] mb-3.5">
         {item.claim}
       </p>
 
       {/* Confidence Bar */}
-      <div className="h-1 w-full rounded-full bg-[var(--color-border)] mb-2">
+      <div className="h-1.5 w-full rounded-full bg-[var(--color-border)]/30 mb-3.5">
         <div
           className={`h-full rounded-full transition-all duration-500 ${confidenceBarColor}`}
           style={{ width: `${item.confidence * 100}%` }}
@@ -100,7 +109,7 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
           {item.sources.map((source, sIdx) => (
             <span
               key={sIdx}
-              className="rounded bg-[var(--color-primary)]/10 px-1.5 py-0.5 text-[10px] text-[var(--color-primary)] font-medium"
+              className="rounded-full bg-[var(--color-primary)]/10 px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] border border-[var(--color-primary)]/10"
             >
               {source}
             </span>

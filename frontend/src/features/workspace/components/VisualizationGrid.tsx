@@ -18,9 +18,9 @@ const HeatmapPanel = dynamic(
 
 function PanelSkeleton({ label }: { label: string }) {
   return (
-    <div className="panel flex flex-col">
+    <div className="panel flex flex-col rounded-[2rem] border border-[var(--color-border)]/50 shadow-soft">
       <div className="panel-header">{label}</div>
-      <div className="flex-1 shimmer" />
+      <div className="flex-1 shimmer m-4 rounded-[1.5rem]" />
     </div>
   );
 }
@@ -49,24 +49,24 @@ export default function VisualizationGrid() {
           : "grid-cols-1 lg:grid-cols-2";
 
   return (
-    <div className={`grid flex-1 gap-3 overflow-auto p-3 ${gridClass} auto-rows-fr`}>
+    <div className={`grid flex-1 gap-4 overflow-auto p-4 ${gridClass} auto-rows-fr`}>
       {showNetwork && (
-        <div className="animate-fade-in">
+        <div className="animate-fade-in h-full">
           <NetworkGraphPanel data={networkData} />
         </div>
       )}
       {showHeatmap && (
-        <div className="animate-fade-in" style={{ animationDelay: "0.1s" }}>
+        <div className="animate-fade-in h-full" style={{ animationDelay: "0.1s" }}>
           <HeatmapPanel data={heatmapData} />
         </div>
       )}
       {showTimeline && (
-        <div className="animate-fade-in" style={{ animationDelay: "0.2s" }}>
+        <div className="animate-fade-in h-full" style={{ animationDelay: "0.2s" }}>
           <TimelinePanel data={timelineData} />
         </div>
       )}
       {showEvidence && (
-        <div className="animate-fade-in" style={{ animationDelay: "0.3s" }}>
+        <div className="animate-fade-in h-full" style={{ animationDelay: "0.3s" }}>
           <EvidencePanel data={evidenceData} />
         </div>
       )}

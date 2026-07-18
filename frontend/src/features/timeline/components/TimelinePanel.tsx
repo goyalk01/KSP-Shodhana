@@ -28,19 +28,19 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
   );
 
   return (
-    <div className="panel flex h-full flex-col">
+    <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
       <div className="panel-header">
         <span>📅 Investigation Timeline</span>
-        <span className="text-[10px] font-normal normal-case tracking-normal text-[var(--color-text-dim)]">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-white px-2 py-0.5 rounded-full border border-[var(--color-border)]/50 shadow-soft">
           {data.length} events
         </span>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4">
+      <div className="flex-1 overflow-y-auto p-5">
         <div className="relative">
-          {/* Vertical line */}
-          <div className="absolute left-[15px] top-2 bottom-2 w-px bg-gradient-to-b from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-border)]" />
-
+          {/* Vertical dashed line */}
+          <div className="absolute left-[15px] top-2 bottom-2 w-0.5 border-l-2 border-dashed border-[var(--color-border)]" />
+ 
           {/* Events */}
           <div className="space-y-4">
             {sorted.map((event, idx) => {
@@ -52,25 +52,25 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
                   style={{ animationDelay: `${idx * 0.08}s` }}
                 >
                   {/* Dot */}
-                  <div className="absolute left-[10px] top-1 h-3 w-3 rounded-full border-2 border-[var(--color-primary)] bg-[var(--color-background)]" />
-
-                  {/* Content */}
-                  <div className="flex-1 rounded-lg border border-[var(--color-border)] bg-[var(--color-surface)] p-3 transition-colors hover:bg-[var(--color-surface-hover)]">
-                    <div className="flex items-start justify-between gap-2">
+                  <div className="absolute left-[9px] top-2.5 h-3.5 w-3.5 rounded-full border-2 border-[var(--color-primary)] bg-white shadow-soft" />
+ 
+                  {/* Content Card */}
+                  <div className="flex-1 rounded-[1.5rem] border border-[var(--color-border)]/50 bg-white p-4 shadow-soft transition-all duration-300 hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-md hover:border-[var(--color-primary)]/30">
+                    <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2">
                         <span className="text-sm">{icon}</span>
-                        <h4 className="text-xs font-semibold text-[var(--color-text)]">
+                        <h4 className="text-xs font-bold text-[var(--color-text)] font-serif leading-tight">
                           {event.title}
                         </h4>
                       </div>
-                      <span className="shrink-0 rounded bg-[var(--color-primary)]/10 px-2 py-0.5 text-[10px] font-medium text-[var(--color-primary)]">
+                      <span className="shrink-0 rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-[9px] font-extrabold tracking-wider uppercase text-[var(--color-primary)]">
                         {event.eventType}
                       </span>
                     </div>
-                    <p className="mt-1.5 text-[11px] text-[var(--color-text-muted)] leading-relaxed">
+                    <p className="text-[11px] font-bold text-[var(--color-text-muted)] leading-relaxed">
                       {event.description}
                     </p>
-                    <p className="mt-2 text-[10px] text-[var(--color-text-dim)]">
+                    <p className="mt-2 text-[9px] font-bold text-[var(--color-text-dim)] tracking-wide">
                       {formatDate(event.eventDate)}
                     </p>
                   </div>
