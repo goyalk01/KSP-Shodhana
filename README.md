@@ -182,7 +182,7 @@ Follow these steps to run all three services concurrently:
 | Variable | Purpose | Required | Default |
 |---|---|---|---|
 | `GEMINI_API_KEY` | Google Gemini API Key | No (forces local offline mode if missing) | `""` |
-| `GEMINI_MODEL` | Google Gemini model selection | No | `gemini-2.5-flash` |
+| `GEMINI_MODEL` | Google Gemini model selection | No | `gemini-3.5-flash-lite` |
 | `PORT` | FastAPI local running port | No | `8000` |
 | `CORS_ORIGINS` | Allowed cross-origins | No | `["http://localhost:3000", "http://localhost:8080"]` |
 
