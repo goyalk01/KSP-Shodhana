@@ -77,6 +77,18 @@ async function proxyRequest(
     const fullUrl = searchParams ? `${url}?${searchParams}` : url;
 
     const response = await fetch(fullUrl, fetchOptions);
+    
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("text/html")) {
+      const html = await response.text();
+      return new NextResponse(html, {
+        status: response.status,
+        headers: {
+          "Content-Type": "text/html; charset=utf-8",
+        },
+      });
+    }
+
     const data = await response.json();
 
     return NextResponse.json(data, { status: response.status });
