@@ -1,0 +1,37 @@
+[
+  {
+    "criminal_a_rowid": 1,
+    "criminal_b_rowid": 2,
+    "relationship_type": "Associate",
+    "strength": 9,
+    "evidence_summary": "Co-accused in 3 theft FIRs (KA/2024/8821, KA/2025/1102, KA/2025/3394). Suresh acts as Ravi's regular getaway driver."
+  },
+  {
+    "criminal_a_rowid": 1,
+    "criminal_b_rowid": 3,
+    "relationship_type": "Associate",
+    "strength": 4,
+    "evidence_summary": "Informant tip connects Ravi to Anil D'Souza's jewelry robbery network. Ravi allegedly served as lookout in KA/2026/00103."
+  },
+  {
+    "criminal_a_rowid": 3,
+    "criminal_b_rowid": 6,
+    "relationship_type": "Rival",
+    "strength": 6,
+    "evidence_summary": "Known territorial rivalry. Anil D'Souza's operations in Hubballi-Dharwad overlapped with Ganesh Naik's influence area. Altercation reported in 2025."
+  },
+  {
+    "criminal_a_rowid": 4,
+    "criminal_b_rowid": 5,
+    "relationship_type": "Associate",
+    "strength": 7,
+    "evidence_summary": "Mohammed Farooq's cyber fraud proceeds suspected to fund Lakshmi Devi's drug distribution. Money trail under investigation."
+  },
+  {
+    "criminal_a_rowid": 1,
+    "criminal_b_rowid": 5,
+    "relationship_type": "Gang Member",
+    "strength": 3,
+    "evidence_summary": "Phone records show 12 calls between Ravi Kumar and Lakshmi Devi in the month before KA/2026/00104. Nature of association unclear."
+  }
+]

@@ -1,0 +1,57 @@
+# ===== General =====
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+.idea/
+.vscode/
+*.iml
+
+# ===== Environment =====
+.env
+.env.local
+.env.*.local
+
+# ===== Node / Frontend =====
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.turbo/
+frontend/coverage/
+
+# ===== Java / Backend =====
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+backend/*.class
+backend/*.jar
+backend/*.war
+backend/logs/
+
+# ===== Python / AI Service =====
+ai-service/.venv/
+ai-service/venv/
+ai-service/__pycache__/
+ai-service/**/__pycache__/
+ai-service/*.pyc
+ai-service/.pytest_cache/
+ai-service/.mypy_cache/
+
+# ===== Zoho Catalyst =====
+.zcatalyst/
+catalyst-debug.log
+
+# ===== Reports / Generated =====
+*.pdf
+
+# ===== Agent / IDE Configurations =====
+agents.md
+AGENTS.md
+claude.md
+CLAUDE.md
+.agents/
+.gemini/
+**/.env
+**/.env.*
+**/venv/
+**/.venv/

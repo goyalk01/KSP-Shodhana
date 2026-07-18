@@ -1,0 +1,23 @@
+# ===== AI Service Dependencies =====
+# Web Framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.0
+
+# Google Gemini
+google-genai==1.10.0
+
+# Data Validation
+pydantic==2.9.0
+pydantic-settings==2.5.0
+
+# HTTP Client
+httpx>=0.28.1
+
+# Environment
+python-dotenv==1.0.1
+
+# Logging
+structlog==24.4.0
+
+# CORS
+python-multipart==0.0.9

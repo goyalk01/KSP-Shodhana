@@ -1,0 +1,49 @@
+"""
+KSP Shodhana — AI Service
+FastAPI entry point for the Gemini-powered query understanding and analysis engine.
+"""
+
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+from app.config import settings
+from app.routers import understand, analyze
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Application startup and shutdown events."""
+    # Startup
+    print(f"KSP Shodhana AI Service starting on port {settings.port}")
+    print(f"Gemini model: {settings.gemini_model}")
+    yield
+    # Shutdown
+    print("AI Service shutting down")
+
+
+app = FastAPI(
+    title="KSP Shodhana AI Service",
+    description="Gemini-powered query understanding and crime analysis engine",
+    version="0.1.0",
+    lifespan=lifespan,
+)
+
+# CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=settings.cors_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Register routers
+app.include_router(understand.router, prefix="/ai/v1", tags=["Query Understanding"])
+app.include_router(analyze.router, prefix="/ai/v1", tags=["Analysis"])
+
+
+@app.get("/ai/v1/health", tags=["Health"])
+async def health_check():
+    """Health check endpoint."""
+    return {"status": "ok", "service": "ksp-shodhana-ai", "model": settings.gemini_model}

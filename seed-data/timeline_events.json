@@ -1,0 +1,82 @@
+[
+  {
+    "investigation_rowid": 1,
+    "event_type": "FIR Filed",
+    "event_date": "2026-06-15 10:30:00",
+    "title": "FIR KA/2026/00101 registered",
+    "description": "FIR filed for chain snatching near MG Road metro station. Victim statement recorded.",
+    "created_by": "Inspector Ramesh K"
+  },
+  {
+    "investigation_rowid": 1,
+    "event_type": "Evidence Found",
+    "event_date": "2026-06-15 14:00:00",
+    "title": "CCTV footage recovered",
+    "description": "CCTV from metro station and nearby shops recovered. Two suspects on motorcycle identified.",
+    "created_by": "SI Kavitha R"
+  },
+  {
+    "investigation_rowid": 1,
+    "event_type": "Witness Statement",
+    "event_date": "2026-06-16 11:00:00",
+    "title": "Eyewitness identifies suspects",
+    "description": "Auto driver witnessed the incident. Partial motorcycle registration noted: KA-01-XX-XXXX.",
+    "created_by": "Inspector Ramesh K"
+  },
+  {
+    "investigation_rowid": 1,
+    "event_type": "Evidence Found",
+    "event_date": "2026-06-18 09:00:00",
+    "title": "Motorcycle traced via RTO records",
+    "description": "Registration traced to a motorcycle owned by Suresh M (alias Suresh Biker). Known associate of Ravi Kumar.",
+    "created_by": "SI Kavitha R"
+  },
+  {
+    "investigation_rowid": 1,
+    "event_type": "Arrest",
+    "event_date": "2026-06-20 06:30:00",
+    "title": "Suresh M arrested",
+    "description": "Suresh M arrested from his residence in Majestic area. Stolen gold chain recovered from pawn shop in Chickpete.",
+    "created_by": "Inspector Ramesh K"
+  },
+  {
+    "investigation_rowid": 2,
+    "event_type": "FIR Filed",
+    "event_date": "2026-06-20 06:00:00",
+    "title": "FIR KA/2026/00103 registered",
+    "description": "Armed robbery at jewelry store on Sayyaji Rao Road. Three masked suspects with machetes. Loot worth Rs 45 lakhs.",
+    "created_by": "Inspector Venkatesh N"
+  },
+  {
+    "investigation_rowid": 2,
+    "event_type": "Evidence Found",
+    "event_date": "2026-06-20 10:00:00",
+    "title": "Fingerprints collected",
+    "description": "Forensic team collected fingerprints from the store counter. One set matched Anil D'Souza (FP-KA-00156).",
+    "created_by": "Forensic Team"
+  },
+  {
+    "investigation_rowid": 2,
+    "event_type": "Witness Statement",
+    "event_date": "2026-06-21 09:00:00",
+    "title": "Store owner's detailed statement",
+    "description": "Owner described 3 suspects: leader was tall, muscular, with a scar on left cheek. Spoke in Tulu.",
+    "created_by": "Inspector Venkatesh N"
+  },
+  {
+    "investigation_rowid": 2,
+    "event_type": "Evidence Found",
+    "event_date": "2026-06-23 15:00:00",
+    "title": "Getaway vehicle found",
+    "description": "White Maruti Eeco van used in robbery found abandoned in Srirangapatna. Partial DNA recovered.",
+    "created_by": "SI Manjunath G"
+  },
+  {
+    "investigation_rowid": 2,
+    "event_type": "Hearing",
+    "event_date": "2026-07-05 10:00:00",
+    "title": "Court hearing for remand extension",
+    "description": "Remand extension granted for 14 days for continued investigation. Prosecution presented CCTV and fingerprint evidence.",
+    "created_by": "Inspector Venkatesh N"
+  }
+]
