@@ -166,6 +166,30 @@ body::before {
 .confidence-medium { color: var(--color-secondary); }
 .confidence-low { color: var(--color-danger); }
 
+/* ===== ACCESSIBILITY & FOCUS RINGS ===== */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ===== BUTTON & INTERACTIVE MICROINTERACTIONS ===== */
+button, input, textarea, a {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button:active, a:active {
+  transform: scale(0.98);
+}
+
+.card-hover-lift {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px -4px rgba(93, 112, 82, 0.12);
+}
+
 /* ===== PANEL STYLES ===== */
 .panel {
   background: var(--color-surface);
@@ -207,4 +231,5 @@ body::before {
 .leaflet-control-zoom a:hover {
   background: var(--color-surface-hover) !important;
 }
+
 

@@ -20,7 +20,9 @@ export default function SuggestionChips({ suggestions }: SuggestionChipsProps) {
             key={idx}
             onClick={() => !isQuerying && sendQuery(suggestion)}
             disabled={isQuerying}
-            className="rounded-full border border-[var(--color-border)] bg-white px-3.5 py-1 text-[10px] font-bold text-[var(--color-text-muted)] shadow-soft transition-all duration-300 hover:scale-105 hover:border-[var(--color-primary)]/50 hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 disabled:opacity-50 active:scale-95 cursor-pointer"
+            aria-label={`Suggested query: ${suggestion}`}
+            title={`Suggested query: ${suggestion}`}
+            className="rounded-full border border-[var(--color-border)] bg-white px-3.5 py-1 text-[10px] font-bold text-[var(--color-text-muted)] shadow-soft transition-all duration-300 hover:scale-105 hover:border-[var(--color-primary)]/50 hover:text-[var(--color-primary)] hover:bg-[var(--color-primary)]/5 disabled:opacity-50 active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
           >
             {suggestion}
           </button>

@@ -34,6 +34,7 @@ export default function ChatInput() {
           onKeyDown={handleKeyDown}
           placeholder="Ask about crimes or criminals..."
           disabled={isQuerying}
+          aria-label="Natural language investigation query input"
           rows={1}
           className="flex-1 resize-none bg-transparent py-2 text-xs font-semibold text-[var(--color-text)] placeholder:text-[var(--color-text-dim)] focus:outline-none disabled:opacity-50"
           style={{ maxHeight: "120px" }}
@@ -41,7 +42,9 @@ export default function ChatInput() {
         <button
           onClick={handleSubmit}
           disabled={!text.trim() || isQuerying}
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] text-white shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[var(--color-primary-hover)] active:scale-90 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+          aria-label="Send investigation query"
+          title="Send investigation query"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] text-white shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[var(--color-primary-hover)] active:scale-90 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

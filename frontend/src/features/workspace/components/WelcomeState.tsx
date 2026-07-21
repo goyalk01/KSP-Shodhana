@@ -89,7 +89,9 @@ export default function WelcomeState({ showMinimal = false }: WelcomeStateProps)
               key={idx}
               onClick={() => !isQuerying && sendQuery(query.text)}
               disabled={isQuerying}
-              className={`group flex items-start gap-3 border border-[var(--color-border)]/50 bg-white p-5 text-left shadow-soft transition-all duration-300 ${shapeClass} ${rotateClass} hover:-translate-y-1 hover:shadow-lg hover:border-[var(--color-primary)]/40 hover:shadow-[var(--color-primary)]/5 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer`}
+              aria-label={`Run query: ${query.text}`}
+              title={`Run query: ${query.text}`}
+              className={`group flex items-start gap-3 border border-[var(--color-border)]/50 bg-white p-5 text-left shadow-soft transition-all duration-300 ${shapeClass} ${rotateClass} hover:-translate-y-1 hover:shadow-lg hover:border-[var(--color-primary)]/40 hover:shadow-[var(--color-primary)]/5 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]`}
             >
               <span className="text-lg">{query.icon}</span>
               <div>

@@ -96,7 +96,14 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
       </p>
 
       {/* Confidence Bar */}
-      <div className="h-1.5 w-full rounded-full bg-[var(--color-border)]/30 mb-3.5">
+      <div 
+        className="h-1.5 w-full rounded-full bg-[var(--color-border)]/30 mb-3.5"
+        role="progressbar"
+        aria-label={`Confidence level: ${Math.round(item.confidence * 100)} percent`}
+        aria-valuenow={Math.round(item.confidence * 100)}
+        aria-valuemin={0}
+        aria-valuemax={100}
+      >
         <div
           className={`h-full rounded-full transition-all duration-500 ${confidenceBarColor}`}
           style={{ width: `${item.confidence * 100}%` }}

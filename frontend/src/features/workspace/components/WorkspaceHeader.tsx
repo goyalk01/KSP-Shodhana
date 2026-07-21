@@ -25,20 +25,27 @@ export default function WorkspaceHeader() {
       {/* Status + Actions */}
       <div className="flex items-center gap-3">
         {isQuerying && (
-          <div className="flex items-center gap-2 text-xs font-bold text-[var(--color-secondary)]">
-            <div className="h-2.5 w-2.5 rounded-full bg-[var(--color-secondary)] animate-pulse" />
+          <div className="flex items-center gap-2 rounded-full border border-[var(--color-secondary)]/30 bg-[var(--color-secondary)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-secondary)] animate-pulse">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-secondary)] opacity-75"></span>
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-secondary)]"></span>
+            </span>
             Analyzing data...
           </div>
         )}
         <button
           onClick={() => window.open("/api/proxy/api/v1/reports/1/preview", "_blank")}
-          className="rounded-full bg-[var(--color-primary)] px-5 py-2 text-xs font-bold text-[var(--color-primary-foreground)] shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[var(--color-primary-hover)] active:scale-95 cursor-pointer"
+          aria-label="Export official police case dossier preview in new tab"
+          title="Export official police case dossier preview in new tab"
+          className="rounded-full bg-[var(--color-primary)] px-5 py-2 text-xs font-bold text-[var(--color-primary-foreground)] shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[var(--color-primary-hover)] active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
         >
           📄 Export Dossier
         </button>
         <button
           onClick={clearWorkspace}
-          className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2 text-xs font-bold text-[var(--color-text-muted)] transition-all duration-300 hover:scale-105 hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] active:scale-95 cursor-pointer"
+          aria-label="Start a new investigation session and clear current workspace"
+          title="Start a new investigation session and clear current workspace"
+          className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2 text-xs font-bold text-[var(--color-text-muted)] transition-all duration-300 hover:scale-105 hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
         >
           New Session
         </button>
