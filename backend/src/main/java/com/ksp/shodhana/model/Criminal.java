@@ -29,6 +29,14 @@ public class Criminal {
     private String status;
     private String photoUrl;
     private String fingerprintId;
+
+    // Official KSP Accused ER Diagram Alignment Columns
+    private Integer accusedMasterId;
+    private String accusedName;
+    private Integer ageYear;
+    private Integer genderId;
+    private String personId;
+
     private String createdTime;
     private String modifiedTime;
 }

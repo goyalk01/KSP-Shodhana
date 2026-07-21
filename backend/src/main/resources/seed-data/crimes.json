@@ -14,7 +14,19 @@
     "address": "MG Road, Near Metro Station, Bengaluru",
     "investigatingOfficer": "Inspector Ramesh K",
     "weaponUsed": "None",
-    "modusOperandi": "Two-wheeler snatch and flee"
+    "modusOperandi": "Two-wheeler snatch and flee",
+    "crimeNo": "104430006202600101",
+    "caseNo": "202600101",
+    "briefFacts": "Chain snatching incident near MG Road metro station. Two suspects on a motorcycle snatched a gold chain from a pedestrian.",
+    "incidentFromDate": "2026-06-15 09:45:00",
+    "incidentToDate": "2026-06-15 09:50:00",
+    "infoReceivedPSDate": "2026-06-15 10:30:00",
+    "policeStationId": 6,
+    "policePersonId": 101,
+    "caseCategoryId": 1,
+    "gravityOffenceId": 2,
+    "crimeMajorHeadId": 3,
+    "crimeMinorHeadId": 12
   },
   {
     "firNumber": "KA/2026/00102",
@@ -31,7 +43,19 @@
     "address": "ITPL Main Road, Whitefield, Bengaluru",
     "investigatingOfficer": "SI Priya Sharma",
     "weaponUsed": "None",
-    "modusOperandi": "Phishing SMS with fake bank link"
+    "modusOperandi": "Phishing SMS with fake bank link",
+    "crimeNo": "104430007202600102",
+    "caseNo": "202600102",
+    "briefFacts": "Online banking fraud. Victim received phishing SMS and lost Rs 2.5 lakhs from savings account.",
+    "incidentFromDate": "2026-06-17 20:15:00",
+    "incidentToDate": "2026-06-17 20:30:00",
+    "infoReceivedPSDate": "2026-06-18 14:00:00",
+    "policeStationId": 7,
+    "policePersonId": 102,
+    "caseCategoryId": 1,
+    "gravityOffenceId": 2,
+    "crimeMajorHeadId": 4,
+    "crimeMinorHeadId": 15
   },
   {
     "firNumber": "KA/2026/00103",
@@ -48,7 +72,19 @@
     "address": "Sayyaji Rao Road, Mysuru",
     "investigatingOfficer": "Inspector Venkatesh N",
     "weaponUsed": "Machete",
-    "modusOperandi": "Armed entry during early morning hours"
+    "modusOperandi": "Armed entry during early morning hours",
+    "crimeNo": "104430008202600103",
+    "caseNo": "202600103",
+    "briefFacts": "Armed robbery at a jewelry store. Three masked suspects entered with machetes and looted gold ornaments worth Rs 45 lakhs.",
+    "incidentFromDate": "2026-06-20 03:30:00",
+    "incidentToDate": "2026-06-20 04:00:00",
+    "infoReceivedPSDate": "2026-06-20 06:00:00",
+    "policeStationId": 8,
+    "policePersonId": 103,
+    "caseCategoryId": 1,
+    "gravityOffenceId": 1,
+    "crimeMajorHeadId": 2,
+    "crimeMinorHeadId": 10
   },
   {
     "firNumber": "KA/2026/00104",
@@ -65,7 +101,19 @@
     "address": "5th Block, Koramangala, Bengaluru",
     "investigatingOfficer": "Inspector Ramesh K",
     "weaponUsed": "None",
-    "modusOperandi": "Residential storage and local distribution"
+    "modusOperandi": "Residential storage and local distribution",
+    "crimeNo": "104430009202600104",
+    "caseNo": "202600104",
+    "briefFacts": "Seizure of 5kg cannabis from a residential apartment. Suspect was running distribution network across 3 districts.",
+    "incidentFromDate": "2026-05-10 14:00:00",
+    "incidentToDate": "2026-05-10 15:30:00",
+    "infoReceivedPSDate": "2026-05-10 16:00:00",
+    "policeStationId": 9,
+    "policePersonId": 104,
+    "caseCategoryId": 1,
+    "gravityOffenceId": 2,
+    "crimeMajorHeadId": 5,
+    "crimeMinorHeadId": 18
   },
   {
     "firNumber": "KA/2026/00105",
@@ -82,7 +130,19 @@
     "address": "11th Main, 4th Block, Jayanagar, Bengaluru",
     "investigatingOfficer": "SI Karthik M",
     "weaponUsed": "Iron Rod",
-    "modusOperandi": "Road rage escalation"
+    "modusOperandi": "Road rage escalation",
+    "crimeNo": "104430010202600105",
+    "caseNo": "202600105",
+    "briefFacts": "Assault during road rage incident. Victim sustained head injuries and was hospitalized.",
+    "incidentFromDate": "2026-06-22 18:30:00",
+    "incidentToDate": "2026-06-22 18:45:00",
+    "infoReceivedPSDate": "2026-06-22 19:00:00",
+    "policeStationId": 10,
+    "policePersonId": 105,
+    "caseCategoryId": 1,
+    "gravityOffenceId": 2,
+    "crimeMajorHeadId": 6,
+    "crimeMinorHeadId": 22
   },
   {
     "firNumber": "KA/2026/00106",
@@ -99,7 +159,19 @@
     "address": "Prestige Lakeside, Yelahanka, Bengaluru",
     "investigatingOfficer": "Inspector Suresh B",
     "weaponUsed": "None",
-    "modusOperandi": "Night-time break-in via balcony access"
+    "modusOperandi": "Night-time break-in via balcony access",
+    "crimeNo": "104430011202600106",
+    "caseNo": "202600106",
+    "briefFacts": "House burglary in gated community. Electronics and cash worth Rs 8 lakhs stolen. CCTV footage shows lone suspect.",
+    "incidentFromDate": "2026-06-30 23:00:00",
+    "incidentToDate": "2026-07-01 02:00:00",
+    "infoReceivedPSDate": "2026-07-01 08:00:00",
+    "policeStationId": 11,
+    "policePersonId": 106,
+    "caseCategoryId": 1,
+    "gravityOffenceId": 2,
+    "crimeMajorHeadId": 3,
+    "crimeMinorHeadId": 13
   },
   {
     "firNumber": "KA/2026/00107",
@@ -116,7 +188,19 @@
     "address": "Vidyanagar, Hubballi",
     "investigatingOfficer": "Inspector Patil R",
     "weaponUsed": "Knife",
-    "modusOperandi": "Personal dispute escalation"
+    "modusOperandi": "Personal dispute escalation",
+    "crimeNo": "104430012202600107",
+    "caseNo": "202600107",
+    "briefFacts": "Homicide in residential area. Victim found with stab wounds. Suspected personal dispute.",
+    "incidentFromDate": "2026-07-04 22:00:00",
+    "incidentToDate": "2026-07-04 22:30:00",
+    "infoReceivedPSDate": "2026-07-05 05:30:00",
+    "policeStationId": 12,
+    "policePersonId": 107,
+    "caseCategoryId": 1,
+    "gravityOffenceId": 1,
+    "crimeMajorHeadId": 1,
+    "crimeMinorHeadId": 5
   },
   {
     "firNumber": "KA/2026/00108",
@@ -133,6 +217,18 @@
     "address": "Pandeshwar, Mangaluru",
     "investigatingOfficer": "SI Deepa N",
     "weaponUsed": "None",
-    "modusOperandi": "Document forgery and multiple sales"
+    "modusOperandi": "Document forgery and multiple sales",
+    "crimeNo": "104430013202600108",
+    "caseNo": "202600108",
+    "briefFacts": "Real estate fraud. Accused sold same property to 3 different buyers using forged documents.",
+    "incidentFromDate": "2026-03-15 00:00:00",
+    "incidentToDate": "2026-03-15 23:59:59",
+    "infoReceivedPSDate": "2026-07-08 11:00:00",
+    "policeStationId": 13,
+    "policePersonId": 108,
+    "caseCategoryId": 1,
+    "gravityOffenceId": 2,
+    "crimeMajorHeadId": 7,
+    "crimeMinorHeadId": 28
   }
 ]

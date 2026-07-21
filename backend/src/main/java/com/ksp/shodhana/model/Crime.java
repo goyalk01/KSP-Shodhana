@@ -31,6 +31,21 @@ public class Crime {
     private String investigatingOfficer;
     private String weaponUsed;
     private String modusOperandi;
+    
+    // Official KSP CaseMaster ER Diagram Alignment Columns
+    private String crimeNo;
+    private String caseNo;
+    private String briefFacts;
+    private String incidentFromDate;
+    private String incidentToDate;
+    private String infoReceivedPSDate;
+    private Integer policeStationId;
+    private Integer policePersonId;
+    private Integer caseCategoryId;
+    private Integer gravityOffenceId;
+    private Integer crimeMajorHeadId;
+    private Integer crimeMinorHeadId;
+
     private String createdTime;
     private String modifiedTime;
 }

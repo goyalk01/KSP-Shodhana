@@ -13,7 +13,12 @@
     "riskLevel": "High",
     "status": "Wanted",
     "photoUrl": "",
-    "fingerprintId": "FP-KA-00234"
+    "fingerprintId": "FP-KA-00234",
+    "accusedMasterId": 1,
+    "accusedName": "Ravi Kumar S",
+    "ageYear": 28,
+    "genderId": 1,
+    "personId": "A1"
   },
   {
     "rowId": 2,
@@ -29,7 +34,12 @@
     "riskLevel": "Medium",
     "status": "Wanted",
     "photoUrl": "",
-    "fingerprintId": "FP-KA-00235"
+    "fingerprintId": "FP-KA-00235",
+    "accusedMasterId": 2,
+    "accusedName": "Suresh M",
+    "ageYear": 25,
+    "genderId": 1,
+    "personId": "A2"
   },
   {
     "rowId": 3,
@@ -45,7 +55,12 @@
     "riskLevel": "High",
     "status": "At Large",
     "photoUrl": "",
-    "fingerprintId": "FP-KA-00156"
+    "fingerprintId": "FP-KA-00156",
+    "accusedMasterId": 3,
+    "accusedName": "Anil D'Souza",
+    "ageYear": 35,
+    "genderId": 1,
+    "personId": "A1"
   },
   {
     "rowId": 4,
@@ -61,7 +76,12 @@
     "riskLevel": "Medium",
     "status": "On Bail",
     "photoUrl": "",
-    "fingerprintId": "FP-KA-00301"
+    "fingerprintId": "FP-KA-00301",
+    "accusedMasterId": 4,
+    "accusedName": "Mohammed Farooq",
+    "ageYear": 30,
+    "genderId": 1,
+    "personId": "A1"
   },
   {
     "rowId": 5,
@@ -77,7 +97,12 @@
     "riskLevel": "Medium",
     "status": "Arrested",
     "photoUrl": "",
-    "fingerprintId": "FP-KA-00188"
+    "fingerprintId": "FP-KA-00188",
+    "accusedMasterId": 5,
+    "accusedName": "Lakshmi Devi",
+    "ageYear": 32,
+    "genderId": 2,
+    "personId": "A1"
   },
   {
     "rowId": 6,
@@ -93,6 +118,11 @@
     "riskLevel": "High",
     "status": "Arrested",
     "photoUrl": "",
-    "fingerprintId": "FP-KA-00089"
+    "fingerprintId": "FP-KA-00089",
+    "accusedMasterId": 6,
+    "accusedName": "Ganesh Naik",
+    "ageYear": 40,
+    "genderId": 1,
+    "personId": "A1"
   }
 ]
