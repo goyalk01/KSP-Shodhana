@@ -47,13 +47,13 @@ export default function WelcomeState({ showMinimal = false }: WelcomeStateProps)
     );
   }
 
-  // Organic asymmetric card shapes and rotations
+  // Balanced, aesthetic card shapes
   const cardShapes = [
-    "rounded-[2rem] rounded-tr-[4rem]",
-    "rounded-[2rem] rounded-bl-[4rem]",
-    "rounded-[2rem] rounded-tl-[4rem]",
-    "rounded-[2rem] rounded-br-[4rem]",
-    "rounded-[3rem] rounded-tr-[1.5rem]",
+    "rounded-2xl rounded-tr-3xl",
+    "rounded-2xl rounded-bl-3xl",
+    "rounded-2xl rounded-tl-3xl",
+    "rounded-2xl rounded-br-3xl",
+    "rounded-2xl",
   ];
 
   return (
@@ -79,7 +79,7 @@ export default function WelcomeState({ showMinimal = false }: WelcomeStateProps)
       </div>
 
       {/* Example Queries */}
-      <div className="grid w-full max-w-2xl grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-2">
         {EXAMPLE_QUERIES.map((query, idx) => {
           const shapeClass = cardShapes[idx % cardShapes.length];
           const rotateClass = idx % 2 === 0 ? "hover:rotate-1" : "hover:-rotate-1";
@@ -91,14 +91,14 @@ export default function WelcomeState({ showMinimal = false }: WelcomeStateProps)
               disabled={isQuerying}
               aria-label={`Run query: ${query.text}`}
               title={`Run query: ${query.text}`}
-              className={`group flex items-start gap-3 border border-[var(--color-border)]/50 bg-white p-5 text-left shadow-soft transition-all duration-300 ${shapeClass} ${rotateClass} hover:-translate-y-1 hover:shadow-lg hover:border-[var(--color-primary)]/40 hover:shadow-[var(--color-primary)]/5 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]`}
+              className={`group flex items-start gap-3.5 border border-[var(--color-border)]/50 bg-white p-4.5 pl-4 pr-5 text-left shadow-soft transition-all duration-300 ${shapeClass} ${rotateClass} hover:-translate-y-1 hover:shadow-lg hover:border-[var(--color-primary)]/40 hover:shadow-[var(--color-primary)]/5 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]`}
             >
-              <span className="text-lg">{query.icon}</span>
-              <div>
+              <span className="text-xl shrink-0 mt-0.5">{query.icon}</span>
+              <div className="flex-1 min-w-0">
                 <p className="text-[9px] font-bold uppercase tracking-widest text-[var(--color-primary)] mb-1">
                   {query.label}
                 </p>
-                <p className="text-xs font-bold text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors leading-relaxed">
+                <p className="text-xs font-bold text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors leading-snug break-words">
                   {query.text}
                 </p>
               </div>

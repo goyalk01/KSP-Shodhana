@@ -26,7 +26,7 @@ export default function ChatInput() {
 
   return (
     <div className="border-t border-[var(--color-border)]/50 p-4 bg-white/10">
-      <div className="flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-white/70 p-1.5 pl-4 focus-within:border-[var(--color-primary)]/50 focus-within:shadow-[0_4px_16px_rgba(93,112,82,0.1)] transition-all">
+      <div className="flex items-center gap-2 rounded-2xl border border-[var(--color-border)] bg-white/90 p-2 pl-4 pr-2 focus-within:border-[var(--color-primary)]/50 focus-within:shadow-[0_4px_16px_rgba(93,112,82,0.1)] transition-all">
         <textarea
           ref={inputRef}
           value={text}
@@ -36,7 +36,7 @@ export default function ChatInput() {
           disabled={isQuerying}
           aria-label="Natural language investigation query input"
           rows={1}
-          className="flex-1 resize-none bg-transparent py-2 text-xs font-semibold text-[var(--color-text)] placeholder:text-[var(--color-text-dim)] focus:outline-none disabled:opacity-50"
+          className="flex-1 resize-none bg-transparent py-1.5 text-xs font-semibold text-[var(--color-text)] placeholder:text-[var(--color-text-dim)] focus:outline-none disabled:opacity-50 min-w-0"
           style={{ maxHeight: "120px" }}
         />
         <button

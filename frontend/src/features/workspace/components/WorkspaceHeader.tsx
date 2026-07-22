@@ -6,9 +6,9 @@ export default function WorkspaceHeader() {
   const { clearWorkspace, isQuerying } = useWorkspaceStore();
 
   return (
-    <header className="glass flex h-16 items-center justify-between px-6 mx-4 mt-4 mb-2 rounded-full border border-[var(--color-border)] shadow-soft">
+    <header className="glass flex h-16 items-center justify-between px-6 mx-4 mt-4 mb-2 rounded-2xl border border-[var(--color-border)] shadow-soft min-w-0">
       {/* Logo + Title */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-3 shrink-0">
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] shadow-soft">
           <span className="text-xs font-bold text-white tracking-wider">KS</span>
         </div>
@@ -23,7 +23,7 @@ export default function WorkspaceHeader() {
       </div>
 
       {/* Status + Actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
         {isQuerying && (
           <div className="flex items-center gap-2 rounded-full border border-[var(--color-secondary)]/30 bg-[var(--color-secondary)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-secondary)] animate-pulse">
             <span className="relative flex h-2 w-2">

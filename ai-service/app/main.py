@@ -43,6 +43,12 @@ app.include_router(understand.router, prefix="/ai/v1", tags=["Query Understandin
 app.include_router(analyze.router, prefix="/ai/v1", tags=["Analysis"])
 
 
+@app.get("/", tags=["Health"])
+async def root():
+    """Root endpoint for service discovery."""
+    return {"status": "ok", "service": "KSP Shodhana AI Service", "model": settings.gemini_model}
+
+
 @app.get("/ai/v1/health", tags=["Health"])
 async def health_check():
     """Health check endpoint."""
