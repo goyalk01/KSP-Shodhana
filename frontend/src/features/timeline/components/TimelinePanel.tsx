@@ -22,10 +22,16 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
     );
   }
 
+  // Helper to extract date and type safely regardless of backend property naming
+  const getEventDate = (e: any) => e.eventDate || e.date || "";
+  const getEventType = (e: any) => e.eventType || e.type || "Event";
+
   // Sort by date descending
-  const sorted = [...data].sort(
-    (a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime()
-  );
+  const sorted = [...data].sort((a, b) => {
+    const timeA = new Date(getEventDate(a).replace(" ", "T")).getTime() || 0;
+    const timeB = new Date(getEventDate(b).replace(" ", "T")).getTime() || 0;
+    return timeB - timeA;
+  });
 
   return (
     <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
@@ -44,10 +50,13 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
           {/* Events */}
           <div className="space-y-4">
             {sorted.map((event, idx) => {
-              const icon = EVENT_TYPE_ICONS[event.eventType] || EVENT_TYPE_ICONS.Default;
+              const eventDate = getEventDate(event);
+              const eventType = getEventType(event);
+              const icon = EVENT_TYPE_ICONS[eventType] || EVENT_TYPE_ICONS.Default;
+              const formattedDateStr = formatDate(eventDate);
               return (
                 <div
-                  key={event.id}
+                  key={event.id || idx}
                   className="relative flex gap-4 pl-10 animate-fade-in"
                   style={{ animationDelay: `${idx * 0.08}s` }}
                 >
@@ -57,7 +66,7 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
                   {/* Content Card */}
                   <div 
                     tabIndex={0}
-                    aria-label={`Timeline event: ${event.title}, ${formatDate(event.eventDate)}`}
+                    aria-label={`Timeline event: ${event.title}, ${formattedDateStr}`}
                     className="flex-1 rounded-[1.5rem] border border-[var(--color-border)]/50 bg-white p-4 shadow-soft card-hover-lift hover:border-[var(--color-primary)]/30 focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
@@ -68,15 +77,17 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
                         </h4>
                       </div>
                       <span className="shrink-0 rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-[9px] font-extrabold tracking-wider uppercase text-[var(--color-primary)]">
-                        {event.eventType}
+                        {eventType}
                       </span>
                     </div>
                     <p className="text-[11px] font-bold text-[var(--color-text-muted)] leading-relaxed">
                       {event.description}
                     </p>
-                    <p className="mt-2 text-[9px] font-bold text-[var(--color-text-dim)] tracking-wide">
-                      {formatDate(event.eventDate)}
-                    </p>
+                    {formattedDateStr && (
+                      <p className="mt-2 text-[9px] font-bold text-[var(--color-text-dim)] tracking-wide">
+                        {formattedDateStr}
+                      </p>
+                    )}
                   </div>
                 </div>
               );

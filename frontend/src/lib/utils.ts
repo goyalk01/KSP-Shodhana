@@ -19,11 +19,17 @@ export function generateId(): string {
 
 /** Format a date string for display */
 export function formatDate(dateStr: string): string {
+  if (!dateStr) return "";
   try {
-    return new Date(dateStr).toLocaleDateString("en-IN", {
+    const formattedStr = dateStr.includes(" ") ? dateStr.replace(" ", "T") : dateStr;
+    const d = new Date(formattedStr);
+    if (isNaN(d.getTime())) return dateStr;
+    return d.toLocaleDateString("en-IN", {
       year: "numeric",
       month: "short",
       day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   } catch {
     return dateStr;
