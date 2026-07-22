@@ -3,17 +3,17 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #FDFCF8;
-  --color-foreground: #2C2C24;
-  --color-surface: #FEFEFA;
-  --color-surface-hover: #F0EBE5;
+  --color-background: #F4F5F0;
+  --color-foreground: #1A1A1A;
+  --color-surface: #FFFFFF;
+  --color-surface-hover: #F0EDE8;
   --color-surface-active: #E6DCCD;
-  --color-border: #DED8CF;
-  --color-border-subtle: #EBE5DB;
+  --color-border: #E2E0DB;
+  --color-border-subtle: #EEECE7;
 
   --color-primary: #5D7052;
   --color-primary-hover: #4A5B40;
-  --color-primary-foreground: #F3F4F1;
+  --color-primary-foreground: #FFFFFF;
 
   --color-secondary: #C18C5D;
   --color-secondary-hover: #A57245;
@@ -22,21 +22,21 @@
   --color-accent: #E6DCCD;
   --color-accent-hover: #D8CCB9;
 
-  --color-danger: #A85448;
-  --color-warning: #C18C5D;
+  --color-danger: #D64545;
+  --color-warning: #E8A838;
   --color-success: #5D7052;
 
-  --color-text: #2C2C24;
-  --color-text-muted: #78786C;
-  --color-text-dim: #949484;
+  --color-text: #1A1A1A;
+  --color-text-muted: #6B6B60;
+  --color-text-dim: #9A9A8E;
 
   --font-sans: "Nunito", system-ui, -apple-system, sans-serif;
   --font-serif: "Fraunces", Georgia, serif;
 
   --radius-sm: 0.5rem;
   --radius-md: 0.75rem;
-  --radius-lg: 1.25rem;
-  --radius-xl: 2rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
 }
 
 /* ===== BASE ===== */
@@ -61,61 +61,55 @@ body {
   position: relative;
 }
 
-/* ===== PAPER GRAIN TEXTURE OVERLAY ===== */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.035;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
 /* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-border);
-  border-radius: 4px;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-dim);
 }
 
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 /* ===== GLASSMORPHISM UTILITIES ===== */
 .glass {
-  background: rgba(253, 252, 248, 0.75);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(222, 216, 207, 0.5);
-  box-shadow: 0 4px 20px -2px rgba(93, 112, 82, 0.08);
+  border: 1px solid rgba(226, 224, 219, 0.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .glass-subtle {
-  background: rgba(254, 254, 250, 0.5);
+  background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(222, 216, 207, 0.3);
+  border: 1px solid rgba(226, 224, 219, 0.3);
 }
 
 /* ===== ANIMATIONS ===== */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(24px); }
+  from { opacity: 0; transform: translateX(16px); }
   to { opacity: 1; transform: translateX(0); }
 }
 
@@ -130,17 +124,17 @@ body::before {
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .animate-slide-in {
-  animation: slideInRight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* ===== TYPING INDICATOR ===== */
 .typing-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: var(--color-primary);
   display: inline-block;
@@ -175,37 +169,29 @@ body::before {
 
 /* ===== BUTTON & INTERACTIVE MICROINTERACTIONS ===== */
 button, input, textarea, a {
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 button:active, a:active {
   transform: scale(0.98);
 }
 
-.card-hover-lift {
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.card-hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px -4px rgba(93, 112, 82, 0.12);
-}
-
 /* ===== PANEL STYLES ===== */
 .panel {
   background: var(--color-surface);
-  border: 1px solid rgba(222, 216, 207, 0.5);
+  border: 1px solid rgba(226, 224, 219, 0.5);
   border-radius: var(--radius-xl);
-  box-shadow: 0 4px 20px -2px rgba(93, 112, 82, 0.08);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .panel-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid rgba(222, 216, 207, 0.5);
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(226, 224, 219, 0.5);
   font-family: var(--font-sans);
   font-size: 0.8125rem;
   font-weight: 700;
@@ -220,16 +206,14 @@ button:active, a:active {
   border-radius: var(--radius-xl);
 }
 .leaflet-control-zoom {
-  border: 1px solid rgba(222, 216, 207, 0.5) !important;
-  box-shadow: 0 4px 20px -2px rgba(93, 112, 82, 0.08) !important;
+  border: 1px solid rgba(226, 224, 219, 0.5) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
 }
 .leaflet-control-zoom a {
   background: var(--color-surface) !important;
   color: var(--color-text) !important;
-  border-bottom: 1px solid rgba(222, 216, 207, 0.5) !important;
+  border-bottom: 1px solid rgba(226, 224, 219, 0.5) !important;
 }
 .leaflet-control-zoom a:hover {
   background: var(--color-surface-hover) !important;
 }
-
-

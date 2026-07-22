@@ -16,19 +16,25 @@ export default function ChatPanel() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-full rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/25 shadow-soft overflow-hidden">
+    <div className="flex flex-col h-full rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
       {/* Chat Header */}
-      <div className="border-b border-[var(--color-border)]/50 px-6 py-4">
+      <div className="border-b border-[var(--color-border)]/50 px-5 py-3.5 flex items-center justify-between">
         <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--color-primary)]">
-          💬 Investigation Chat
+          Investigation Chat
         </h2>
+        <span className="flex h-2 w-2 rounded-full bg-[var(--color-success)]" title="AI Connected"></span>
       </div>
 
       {/* Messages List */}
-      <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+      <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full gap-3 text-center p-6">
-            <p className="text-xs font-semibold text-[var(--color-text-muted)] leading-relaxed">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
+                <path fillRule="evenodd" d="M10 2c-2.236 0-4.43.18-6.57.524C1.993 2.755 1 4.014 1 5.426v5.148c0 1.413.993 2.67 2.43 2.902 1.168.188 2.352.327 3.55.414.28.02.521.18.642.413l1.713 3.293a.75.75 0 0 0 1.33 0l1.713-3.293a.783.783 0 0 1 .642-.413 41.102 41.102 0 0 0 3.55-.414c1.437-.231 2.43-1.49 2.43-2.902V5.426c0-1.413-.993-2.67-2.43-2.902A41.289 41.289 0 0 0 10 2ZM6.75 6a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Zm0 2.5a.75.75 0 0 0 0 1.5h3.5a.75.75 0 0 0 0-1.5h-3.5Z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <p className="text-xs font-semibold text-[var(--color-text-muted)] leading-relaxed max-w-[200px]">
               Ask anything about crimes, criminals, or investigations.
             </p>
           </div>

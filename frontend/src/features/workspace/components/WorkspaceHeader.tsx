@@ -6,47 +6,49 @@ export default function WorkspaceHeader() {
   const { clearWorkspace, isQuerying } = useWorkspaceStore();
 
   return (
-    <header className="glass flex h-16 items-center justify-between px-6 mx-4 mt-4 mb-2 rounded-2xl border border-[var(--color-border)] shadow-soft min-w-0">
-      {/* Logo + Title */}
-      <div className="flex items-center gap-3 shrink-0">
-        <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-secondary)] shadow-soft">
-          <span className="text-xs font-bold text-white tracking-wider">KS</span>
-        </div>
-        <div>
-          <h1 className="font-serif text-base font-extrabold tracking-tight text-[var(--color-text)] leading-tight">
-            KSP Shodhana
-          </h1>
-          <p className="text-[9px] font-semibold text-[var(--color-text-dim)] tracking-widest uppercase">
-            Ask · Analyze · Act
-          </p>
-        </div>
+    <header className="flex h-[72px] items-center justify-between px-7 border-b border-[var(--color-border)]/50 bg-[var(--color-surface)] shrink-0">
+      {/* Title + Subtitle */}
+      <div>
+        <h1 className="font-serif text-xl font-extrabold tracking-tight text-[var(--color-text)] leading-tight">
+          KSP Shodhana — Investigation Workspace
+        </h1>
+        <p className="text-[11px] font-semibold text-[var(--color-text-muted)] mt-0.5">
+          Here&apos;s what&apos;s happening across Karnataka today.
+        </p>
       </div>
 
       {/* Status + Actions */}
-      <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+      <div className="flex items-center gap-3 shrink-0">
         {isQuerying && (
-          <div className="flex items-center gap-2 rounded-full border border-[var(--color-secondary)]/30 bg-[var(--color-secondary)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-secondary)] animate-pulse">
+          <div className="flex items-center gap-2 rounded-lg border border-[var(--color-secondary)]/30 bg-[var(--color-secondary)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-secondary)]">
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-secondary)] opacity-75"></span>
               <span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-secondary)]"></span>
             </span>
-            Analyzing data...
+            Analyzing...
           </div>
         )}
         <button
           onClick={() => window.open("/api/proxy/api/v1/reports/1/preview", "_blank")}
-          aria-label="Export official police case dossier preview in new tab"
-          title="Export official police case dossier preview in new tab"
-          className="rounded-full bg-[var(--color-primary)] px-5 py-2 text-xs font-bold text-[var(--color-primary-foreground)] shadow-soft transition-all duration-300 hover:scale-105 hover:bg-[var(--color-primary-hover)] active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+          aria-label="Export official police case dossier preview"
+          title="Export official police case dossier preview"
+          className="flex items-center gap-2 rounded-lg border border-[var(--color-primary)]/30 bg-[var(--color-primary)]/10 px-4 py-2 text-xs font-bold text-[var(--color-primary)] transition-all duration-200 hover:bg-[var(--color-primary)]/20 active:scale-[0.97] cursor-pointer"
         >
-          📄 Export Dossier
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+            <path d="M13.75 7h-3v5.296l1.943-2.048a.75.75 0 0 1 1.114 1.004l-3.25 3.5a.75.75 0 0 1-1.114 0l-3.25-3.5a.75.75 0 1 1 1.114-1.004l1.943 2.048V7h-3A2.25 2.25 0 0 0 4 9.25v7.5A2.25 2.25 0 0 0 6.25 19h7.5A2.25 2.25 0 0 0 16 16.75v-7.5A2.25 2.25 0 0 0 13.75 7Z" />
+            <path d="M10 1a.75.75 0 0 1 .75.75v5.5a.75.75 0 0 1-1.5 0v-5.5A.75.75 0 0 1 10 1Z" />
+          </svg>
+          Export Dossier
         </button>
         <button
           onClick={clearWorkspace}
-          aria-label="Start a new investigation session and clear current workspace"
-          title="Start a new investigation session and clear current workspace"
-          className="rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-5 py-2 text-xs font-bold text-[var(--color-text-muted)] transition-all duration-300 hover:scale-105 hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)] active:scale-95 cursor-pointer focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+          aria-label="Start a new investigation session"
+          title="Start a new investigation session"
+          className="flex items-center gap-2 rounded-lg bg-[var(--color-primary)] px-4 py-2 text-xs font-bold text-white shadow-sm transition-all duration-200 hover:bg-[var(--color-primary-hover)] active:scale-[0.97] cursor-pointer"
         >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
+            <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+          </svg>
           New Session
         </button>
       </div>

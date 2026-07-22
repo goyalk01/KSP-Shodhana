@@ -10,7 +10,7 @@ interface EvidencePanelProps {
 export default function EvidencePanel({ data }: EvidencePanelProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
+      <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
         <div className="panel-header">
           <span>📊 Evidence Panel</span>
         </div>
@@ -22,10 +22,10 @@ export default function EvidencePanel({ data }: EvidencePanelProps) {
   }
 
   return (
-    <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
+    <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
       <div className="panel-header">
         <span>📊 Explainable Evidence</span>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-white px-2 py-0.5 rounded-full border border-[var(--color-border)]/50 shadow-soft">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2 py-0.5 rounded-md">
           {data.length} items
         </span>
       </div>
@@ -64,18 +64,9 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
       system: "⚙️ System",
     }[item.type] || "📌 General";
 
-  // Asymmetric wabi-sabi card shapes
-  const shapes = [
-    "rounded-[1.5rem] rounded-tr-[3rem]",
-    "rounded-[1.5rem] rounded-bl-[3rem]",
-    "rounded-[1.5rem] rounded-tl-[3rem]",
-    "rounded-[1.5rem] rounded-br-[3rem]",
-  ];
-  const shapeClass = shapes[index % shapes.length];
-
   return (
     <div
-      className={`border border-[var(--color-border)]/50 bg-white p-4 shadow-soft transition-all duration-300 hover:scale-[1.01] hover:-translate-y-0.5 hover:shadow-md hover:border-[var(--color-primary)]/30 ${shapeClass} animate-fade-in`}
+      className="rounded-xl border border-[var(--color-border)]/50 bg-[var(--color-surface)] p-4 transition-all duration-200 hover:shadow-md hover:border-[var(--color-primary)]/30 animate-fade-in"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Header: Type + Confidence */}
@@ -91,13 +82,13 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
       </div>
 
       {/* Claim */}
-      <p className="text-xs font-bold leading-relaxed text-[var(--color-text)] mb-3.5">
+      <p className="text-xs font-bold leading-relaxed text-[var(--color-text)] mb-3">
         {item.claim}
       </p>
 
       {/* Confidence Bar */}
-      <div 
-        className="h-1.5 w-full rounded-full bg-[var(--color-border)]/30 mb-3.5"
+      <div
+        className="h-1.5 w-full rounded-full bg-[var(--color-border)]/30 mb-3"
         role="progressbar"
         aria-label={`Confidence level: ${Math.round(item.confidence * 100)} percent`}
         aria-valuenow={Math.round(item.confidence * 100)}
@@ -116,7 +107,7 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
           {item.sources.map((source, sIdx) => (
             <span
               key={sIdx}
-              className="rounded-full bg-[var(--color-primary)]/10 px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] border border-[var(--color-primary)]/10"
+              className="rounded-md bg-[var(--color-primary)]/10 px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-[var(--color-primary)]"
             >
               {source}
             </span>
