@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     # Gemini API
     gemini_api_key: str = ""
     gemini_model: str = "gemini-3.5-flash-lite"
-    gemini_max_tokens: int = 1024
+    gemini_max_tokens: int = 4096
 
     # Server
     host: str = "0.0.0.0"
