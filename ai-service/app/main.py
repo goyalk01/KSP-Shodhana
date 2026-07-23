@@ -60,3 +60,14 @@ async def health():
 async def health_check():
     """Health check endpoint."""
     return {"status": "ok", "service": "ksp-shodhana-ai", "model": settings.gemini_model}
+
+
+@app.post("/ai/v1/search/vector", tags=["Vector Search"])
+async def search_vector(payload: dict):
+    """RAG Semantic Vector Search endpoint across crime documents."""
+    from app.services.vector_store import vector_store
+    query = payload.get("query", "")
+    top_k = payload.get("top_k", 3)
+    results = vector_store.search_semantic(query, top_k)
+    return {"query": query, "results": results}
+
