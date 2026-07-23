@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useCallback, useEffect } from "react";
+import { useRef, useCallback, useEffect, useState } from "react";
 import ForceGraph2D from "react-force-graph-2d";
 import type { NetworkGraphData, GraphNode } from "@/types/domain";
 import { RISK_COLORS } from "@/lib/constants";
@@ -11,14 +11,54 @@ interface NetworkGraphPanelProps {
 
 export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const graphWrapperRef = useRef<HTMLDivElement>(null);
   const graphRef = useRef<any>(null);
 
-  // Auto-fit graph on data change with ample padding for text labels
+  const [dimensions, setDimensions] = useState<{ width: number; height: number }>({
+    width: 600,
+    height: 400,
+  });
+
+  // Track container dimensions dynamically with ResizeObserver
   useEffect(() => {
-    if (graphRef.current && data && data.nodes.length > 0) {
-      setTimeout(() => graphRef.current?.zoomToFit(400, 120), 350);
-    }
-  }, [data]);
+    if (!graphWrapperRef.current) return;
+
+    const updateDimensions = () => {
+      if (!graphWrapperRef.current) return;
+      const w = graphWrapperRef.current.clientWidth || 600;
+      const h = graphWrapperRef.current.clientHeight || 400;
+      setDimensions({ width: w, height: h });
+    };
+
+    const observer = new ResizeObserver(() => {
+      updateDimensions();
+    });
+
+    observer.observe(graphWrapperRef.current);
+    updateDimensions();
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Dynamically adjust physics forces and zoom level whenever dimensions or data changes
+  useEffect(() => {
+    if (!graphRef.current || !data || data.nodes.length === 0) return;
+
+    // Dynamic node charge and link distance based on canvas size
+    const chargeStrength = Math.min(-250, -dimensions.width * 0.45);
+    const linkDistance = Math.min(140, Math.max(60, dimensions.width * 0.14));
+
+    graphRef.current.d3Force("charge")?.strength(chargeStrength);
+    graphRef.current.d3Force("link")?.distance(linkDistance);
+    graphRef.current.d3ReheatSimulation();
+
+    // Smoothly re-fit graph to fill updated canvas dimensions
+    const timer = setTimeout(() => {
+      graphRef.current?.zoomToFit(300, 70);
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, [dimensions, data]);
 
   const nodeColor = useCallback((node: any) => {
     const graphNode = node as GraphNode;
@@ -65,36 +105,36 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
         <LegendItem color="#949484" label="Location" />
       </div>
 
-      {/* Graph */}
-      <div className="flex-1 relative min-h-0 overflow-hidden">
+      {/* Dynamic Graph Container */}
+      <div className="flex-1 relative min-h-0 overflow-hidden" ref={graphWrapperRef}>
         <ForceGraph2D
           ref={graphRef}
+          width={dimensions.width}
+          height={dimensions.height}
           graphData={{
             nodes: data.nodes.map((n) => ({ ...n })),
             links: data.links.map((l) => ({ ...l })),
           }}
           nodeColor={nodeColor}
           nodeLabel={nodeLabel}
-          nodeRelSize={6}
-          linkColor={() => "rgba(93, 112, 82, 0.2)"}
-          linkWidth={(link: any) => Math.max(1, (link.strength || 1) / 3)}
+          nodeRelSize={7}
+          linkColor={() => "rgba(93, 112, 82, 0.25)"}
+          linkWidth={(link: any) => Math.max(1.5, (link.strength || 1) / 2.5)}
           linkDirectionalParticles={2}
           linkDirectionalParticleSpeed={0.005}
-          linkDirectionalParticleColor={() => "rgba(193, 140, 93, 0.5)"}
+          linkDirectionalParticleColor={() => "rgba(193, 140, 93, 0.6)"}
           backgroundColor="transparent"
           nodeCanvasObjectMode={() => "after"}
           nodeCanvasObject={(node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
             const label = node.name || "";
-            const fontSize = Math.max(10 / globalScale, 3);
-            ctx.font = `${fontSize}px Nunito, sans-serif`;
+            const fontSize = Math.max(11 / globalScale, 3.5);
+            ctx.font = `bold ${fontSize}px Nunito, sans-serif`;
             ctx.textAlign = "center";
             ctx.textBaseline = "top";
-            ctx.fillStyle = "rgba(44, 44, 36, 0.85)";
-            ctx.fillText(label, node.x!, node.y! + 8);
+            ctx.fillStyle = "rgba(44, 44, 36, 0.9)";
+            ctx.fillText(label, node.x!, node.y! + 9);
           }}
           cooldownTicks={100}
-          width={containerRef.current?.clientWidth || 600}
-          height={(containerRef.current?.clientHeight || 450) - 95}
         />
       </div>
     </div>
