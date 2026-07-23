@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { translateTextForSpeech } from "@/lib/translator";
 
 type LanguageCode = "en-IN" | "hi-IN" | "kn-IN";
 
@@ -65,7 +66,10 @@ export default function SpeakAloudButton({ text, size = "md" }: SpeakAloudButton
     // Cancel any active speech
     synth.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
+    // Translate English text to authentic Hindi/Kannada script before speaking
+    const textToSpeak = translateTextForSpeech(text, selectedLang);
+
+    const utterance = new SpeechSynthesisUtterance(textToSpeak);
     utterance.lang = selectedLang;
     utterance.rate = 0.95; // Slightly slower for crisp clear officer audio
     utterance.pitch = 1.0;
@@ -117,7 +121,7 @@ export default function SpeakAloudButton({ text, size = "md" }: SpeakAloudButton
           <>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
               <path d="M10 3.75a.75.75 0 0 0-1.264-.546L4.703 7H3.167A2.167 2.167 0 0 0 1 9.167v1.666C1 12.03 2.03 13 3.167 13h1.536l4.033 3.796A.75.75 0 0 0 10 16.25V3.75ZM15.854 6.146a.75.75 0 0 1 1.06 1.06 5.5 5.5 0 0 1 0 7.778.75.75 0 1 1-1.06-1.06 4 4 0 0 0 0-5.658.75.75 0 0 1 0-1.06Z" />
-              <path d="M13.207 8.793a.75.75 0 0 1 1.06 0 2 2 0 0 1 0 2.828.75.75 0 1 1-1.06-1.06.5.5 0 0 0 0-.708.75.75 0 0 1 0-1.06Z" />
+              <path d="M13.207 8.793a.75.75 0 0 1 1.06 0 2 2 0 0 1 0 2.828.75.75 0 0 1-1.06-1.06.5.5 0 0 0 0-.708.75.75 0 0 1 0-1.06Z" />
             </svg>
             <span>Speak</span>
           </>
