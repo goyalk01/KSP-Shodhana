@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: ksp-shodhana-ai
+    ports:
+      - "8000:8000"
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-3.5-flash-lite}
+      - PORT=8000
+      - CORS_ORIGINS=["http://localhost:3000","http://localhost:8080","http://frontend:3000"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ksp-shodhana-backend
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - AI_SERVICE_URL=http://ai-service:8000
+    depends_on:
+      ai-service:
+        condition: service_healthy
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ksp-shodhana-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - BACKEND_URL=http://backend:8080
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  default:
+    name: ksp-shodhana-network

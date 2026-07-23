@@ -230,6 +230,41 @@ The system models intelligence across 7 core entities:
 
 ---
 
+## Production & One-Command Docker Deployment
+
+KSP Shodhana is fully containerized with multi-stage production Dockerfiles for each microservice and a unified `docker-compose.yml`.
+
+### One-Command Quick Deploy
+
+**Linux / macOS**:
+```bash
+./deploy.sh
+```
+
+**Windows (Command Prompt / PowerShell)**:
+```cmd
+deploy.bat
+```
+
+### Manual Docker Compose Commands
+```bash
+# Build and launch all 3 microservices in detached mode
+docker-compose up --build -d
+
+# Check running container health
+docker-compose ps
+
+# View unified logs
+docker-compose logs -f
+```
+
+Once launched, access the production deployment:
+* **Frontend Application**: `http://localhost:3000`
+* **Spring Boot Core API**: `http://localhost:8080`
+* **FastAPI AI Gateway**: `http://localhost:8000`
+
+---
+
 ## Local Installation & Quickstart
 
 ### Prerequisites
