@@ -55,11 +55,11 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
   if (!activeData || activeData.points.length === 0) {
     return (
       <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
-        <div className="panel-header flex justify-between items-center px-4 py-2 bg-slate-50 border-b border-slate-200">
-          <span className="font-bold text-slate-800 text-sm">PostGIS Crime Spatial Heatmap</span>
+        <div className="panel-header flex justify-between items-center px-4 py-2 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50">
+          <span className="font-serif font-bold text-[var(--color-text)] text-sm">PostGIS Spatial Heatmap</span>
           <button
             onClick={handlePostGisSpatialQuery}
-            className="text-[10px] font-mono font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 px-2.5 py-1 rounded-md transition shadow-xs"
+            className="text-xs font-bold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3 py-1.5 rounded-lg transition shadow-xs cursor-pointer"
           >
             Run ST_DWithin Query
           </button>
@@ -76,17 +76,17 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
 
   return (
     <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
-      <div className="panel-header flex justify-between items-center px-4 py-2.5 bg-slate-900 border-b border-slate-800">
+      <div className="panel-header flex justify-between items-center px-4 py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50">
         <div className="flex items-center space-x-2">
-          <span className="font-bold text-white text-sm font-mono">POSTGIS SPATIAL HEATMAP</span>
-          <span className="text-[10px] font-extrabold font-mono uppercase tracking-wider text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-md">
-            ST_DWithin 15km Radius
+          <span className="font-serif font-bold text-[var(--color-text)] text-sm">PostGIS Spatial Heatmap</span>
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 px-2 py-0.5 rounded-md">
+            ST_DWithin 15km
           </span>
         </div>
         <div className="flex items-center space-x-2">
           <button
             onClick={handlePostGisSpatialQuery}
-            className="text-[10px] font-mono font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 px-2.5 py-1 rounded-md transition shadow-sm"
+            className="text-xs font-bold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3 py-1.5 rounded-lg transition shadow-sm cursor-pointer"
           >
             {isSpatialQuery ? 'Querying PostGIS...' : 'Execute ST_DWithin Query'}
           </button>
@@ -131,8 +131,8 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
                 }}
               >
                 <Popup>
-                  <div className="text-xs font-mono">
-                    <p className="font-bold text-amber-600">PostGIS Spatial Incident</p>
+                  <div className="text-xs font-serif">
+                    <p className="font-bold text-[var(--color-primary)]">PostGIS Spatial Incident</p>
                     <p>Geom Density: {Math.round(point.intensity * 100)}%</p>
                     <p>Coordinates: {point.lat.toFixed(4)}, {point.lng.toFixed(4)}</p>
                   </div>
