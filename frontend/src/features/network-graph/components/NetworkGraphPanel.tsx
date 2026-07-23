@@ -40,22 +40,31 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
     return () => observer.disconnect();
   }, []);
 
-  // Dynamically adjust physics forces and zoom level whenever dimensions or data changes
+  // Dynamically adjust physics forces and zoomToFit whenever dimensions or data changes
   useEffect(() => {
     if (!graphRef.current || !data || data.nodes.length === 0) return;
 
-    // Dynamic node charge and link distance based on canvas size
-    const chargeStrength = Math.min(-250, -dimensions.width * 0.45);
-    const linkDistance = Math.min(140, Math.max(60, dimensions.width * 0.14));
+    // Gentle node charge and bounded link distance to prevent nodes exploding off-screen
+    const chargeStrength = Math.max(-140, -dimensions.width * 0.22);
+    const linkDistance = Math.min(75, Math.max(45, dimensions.width * 0.08));
 
-    graphRef.current.d3Force("charge")?.strength(chargeStrength);
-    graphRef.current.d3Force("link")?.distance(linkDistance);
+    const chargeForce = graphRef.current.d3Force("charge");
+    if (chargeForce) {
+      chargeForce.strength(chargeStrength);
+      chargeForce.distanceMax(220);
+    }
+
+    const linkForce = graphRef.current.d3Force("link");
+    if (linkForce) {
+      linkForce.distance(linkDistance);
+    }
+
     graphRef.current.d3ReheatSimulation();
 
-    // Smoothly re-fit graph to fill updated canvas dimensions
+    // Smoothly re-fit graph into visible canvas with generous padding
     const timer = setTimeout(() => {
-      graphRef.current?.zoomToFit(300, 70);
-    }, 200);
+      graphRef.current?.zoomToFit(400, 140);
+    }, 350);
 
     return () => clearTimeout(timer);
   }, [dimensions, data]);
@@ -134,7 +143,7 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
             ctx.fillStyle = "rgba(44, 44, 36, 0.9)";
             ctx.fillText(label, node.x!, node.y! + 9);
           }}
-          cooldownTicks={100}
+          cooldownTicks={120}
         />
       </div>
     </div>
