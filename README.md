@@ -53,19 +53,135 @@ Instead of navigating legacy vaults, fragmented spreadsheet registries, and disc
 
 ## 🏗️ System Architecture & Data Flow
 
+KSP Shodhana employs a **decoupled 3-tier microservice architecture** with a Backend-For-Frontend (BFF) pattern, dynamic proxy routing, structured AI intent parsing, and dual-mode resilient persistence.
+
+### 🏛️ High-Level System Architecture
+
 ```mermaid
-flowchart TD
-    User([Investigator / Officer]) -->|Natural Language Query| NextJS[Next.js Workspace UI :3000]
-    NextJS -->|REST API Request / BFF Proxy| SpringBoot[Spring Boot Core Orchestrator :8080]
-    SpringBoot -->|Query Text & Context| FastAPI[FastAPI AI Gateway :8000]
-    FastAPI -->|Structured Extraction Prompt| Gemini[Google Gemini API]
-    Gemini -->|Structured JSON Intent & Entities| FastAPI
-    FastAPI -->|Intent + Target Filters| SpringBoot
-    SpringBoot -->|Query Data Records| LocalStore[LocalDataStore / Catalyst Data Store]
-    LocalStore -->|FIRs, Criminals, Networks| SpringBoot
-    SpringBoot -->|Compile Visualizations & Evidence| NextJS
-    NextJS -->|Render Heatmap, Graph, Timeline, Evidence| User
+flowchart TB
+    subgraph ClientLayer ["1. Presentation Layer (Port 3000)"]
+        UI["Next.js 16 Workspace UI"]
+        Store["Zustand State Store"]
+        SplitPane["Interactive Resizable Split-Pane"]
+        
+        subgraph Panels ["Interactive Visualization Panels"]
+            Heatmap["🗺️ Leaflet Heatmap"]
+            NetworkGraph["🕸️ 2D Physics Force Graph"]
+            Timeline["📅 Investigation Timeline"]
+            Evidence["📊 Explainable Evidence"]
+        end
+    end
+
+    subgraph BFFProxy ["BFF / Reverse Proxy Router"]
+        NextProxy["Next.js /api/proxy/* Route Handlers"]
+    end
+
+    subgraph BackendCore ["2. Core Orchestrator Layer (Port 8080)"]
+        SpringBoot["Spring Boot 3.3 Application"]
+        AiController["AiController & SettingsController"]
+        AiGateway["AiGatewayService"]
+        CrimeService["Crime & Criminal Services"]
+        LocalFallback["Heuristic Offline Engine (English + Kannada)"]
+    end
+
+    subgraph AIGateway ["3. AI Intelligence Layer (Port 8000)"]
+        FastAPI["FastAPI Uvicorn Service"]
+        UnderstandRouter["/ai/v1/understand"]
+        AnalyzeRouter["/ai/v1/analyze"]
+        PydanticSchemas["Pydantic Structured Output Models"]
+    end
+
+    subgraph ExternalAI ["4. External Foundation Models"]
+        Gemini["Google Gemini 3.5 Flash API"]
+    end
+
+    subgraph StorageLayer ["5. Data Persistence Layer"]
+        CatalystDS[("Zoho Catalyst Data Store")]
+        LocalStore[("LocalDataStore (JSON Fallback Store)")]
+    end
+
+    %% Data Flow Connections
+    UI -->|User Query / Interaction| Store
+    Store -->|HTTP JSON Request| NextProxy
+    NextProxy -->|Proxy Header & Route| SpringBoot
+    
+    SpringBoot --> AiController
+    AiController --> AiGateway
+    
+    AiGateway -->|POST Intent Extraction| FastAPI
+    FastAPI --> UnderstandRouter
+    UnderstandRouter --> PydanticSchemas
+    PydanticSchemas -->|Structured Prompt| Gemini
+    Gemini -->|JSON Output| FastAPI
+    FastAPI -->|Extracted Filters & Intent| AiGateway
+    
+    AiGateway -.->|On API Failure / Offline| LocalFallback
+    
+    AiGateway --> CrimeService
+    CrimeService --> CatalystDS
+    CrimeService -.->|Fallback Query| LocalStore
+    
+    SpringBoot -->|WorkspacePayload Response| NextProxy
+    NextProxy -->|Update Visual State| Store
+    Store --> Heatmap
+    Store --> NetworkGraph
+    Store --> Timeline
+    Store --> Evidence
 ```
+
+### 🔄 End-to-End Query Processing Lifecycle
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Officer as 👮 Investigator
+    participant UI as 💻 Next.js Workspace (:3000)
+    participant Proxy as 🔄 BFF API Proxy
+    participant BE as ⚙️ Spring Boot Core (:8080)
+    participant AI as 🧠 FastAPI Service (:8000)
+    participant GEM as ✦ Gemini 3.5 Flash
+    participant DB as 🗄️ LocalDataStore / Catalyst
+
+    Officer->>UI: Enter natural language query ("Show crime hotspots in Bengaluru")
+    UI->>Proxy: POST /api/proxy/api/v1/ai/query
+    Proxy->>BE: Forward request to POST /api/v1/ai/query
+    
+    BE->>AI: POST /ai/v1/understand { text, district, station }
+    AI->>GEM: Generate Content (Structured Prompt + Strict JSON Schema)
+    
+    alt Gemini Connection Success
+        GEM-->>AI: Return Structured JSON { intent: "CRIME_HOTSPOT", filters: { district: "Bengaluru Urban" } }
+        AI-->>BE: 200 OK { success: true, data: { intent, filters, visualizations: ["heatmap", "evidence"] } }
+    else Gemini Error / Key Missing
+        AI-->>BE: 500 Error / Timeout
+        BE->>BE: Trigger Local Fallback Engine (Regex Heuristics for English & Kannada)
+    end
+
+    BE->>DB: Query records using extracted entity filters (District, Severity, Status)
+    DB-->>BE: Return matching Crime, Criminal, and Link entities
+
+    BE->>AI: POST /ai/v1/analyze { records, query }
+    AI->>GEM: Generate Evidence Citations & Confidence Indexes
+    GEM-->>AI: Return Evidence Array with source FIR IDs and confidence scores
+    AI-->>BE: 200 OK Evidence Payload
+
+    BE->>BE: Assemble WorkspacePayload (Active Panels + Heatmap Points + Evidence Cards)
+    BE-->>Proxy: Return WorkspacePayload JSON
+    Proxy-->>UI: Forward Response Payload
+    UI->>UI: Update Zustand Store -> Render Heatmap, Evidence, & Chat Response
+    UI-->>Officer: Interactive Workspace displays spatial crime density & citations
+```
+
+### 🌊 Detailed Data Pipeline Phases
+
+| Phase | Component | Responsibilities & Data Operations |
+|---|---|---|
+| **Phase 1: Ingestion & BFF Routing** | Next.js App Router | Receives natural language input from `ChatInput`, updates Zustand workspace state, and proxies requests via `/api/proxy/*` to remove CORS issues and keep backend credentials secure. |
+| **Phase 2: Intent Parsing & Entity Extraction** | FastAPI + Gemini 3.5 Flash | Dispatches structured extraction prompts via Uvicorn. Validates output using Pydantic schemas (intent, action type, district/station parameters, severity, and requested visualization types). |
+| **Phase 3: Resilient Fallback Router** | Spring Boot `AiGatewayService` | Monitors FastAPI response health. If Gemini API is unreachable or rate-limited, triggers a dual-language (English & Kannada) regex heuristic fallback parser, ensuring zero downtime. |
+| **Phase 4: Database Query & Aggregation** | `CrimeService` & `LocalDataStore` | Executes filtered SQL/DataStore queries using the extracted entities. Retrieves FIR records, suspect co-accused links, and chronological investigation events. |
+| **Phase 5: Analytical Evidence Generation** | FastAPI `/ai/v1/analyze` | Generates explainable evidence cards backed by official FIR citations, severity badges, and confidence percentages. |
+| **Phase 6: Multi-Panel Client Rendering** | Leaflet + Force Graph + Zustand | Populates Leaflet maps (`heatmap`), 2D physics suspect force graphs (`network_graph`), vertical timelines (`timeline`), and resizable split-pane containers (`ChatPanel` vs `VisualizationGrid`). |
 
 ---
 
