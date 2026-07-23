@@ -7,29 +7,22 @@ spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:demo}
 
-  # JPA & PostgreSQL DataSource (Production Profile)
+  # JPA & PostgreSQL/H2 DataSource
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ksp_shodhana}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
-    driver-class-name: org.postgresql.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:ksp_shodhana;DB_CLOSE_DELAY=-1;MODE=PostgreSQL}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER:org.h2.Driver}
   jpa:
-    database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
+    database-platform: ${SPRING_JPA_DIALECT:org.hibernate.dialect.H2Dialect}
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update
     show-sql: false
 
   # Flyway Migration Configuration
   flyway:
     enabled: false
     locations: classpath:db/migration
-
-  # Auto-configuration exclusions for zero-dependency demo mode
-  autoconfigure:
-    exclude:
-      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
-      - org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration
 
 # === Catalyst Configuration ===
 catalyst:

@@ -12,16 +12,20 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Repository for Criminal records.
- * Uses LocalDataStore for local/demo mode.
+ * Hybrid Domain Repository for Criminal entities.
+ * Delegates to CriminalJpaRepository (Spring Data JPA) when database is populated,
+ * with zero-dependency fallback to LocalDataStore in demo mode.
  */
 @Repository
 public class CriminalRepository {
 
     private static final Logger log = LoggerFactory.getLogger(CriminalRepository.class);
+
+    private final CriminalJpaRepository criminalJpaRepository;
     private final LocalDataStore localDataStore;
 
-    public CriminalRepository(LocalDataStore localDataStore) {
+    public CriminalRepository(CriminalJpaRepository criminalJpaRepository, LocalDataStore localDataStore) {
+        this.criminalJpaRepository = criminalJpaRepository;
         this.localDataStore = localDataStore;
     }
 
@@ -29,21 +33,33 @@ public class CriminalRepository {
         log.debug("CriminalRepository.findAll - district: {}, risk: {}, status: {}, search: {}",
                 district, riskLevel, status, search);
 
-        Stream<Criminal> stream = localDataStore.getCriminals().stream();
+        List<Criminal> sourceList;
+        try {
+            if (criminalJpaRepository.count() > 0) {
+                sourceList = criminalJpaRepository.findAll();
+            } else {
+                sourceList = localDataStore.getCriminals();
+            }
+        } catch (Exception e) {
+            log.warn("JPA Criminal query failed, falling back to LocalDataStore: {}", e.getMessage());
+            sourceList = localDataStore.getCriminals();
+        }
+
+        Stream<Criminal> stream = sourceList.stream();
 
         if (district != null && !district.isEmpty()) {
-            stream = stream.filter(c -> c.getDistrict().equalsIgnoreCase(district));
+            stream = stream.filter(c -> c.getDistrict() != null && c.getDistrict().equalsIgnoreCase(district));
         }
         if (riskLevel != null && !riskLevel.isEmpty()) {
-            stream = stream.filter(c -> c.getRiskLevel().equalsIgnoreCase(riskLevel));
+            stream = stream.filter(c -> c.getRiskLevel() != null && c.getRiskLevel().equalsIgnoreCase(riskLevel));
         }
         if (status != null && !status.isEmpty()) {
-            stream = stream.filter(c -> c.getStatus().equalsIgnoreCase(status));
+            stream = stream.filter(c -> c.getStatus() != null && c.getStatus().equalsIgnoreCase(status));
         }
         if (search != null && !search.isEmpty()) {
             String searchLower = search.toLowerCase();
             stream = stream.filter(c ->
-                    c.getName().toLowerCase().contains(searchLower) ||
+                    (c.getName() != null && c.getName().toLowerCase().contains(searchLower)) ||
                     (c.getAlias() != null && c.getAlias().toLowerCase().contains(searchLower))
             );
         }
@@ -54,8 +70,17 @@ public class CriminalRepository {
     }
 
     public Optional<Criminal> findById(Long id) {
+        try {
+            Optional<Criminal> jpaResult = criminalJpaRepository.findById(id);
+            if (jpaResult.isPresent()) {
+                return jpaResult;
+            }
+        } catch (Exception e) {
+            log.warn("JPA findById failed, falling back to LocalDataStore: {}", e.getMessage());
+        }
+
         return localDataStore.getCriminals().stream()
-                .filter(c -> c.getRowId().equals(id))
+                .filter(c -> c.getRowId() != null && c.getRowId().equals(id))
                 .findFirst();
     }
 }
