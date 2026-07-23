@@ -13,7 +13,7 @@
 
 ---
 
-## 📌 Executive Overview
+## Executive Overview
 
 **KSP Shodhana (ಶೋಧನೆ)** is an AI-powered intelligence workspace engineered specifically for police officers and crime investigators across Karnataka State.
 
@@ -21,21 +21,21 @@ Instead of navigating legacy vaults, fragmented spreadsheet registries, and disc
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
-* 💬 **Multimodal AI Copilot**: Understood via Google Gemini 3.5 Flash with structured intent parsing for complex queries (`understand` & `analyze`).
-* 🗺️ **Geographic Crime Density Heatmap**: Interactive Leaflet maps highlighting district-level crime hotspots, frequency clusters, and station radii.
-* 🕸️ **Co-Accused Suspect Network Graph**: Interactive 2D physics-directed graph mapping suspect links, gang structures, and FIR associations.
-* 📅 **Chronological Investigation Timeline**: Visual step-by-step progress tracking for active investigations and FIR events.
-* 📊 **Explainable Evidence Cards**: Every AI deduction is backed by official record keys, confidence scores, and source citations.
-* 🎛️ **Interactive Resizable Split-Pane**: Fluid drag-slider allowing officers to dynamically resize the Chat Box and Visualization panels.
-* ⚙️ **Dynamic Settings Management**: Custom district, duty station, language, refresh interval, and local fallback toggles.
-* 📄 **Official Case Dossier Preview**: One-click generation of print-ready, official KSP-formatted investigation reports.
-* 🛡️ **Zero-Downtime Local Fallback Engine**: Built-in regex and keyword heuristic fallback (`English & Kannada`) ensuring reliability if external APIs are unreachable.
+* **Multimodal AI Copilot**: Powered by Google Gemini 3.5 Flash with structured intent parsing for complex queries (`understand` & `analyze`).
+* **Geographic Crime Density Heatmap**: Interactive Leaflet maps highlighting district-level crime hotspots, frequency clusters, and station radii.
+* **Co-Accused Suspect Network Graph**: Interactive 2D physics-directed graph mapping suspect links, gang structures, and FIR associations.
+* **Chronological Investigation Timeline**: Visual step-by-step progress tracking for active investigations and FIR events.
+* **Explainable Evidence Cards**: Every AI deduction is backed by official record keys, confidence scores, and source citations.
+* **Interactive Resizable Split-Pane**: Fluid drag-slider allowing officers to dynamically resize the Chat Box and Visualization panels.
+* **Dynamic Settings Management**: Custom district, duty station, language, refresh interval, and local fallback toggles.
+* **Official Case Dossier Preview**: One-click generation of print-ready, official KSP-formatted investigation reports.
+* **Zero-Downtime Local Fallback Engine**: Built-in regex and keyword heuristic fallback (`English & Kannada`) ensuring reliability if external APIs are unreachable.
 
 ---
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 | Layer | Technology | Version | Purpose |
 |---|---|---|---|
@@ -51,11 +51,11 @@ Instead of navigating legacy vaults, fragmented spreadsheet registries, and disc
 
 ---
 
-## 🏗️ System Architecture & Data Flow
+## System Architecture & Data Flow
 
 KSP Shodhana employs a **decoupled 3-tier microservice architecture** with a Backend-For-Frontend (BFF) pattern, dynamic proxy routing, structured AI intent parsing, and dual-mode resilient persistence.
 
-### 🏛️ High-Level System Architecture
+### High-Level System Architecture
 
 ```mermaid
 flowchart TB
@@ -65,10 +65,10 @@ flowchart TB
         SplitPane["Interactive Resizable Split-Pane"]
         
         subgraph Panels ["Interactive Visualization Panels"]
-            Heatmap["🗺️ Leaflet Heatmap"]
-            NetworkGraph["🕸️ 2D Physics Force Graph"]
-            Timeline["📅 Investigation Timeline"]
-            Evidence["📊 Explainable Evidence"]
+            Heatmap["Leaflet Heatmap"]
+            NetworkGraph["2D Physics Force Graph"]
+            Timeline["Investigation Timeline"]
+            Evidence["Explainable Evidence"]
         end
     end
 
@@ -129,18 +129,18 @@ flowchart TB
     Store --> Evidence
 ```
 
-### 🔄 End-to-End Query Processing Lifecycle
+### End-to-End Query Processing Lifecycle
 
 ```mermaid
 sequenceDiagram
     autonumber
-    actor Officer as 👮 Investigator
-    participant UI as 💻 Next.js Workspace (:3000)
-    participant Proxy as 🔄 BFF API Proxy
-    participant BE as ⚙️ Spring Boot Core (:8080)
-    participant AI as 🧠 FastAPI Service (:8000)
-    participant GEM as ✦ Gemini 3.5 Flash
-    participant DB as 🗄️ LocalDataStore / Catalyst
+    actor Officer as Investigator
+    participant UI as Next.js Workspace (:3000)
+    participant Proxy as BFF API Proxy
+    participant BE as Spring Boot Core (:8080)
+    participant AI as FastAPI Service (:8000)
+    participant GEM as Gemini 3.5 Flash
+    participant DB as LocalDataStore / Catalyst
 
     Officer->>UI: Enter natural language query ("Show crime hotspots in Bengaluru")
     UI->>Proxy: POST /api/proxy/api/v1/ai/query
@@ -172,7 +172,7 @@ sequenceDiagram
     UI-->>Officer: Interactive Workspace displays spatial crime density & citations
 ```
 
-### 🌊 Detailed Data Pipeline Phases
+### Detailed Data Pipeline Phases
 
 | Phase | Component | Responsibilities & Data Operations |
 |---|---|---|
@@ -185,7 +185,7 @@ sequenceDiagram
 
 ---
 
-## 📂 Repository Structure
+## Repository Structure
 
 ```
 KSP-Shodhana/
@@ -214,7 +214,7 @@ KSP-Shodhana/
 
 ---
 
-## 🗄️ Database Schema & Data Models
+## Database Schema & Data Models
 
 The system models intelligence across 7 core entities:
 
@@ -230,7 +230,7 @@ The system models intelligence across 7 core entities:
 
 ---
 
-## 🚀 Local Installation & Quickstart
+## Local Installation & Quickstart
 
 ### Prerequisites
 * **Node.js**: `v20.0+`
@@ -287,7 +287,7 @@ Open **`http://localhost:3000`** in your web browser to access the workspace.
 
 ---
 
-## ⚙️ Environment Variables
+## Environment Variables
 
 ### AI Gateway (`ai-service/.env`)
 ```env
@@ -299,7 +299,7 @@ CORS_ORIGINS=["http://localhost:3000","http://localhost:8080"]
 
 ---
 
-## ⚡ Key API Endpoints
+## Key API Endpoints
 
 ### AI Gateway Endpoints (`http://localhost:8000`)
 * `POST /ai/v1/understand`: Parses natural language text into structured intent & filters.
@@ -316,7 +316,7 @@ CORS_ORIGINS=["http://localhost:3000","http://localhost:8080"]
 
 ---
 
-## 🛡️ Offline Heuristic Fallback & Reliability
+## Offline Heuristic Fallback & Reliability
 
 To ensure uninterrupted operation during network outages or API rate limit caps:
 * When `GEMINI_API_KEY` is not supplied or Gemini API returns an error, Uvicorn and Spring Boot automatically failover to local offline heuristic processors (`AiGatewayService.java`).
@@ -325,6 +325,6 @@ To ensure uninterrupted operation during network outages or API rate limit caps:
 
 ---
 
-## 📜 License & Accreditation
+## License & Accreditation
 
 Developed for **Karnataka State Police**. Created for KSP Hackathon 2026.
