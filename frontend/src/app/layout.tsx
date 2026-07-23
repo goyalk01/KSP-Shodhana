@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   description:
     "AI-Powered Crime Intelligence & Investigation Workspace for Karnataka State Police. Ask. Analyze. Act.",
   keywords: ["KSP", "Crime Intelligence", "AI", "Karnataka Police", "Investigation"],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
