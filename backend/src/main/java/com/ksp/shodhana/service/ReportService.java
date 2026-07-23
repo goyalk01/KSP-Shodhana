@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Service layer for PDF report generation.
- * Generates structured, print-ready HTML which can be converted to PDF on the client or server.
+ * Service layer for PDF report generation and auto-download preview.
+ * Generates structured, print-ready HTML which auto-triggers the browser's PDF save dialog.
  */
 @Service
 public class ReportService {
@@ -43,7 +43,8 @@ public class ReportService {
     }
 
     /**
-     * Generates a print-ready HTML intelligence report for an investigation.
+     * Generates a print-ready HTML intelligence report for an investigation,
+     * equipped with auto-print PDF trigger script and PDF print styling.
      */
     public String generateReport(Long investigationId) {
         log.info("Generating report for investigation ID {}", investigationId);
@@ -64,12 +65,20 @@ public class ReportService {
         sb.append("<title>KSP Case Intelligence Report - ").append(crime.getFirNumber()).append("</title>");
         sb.append("<link href='https://fonts.googleapis.com/css2?family=Fraunces:wght@700;800&family=Nunito:wght@400;600;700&display=swap' rel='stylesheet'>");
         sb.append("<style>");
-        sb.append("body { font-family: 'Nunito', system-ui, sans-serif; color: #2C2C24; line-height: 1.6; padding: 40px; background: #FDFCF8; position: relative; }");
+        sb.append("body { font-family: 'Nunito', system-ui, sans-serif; color: #2C2C24; line-height: 1.6; padding: 40px; padding-top: 80px; background: #FDFCF8; position: relative; }");
         sb.append("body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; opacity: 0.03; mix-blend-mode: multiply; background-image: url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E\"); }");
+        
+        // Print action bar
+        sb.append(".print-bar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background: #2C2C24; color: #FFFFFF; display: flex; items-center: center; justify-content: space-between; padding: 0 24px; z-index: 10000; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }");
+        sb.append(".print-bar-title { font-size: 13px; font-weight: 700; color: #F0EBE5; }");
+        sb.append(".print-btn { background: #5D7052; color: #FFFFFF; border: none; padding: 8px 18px; border-radius: 8px; font-weight: 700; font-size: 12px; cursor: pointer; transition: background 0.2s; }");
+        sb.append(".print-btn:hover { background: #4a5a41; }");
+        
+        // Document styling
         sb.append(".header { text-align: center; border-bottom: 2px solid #5D7052; padding-bottom: 24px; margin-bottom: 30px; }");
         sb.append(".header h1 { font-family: 'Fraunces', Georgia, serif; font-size: 26px; margin: 0; color: #5D7052; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }");
-        sb.append(".header p { margin: 8px 0 0 0; font-size: 11px; color: #78786C; tracking-wider; font-weight: 700; letter-spacing: 0.15em; }");
-        sb.append(".section { margin-bottom: 35px; background: #FEFEFA; border: 1px solid rgba(222, 216, 207, 0.6); border-radius: 20px; padding: 24px; box-shadow: 0 4px 15px -2px rgba(93, 112, 82, 0.04); }");
+        sb.append(".header p { margin: 8px 0 0 0; font-size: 11px; color: #78786C; font-weight: 700; letter-spacing: 0.15em; }");
+        sb.append(".section { margin-bottom: 35px; background: #FEFEFA; border: 1px solid rgba(222, 216, 207, 0.6); border-radius: 20px; padding: 24px; box-shadow: 0 4px 15px -2px rgba(93, 112, 82, 0.04); page-break-inside: avoid; }");
         sb.append(".section-title { font-family: 'Fraunces', Georgia, serif; font-size: 16px; font-weight: 800; color: #5D7052; border-bottom: 1px solid #DED8CF; padding-bottom: 8px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.05em; }");
         sb.append(".grid { display: grid; grid-template-cols: 1fr 1fr; gap: 20px; margin-bottom: 10px; }");
         sb.append(".field { font-size: 13px; }");
@@ -86,7 +95,22 @@ public class ReportService {
         sb.append(".timeline-title { font-family: 'Fraunces', Georgia, serif; font-weight: 800; color: #2C2C24; margin: 4px 0; font-size: 14px; }");
         sb.append(".timeline-desc { color: #78786C; font-weight: 600; }");
         sb.append(".footer { margin-top: 60px; border-top: 1px solid #DED8CF; padding-top: 24px; text-align: center; font-size: 11px; color: #949484; font-weight: 600; }");
+        
+        // Media query for PDF print rendering
+        sb.append("@media print { ");
+        sb.append("@page { size: A4; margin: 15mm; } ");
+        sb.append("body { padding: 0 !important; background: #FFFFFF !important; } ");
+        sb.append(".print-bar { display: none !important; } ");
+        sb.append(".section { border: 1px solid #CCCCCC !important; box-shadow: none !important; border-radius: 8px !important; } ");
+        sb.append("}");
+
         sb.append("</style></head><body>");
+
+        // Action Bar for PDF Save
+        sb.append("<div class='print-bar no-print'>");
+        sb.append("<div class='print-bar-title'>KSP Shodhana Official Intelligence Dossier · ").append(crime.getFirNumber()).append("</div>");
+        sb.append("<button class='print-btn' onclick='window.print()'>Save / Print as PDF</button>");
+        sb.append("</div>");
 
         // Header
         sb.append("<div class='header'>");
@@ -158,6 +182,15 @@ public class ReportService {
         sb.append(" · KSP Shodhana Intelligence Workspace");
         sb.append("</div>");
 
+        // Auto-download PDF script trigger
+        sb.append("<script>");
+        sb.append("window.addEventListener('DOMContentLoaded', function() {");
+        sb.append("  setTimeout(function() {");
+        sb.append("    window.print();");
+        sb.append("  }, 600);");
+        sb.append("});");
+        sb.append("</script>");
+
         sb.append("</body></html>");
 
         return sb.toString();
@@ -165,7 +198,7 @@ public class ReportService {
 
     public String getDownloadUrl(String reportId) {
         log.info("Getting download URL for report {}", reportId);
-        // MVP: return localized preview endpoint
+        // Return localized preview endpoint
         return "/api/v1/reports/" + reportId + "/preview";
     }
 }
