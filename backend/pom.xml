@@ -49,7 +49,7 @@
             <artifactId>jackson-databind</artifactId>
         </dependency>
 
-        <!-- Zoho Catalyst SDK — loaded at runtime when deployed to Catalyst -->
+        <!-- Zoho Catalyst SDK  loaded at runtime when deployed to Catalyst -->
         <!-- Uncomment when deploying to Zoho Catalyst:
         <dependency>
             <groupId>com.zoho.catalyst</groupId>

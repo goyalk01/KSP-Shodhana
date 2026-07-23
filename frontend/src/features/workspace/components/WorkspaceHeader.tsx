@@ -20,7 +20,7 @@ export default function WorkspaceHeader() {
         className="min-w-0 pr-4 shrink text-left cursor-pointer group"
       >
         <h1 className="font-serif text-base sm:text-lg lg:text-xl font-extrabold tracking-tight text-[var(--color-text)] leading-tight whitespace-nowrap group-hover:text-[var(--color-primary)] transition-colors">
-          KSP Shodhana — Investigation Workspace
+          KSP Shodhana  Investigation Workspace
         </h1>
         <p className="text-[11px] font-semibold text-[var(--color-text-muted)] mt-0.5 whitespace-nowrap hidden sm:block">
           Here&apos;s what&apos;s happening across Karnataka today.

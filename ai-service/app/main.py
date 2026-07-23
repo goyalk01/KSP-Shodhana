@@ -1,5 +1,5 @@
 """
-KSP Shodhana — AI Service
+KSP Shodhana  AI Service
 FastAPI entry point for the Gemini-powered query understanding and analysis engine.
 """
 

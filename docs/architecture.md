@@ -1,10 +1,10 @@
-# 🏛️ KSP-Shodhana — Enterprise System Architecture & Security Specification
+# ️ KSP-Shodhana  Enterprise System Architecture & Security Specification
 
 **KSP-Shodhana** (Karnataka State Police Shodhana) is an enterprise-grade, high-performance, and vault-secured Crime Intelligence & Network Analysis Platform engineered for law enforcement officers and intelligence analysts across Karnataka.
 
 ---
 
-## 📐 1. End-to-End System Topology
+## 1. End-to-End System Topology
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────┐
@@ -43,7 +43,7 @@
 
 ---
 
-## 🛠️ 2. Core Service Architectures
+## ️ 2. Core Service Architectures
 
 ### A. FastAPI AI Gateway & Zero-Leakage Pipeline (`ai-service/`)
 * **Pre-Inference PII Redaction** ([`pii_anonymizer.py`](file:///e:/VS%20Code/Combination/Hackathon/KSP%20Shodhana/ai-service/app/services/pii_anonymizer.py)):
@@ -87,7 +87,7 @@
 
 ---
 
-## 📊 Summary of Security Domain Implementation
+## Summary of Security Domain Implementation
 
 | Domain | Standard Baseline | **KSP-Shodhana Vault Grade** |
 | --- | --- | --- |

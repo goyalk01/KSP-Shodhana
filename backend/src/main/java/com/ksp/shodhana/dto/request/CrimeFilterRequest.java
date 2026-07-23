@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * Request body for filtering crimes in GET /api/v1/crimes.
- * All fields are optional — acts as a filter builder.
+ * All fields are optional  acts as a filter builder.
  */
 @Data
 @Builder

@@ -1,5 +1,5 @@
 /**
- * Chat service — handles communication with the AI query endpoint.
+ * Chat service  handles communication with the AI query endpoint.
  */
 
 import apiClient from "@/lib/api-client";

@@ -12,7 +12,7 @@ const TRANSLATION_MAP: Record<string, { hi: string; kn: string }> = {
   },
   "Show crime hotspots in Karnataka": {
     hi: "कर्नाटक में अपराध के हॉटस्पॉट दिखाएं।",
-    kn: "ಕರ್ನಾಟಕದಲ್ಲಿ ಅಪರಾಧದ ಹಾಟ್‌ಸ್ಪಾಟ್‌ಗಳನ್ನು ತೋರಿಸಿ.",
+    kn: "ಕರ್ನಾಟಕದಲ್ಲಿ ಅಪರಾಧದ ಹಾಟ್ಸ್ಪಾಟ್ಗಳನ್ನು ತೋರಿಸಿ.",
   },
   "Show all theft cases in Bengaluru": {
     hi: "बेंगलुरु में सभी चोरी के मामले दिखाएं।",
@@ -75,8 +75,8 @@ const COMMON_WORDS_KN: Record<string, string> = {
   investigation: "ತನಿಖೆ",
   evidence: "ಸಾಕ್ಷ್ಯಾಧಾರ",
   network: "ಜಾಲ",
-  hotspot: "ಹಾಟ್‌ಸ್ಪಾಟ್",
-  hotspots: "ಹಾಟ್‌ಸ್ಪಾಟ್‌ಗಳು",
+  hotspot: "ಹಾಟ್ಸ್ಪಾಟ್",
+  hotspots: "ಹಾಟ್ಸ್ಪಾಟ್ಗಳು",
   suspect: "ಶಂಕಿತ",
   suspects: "ಶಂಕಿತರು",
   police: "ಪೋಲಿಸ್",

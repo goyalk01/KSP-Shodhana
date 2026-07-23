@@ -1,6 +1,6 @@
 # KSP Shodhana (ಶೋಧನೆ)
 
-> **Ask. Analyze. Act.** — AI-Powered Crime Intelligence & Investigation Workspace for the Karnataka State Police.
+> **Ask. Analyze. Act.**  AI-Powered Crime Intelligence & Investigation Workspace for the Karnataka State Police.
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.2-FDFCF8?style=flat-square&logo=next.js&logoColor=2C2C24)](https://nextjs.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3-5D7052?style=flat-square&logo=springboot&logoColor=F3F4F1)](https://spring.io/projects/spring-boot)

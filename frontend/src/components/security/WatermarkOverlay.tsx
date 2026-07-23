@@ -31,7 +31,7 @@ export default function WatermarkOverlay({
             key={idx}
             className="flex -rotate-12 flex-col items-center justify-center font-mono text-xs font-bold tracking-widest text-slate-900 dark:text-slate-100"
           >
-            <div>CONFIDENTIAL — KSP SHODHANA</div>
+            <div>CONFIDENTIAL  KSP SHODHANA</div>
             <div>{badgeNumber} | {officerName}</div>
             <div>{timestamp}</div>
             <div>IP: 172.25.210.164 | STRICTLY RESTRICTED</div>
