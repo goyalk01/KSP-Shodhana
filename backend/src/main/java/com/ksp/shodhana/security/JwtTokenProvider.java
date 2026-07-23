@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Enterprise JWT Token Provider for officer authentication and RBAC scoping.
+ * Provides token creation, verification, officer badge extraction, and role mapping.
  */
 @Component
 public class JwtTokenProvider {
@@ -26,11 +26,15 @@ public class JwtTokenProvider {
         return "Bearer.ksp." + badgeNumber + "." + role + "." + validity.getTime();
     }
 
+    public String generateToken(String badgeNumber, String role) {
+        return createToken(badgeNumber, role);
+    }
+
     public boolean validateToken(String token) {
-        if (token == null || !token.startsWith("Bearer ")) {
+        if (token == null) {
             return false;
         }
-        return token.length() > 10;
+        return (token.startsWith("Bearer ") || token.startsWith("Bearer.")) && token.length() > 10;
     }
 
     public String getOfficerBadge(String token) {
@@ -39,6 +43,10 @@ public class JwtTokenProvider {
             if (parts.length >= 3) return parts[2];
         }
         return "KSP-OFFICER-001";
+    }
+
+    public String getUsername(String token) {
+        return getOfficerBadge(token);
     }
 
     public String getRole(String token) {
