@@ -22,7 +22,7 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
     return (
       <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
         <div className="panel-header">
-          <span>🗺️ Crime Heatmap</span>
+          <span>Crime Heatmap</span>
         </div>
         <div className="flex flex-1 items-center justify-center text-sm text-[var(--color-text-dim)]">
           No location data available
@@ -37,7 +37,7 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
   return (
     <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
       <div className="panel-header">
-        <span>🗺️ Crime Heatmap</span>
+        <span>Crime Heatmap</span>
         <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap border border-[var(--color-primary)]/20">
           {data.points.length} incidents
         </span>

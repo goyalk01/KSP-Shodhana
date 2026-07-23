@@ -48,7 +48,7 @@ export default function SettingsPanel() {
         {/* Title */}
         <div className="border-b border-[var(--color-border)]/50 pb-5 mb-6">
           <h2 className="font-serif text-xl font-extrabold text-[var(--color-text)]">
-            ⚙️ Workspace Settings
+            Workspace Settings
           </h2>
           <p className="text-xs font-semibold text-[var(--color-text-muted)] mt-1">
             Configure investigation defaults, preferred interface options, and local overrides.
@@ -167,7 +167,7 @@ export default function SettingsPanel() {
           <div className="flex items-center gap-2">
             {settingsSuccessMessage && (
               <span className="text-[11px] font-bold text-[var(--color-success)] animate-fade-in">
-                ✅ {settingsSuccessMessage}
+                {settingsSuccessMessage}
               </span>
             )}
           </div>

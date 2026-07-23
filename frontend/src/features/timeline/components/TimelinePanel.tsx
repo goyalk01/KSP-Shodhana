@@ -13,7 +13,7 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
     return (
       <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
         <div className="panel-header">
-          <span>📅 Investigation Timeline</span>
+          <span>Investigation Timeline</span>
         </div>
         <div className="flex flex-1 items-center justify-center text-sm text-[var(--color-text-dim)]">
           No timeline data available
@@ -36,7 +36,7 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
   return (
     <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
       <div className="panel-header">
-        <span>📅 Investigation Timeline</span>
+        <span>Investigation Timeline</span>
         <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2 py-0.5 rounded-md">
           {data.length} events
         </span>
@@ -52,7 +52,6 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
             {sorted.map((event, idx) => {
               const eventDate = getEventDate(event);
               const eventType = getEventType(event);
-              const icon = EVENT_TYPE_ICONS[eventType] || EVENT_TYPE_ICONS.Default;
               const formattedDateStr = formatDate(eventDate);
               return (
                 <div
@@ -70,12 +69,9 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
                     className="flex-1 rounded-xl border border-[var(--color-border)]/50 bg-[var(--color-surface)] p-4 shadow-sm hover:shadow-md hover:border-[var(--color-primary)]/30 focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm">{icon}</span>
-                        <h4 className="text-xs font-bold text-[var(--color-text)] leading-tight">
-                          {event.title}
-                        </h4>
-                      </div>
+                      <h4 className="text-xs font-bold text-[var(--color-text)] leading-tight">
+                        {event.title}
+                      </h4>
                       <span className="shrink-0 rounded-md bg-[var(--color-primary)]/10 px-2 py-0.5 text-[9px] font-extrabold tracking-wider uppercase text-[var(--color-primary)]">
                         {eventType}
                       </span>

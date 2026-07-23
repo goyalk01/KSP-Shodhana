@@ -12,7 +12,7 @@ export default function EvidencePanel({ data }: EvidencePanelProps) {
     return (
       <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
         <div className="panel-header">
-          <span>📊 Evidence Panel</span>
+          <span>Evidence Panel</span>
         </div>
         <div className="flex flex-1 items-center justify-center text-sm text-[var(--color-text-dim)]">
           No evidence data available
@@ -24,7 +24,7 @@ export default function EvidencePanel({ data }: EvidencePanelProps) {
   return (
     <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
       <div className="panel-header">
-        <span>📊 Explainable Evidence</span>
+        <span>Explainable Evidence</span>
         <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap border border-[var(--color-primary)]/20">
           {data.length} items
         </span>
@@ -56,13 +56,13 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
 
   const typeLabel =
     {
-      criminal_link: "🔗 Criminal Link",
-      pattern: "📈 Pattern",
-      location: "📍 Location",
-      modus_operandi: "🎯 Modus Operandi",
-      temporal: "⏰ Temporal",
-      system: "⚙️ System",
-    }[item.type] || "📌 General";
+      criminal_link: "Criminal Link",
+      pattern: "Pattern",
+      location: "Location",
+      modus_operandi: "Modus Operandi",
+      temporal: "Temporal",
+      system: "System",
+    }[item.type] || "General";
 
   return (
     <div

@@ -170,7 +170,7 @@ export default function WelcomeState({ showMinimal = false }: WelcomeStateProps)
             </div>
           </div>
           <p className="mt-3 text-[10px] font-bold text-[var(--color-text-dim)]">
-            💡 Try: &quot;ಬೆಂಗಳೂರಿನಲ್ಲಿ ಕಳ್ಳತನ ಪ್ರಕರಣಗಳನ್ನು ತೋರಿಸಿ&quot;
+            Try: &quot;ಬೆಂಗಳೂರಿನಲ್ಲಿ ಕಳ್ಳತನ ಪ್ರಕರಣಗಳನ್ನು ತೋರಿಸಿ&quot;
           </p>
         </div>
       </div>

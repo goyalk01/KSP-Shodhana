@@ -39,7 +39,7 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
     return (
       <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
         <div className="panel-header">
-          <span>🕸️ Criminal Network</span>
+          <span>Criminal Network</span>
         </div>
         <div className="flex flex-1 items-center justify-center text-sm text-[var(--color-text-dim)]">
           No network data available
@@ -51,7 +51,7 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
   return (
     <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden" ref={containerRef}>
       <div className="panel-header">
-        <span>🕸️ Criminal Network</span>
+        <span>Criminal Network</span>
         <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap border border-[var(--color-primary)]/20">
           {data.nodes.length} nodes · {data.links.length} links
         </span>
