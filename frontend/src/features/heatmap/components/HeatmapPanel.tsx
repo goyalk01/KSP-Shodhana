@@ -44,7 +44,7 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
         });
       }
     } catch (e) {
-      console.error('PostGIS spatial query error:', e);
+      console.error('Spatial radius query error:', e);
     } finally {
       setIsSpatialQuery(false);
     }
@@ -56,12 +56,12 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
     return (
       <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
         <div className="panel-header flex justify-between items-center px-4 py-2 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50">
-          <span className="font-serif font-bold text-[var(--color-text)] text-sm">PostGIS Spatial Heatmap</span>
+          <span className="font-serif font-bold text-[var(--color-text)] text-sm">Crime Hotspots Map</span>
           <button
             onClick={handlePostGisSpatialQuery}
-            className="text-xs font-bold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3 py-1.5 rounded-lg transition shadow-xs cursor-pointer"
+            className="text-xs font-bold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3 py-1.5 rounded-lg transition shadow-xs cursor-pointer whitespace-nowrap shrink-0"
           >
-            Run ST_DWithin Query
+            Filter 15km Radius
           </button>
         </div>
         <div className="flex flex-1 items-center justify-center text-sm text-[var(--color-text-dim)]">
@@ -77,21 +77,21 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
   return (
     <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
       <div className="panel-header flex justify-between items-center px-4 py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50">
-        <div className="flex items-center space-x-2">
-          <span className="font-serif font-bold text-[var(--color-text)] text-sm">PostGIS Spatial Heatmap</span>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 px-2 py-0.5 rounded-md">
-            ST_DWithin 15km
+        <div className="flex items-center space-x-2 min-w-0">
+          <span className="font-serif font-bold text-[var(--color-text)] text-sm whitespace-nowrap shrink-0">Crime Hotspots Map</span>
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 px-2 py-0.5 rounded-md whitespace-nowrap shrink-0">
+            15km Radius Zone
           </span>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 shrink-0">
           <button
             onClick={handlePostGisSpatialQuery}
-            className="text-xs font-bold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3 py-1.5 rounded-lg transition shadow-sm cursor-pointer"
+            className="text-xs font-bold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3.5 py-1.5 rounded-lg transition shadow-sm cursor-pointer whitespace-nowrap shrink-0"
           >
-            {isSpatialQuery ? 'Querying PostGIS...' : 'Execute ST_DWithin Query'}
+            {isSpatialQuery ? 'Filtering Radius...' : 'Filter 15km Radius'}
           </button>
           <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap border border-[var(--color-primary)]/20">
-            {activeData.points.length} incidents
+            {activeData.points.length} Incidents
           </span>
         </div>
       </div>
@@ -132,8 +132,8 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
               >
                 <Popup>
                   <div className="text-xs font-serif">
-                    <p className="font-bold text-[var(--color-primary)]">PostGIS Spatial Incident</p>
-                    <p>Geom Density: {Math.round(point.intensity * 100)}%</p>
+                    <p className="font-bold text-[var(--color-primary)]">Crime Incident Location</p>
+                    <p>Incident Density: {Math.round(point.intensity * 100)}%</p>
                     <p>Coordinates: {point.lat.toFixed(4)}, {point.lng.toFixed(4)}</p>
                   </div>
                 </Popup>
