@@ -35,9 +35,10 @@ public class SettingsController {
         } catch (Exception e) {
             log.error("Failed to fetch settings from AI service: {}", e.getMessage());
             // Fallback response if AI service is offline
+            String apiKey = System.getenv("GEMINI_API_KEY") != null ? System.getenv("GEMINI_API_KEY") : "";
             return ApiResponse.ok(Map.of(
                     "gemini_model", "gemini-3.5-flash-lite",
-                    "gemini_api_key", "AIzaSyAegIfAXGyCo_jemy9kziLFWVVel1YNVIc",
+                    "gemini_api_key", apiKey,
                     "default_district", "Bengaluru Urban",
                     "local_fallback_active", true
             ));

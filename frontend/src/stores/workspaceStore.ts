@@ -66,7 +66,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
 
   // Settings
   geminiModel: "gemini-3.5-flash-lite",
-  geminiApiKey: "AIzaSyAegIfAXGyCo_jemy9kziLFWVVel1YNVIc",
+  geminiApiKey: process.env.NEXT_PUBLIC_GEMINI_API_KEY || "",
   defaultDistrict: "Bengaluru Urban",
   localFallbackActive: false,
   settingsLoading: false,
