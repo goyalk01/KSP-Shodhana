@@ -37,7 +37,7 @@ export default function VisualizationGrid() {
   const showEvidence = activeVisualizations.includes("evidence");
 
   // Collect active panel JSX nodes
-  const activePanels: JSX.Element[] = [];
+  const activePanels: React.ReactNode[] = [];
   if (showNetwork) activePanels.push(<NetworkGraphPanel key="network" data={networkData} />);
   if (showHeatmap) activePanels.push(<HeatmapPanel key="heatmap" data={heatmapData} />);
   if (showTimeline) activePanels.push(<TimelinePanel key="timeline" data={timelineData} />);
