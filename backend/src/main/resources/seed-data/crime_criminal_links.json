@@ -18,10 +18,22 @@
     "involvementDetail": "Phone number used in phishing SMS traced to SIM registered under his alias. Prior cybercrime history."
   },
   {
+    "crimeRowId": 2,
+    "criminalRowId": 8,
+    "role": "Accused",
+    "involvementDetail": "Technical handler who generated fake banking phishing links for Mohammed Farooq's scam."
+  },
+  {
     "crimeRowId": 3,
     "criminalRowId": 3,
     "role": "Accused",
     "involvementDetail": "Fingerprints matched at the crime scene. Known for jewelry store robberies across south Karnataka."
+  },
+  {
+    "crimeRowId": 3,
+    "criminalRowId": 10,
+    "role": "Accused",
+    "involvementDetail": "Fenced stolen gold ornaments from Anil D'Souza's Mysuru jewelry robbery."
   },
   {
     "crimeRowId": 4,
@@ -36,10 +48,22 @@
     "involvementDetail": "Eyewitness identified suspect as the attacker. Matches description of known rowdy sheeter in area."
   },
   {
+    "crimeRowId": 6,
+    "criminalRowId": 7,
+    "role": "Accused",
+    "involvementDetail": "Extortion demand calls traced to SIM cards supplied by Vikram Rathod's coastal syndicate."
+  },
+  {
     "crimeRowId": 7,
     "criminalRowId": 6,
     "role": "Accused",
     "involvementDetail": "Primary accused. Found with blood-stained knife matching victim's wounds. Known history of personal disputes escalating to violence."
+  },
+  {
+    "crimeRowId": 8,
+    "criminalRowId": 11,
+    "role": "Suspect",
+    "involvementDetail": "Corporate bank account used for laundering embezzled tech firm funds registered under Anitha Rao's name."
   },
   {
     "crimeRowId": 3,

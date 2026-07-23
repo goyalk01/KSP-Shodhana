@@ -15,6 +15,20 @@
   },
   {
     "criminalARowId": 3,
+    "criminalBRowId": 10,
+    "relationshipType": "Associate",
+    "strength": 8,
+    "evidenceSummary": "Zubair Ahmed regularly fences stolen gold looted by Anil D'Souza's robbery gang across Mysuru and Mandya."
+  },
+  {
+    "criminalARowId": 4,
+    "criminalBRowId": 8,
+    "relationshipType": "Associate",
+    "strength": 9,
+    "evidenceSummary": "Pradeep Gowda generates phishing portals and OTP interceptors for Mohammed Farooq's cyber fraud ring."
+  },
+  {
+    "criminalARowId": 3,
     "criminalBRowId": 6,
     "relationshipType": "Rival",
     "strength": 6,
@@ -26,6 +40,13 @@
     "relationshipType": "Associate",
     "strength": 7,
     "evidenceSummary": "Mohammed Farooq's cyber fraud proceeds suspected to fund Lakshmi Devi's drug distribution. Money trail under investigation."
+  },
+  {
+    "criminalARowId": 7,
+    "criminalBRowId": 9,
+    "relationshipType": "Associate",
+    "strength": 7,
+    "evidenceSummary": "Kiran Hegde supplies stolen luxury getaway motorcycles to Vikram Rathod's coastal extortion syndicate in Mangaluru."
   },
   {
     "criminalARowId": 1,
