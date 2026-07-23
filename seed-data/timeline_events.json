@@ -1,82 +1,130 @@
 [
   {
-    "investigation_rowid": 1,
-    "event_type": "FIR Filed",
-    "event_date": "2026-06-15 10:30:00",
-    "title": "FIR KA/2026/00101 registered",
-    "description": "FIR filed for chain snatching near MG Road metro station. Victim statement recorded.",
-    "created_by": "Inspector Ramesh K"
+    "eventId": "EVT-001",
+    "investigationId": "KA/2026/00101",
+    "timestamp": "2026-06-15 10:30:00",
+    "title": "FIR Registered",
+    "description": "FIR filed at Cubbon Park PS under IPC Section 379 for chain snatching near MG Road metro.",
+    "officerName": "Inspector Ramesh K"
   },
   {
-    "investigation_rowid": 1,
-    "event_type": "Evidence Found",
-    "event_date": "2026-06-15 14:00:00",
-    "title": "CCTV footage recovered",
-    "description": "CCTV from metro station and nearby shops recovered. Two suspects on motorcycle identified.",
-    "created_by": "SI Kavitha R"
+    "eventId": "EVT-002",
+    "investigationId": "KA/2026/00101",
+    "timestamp": "2026-06-15 14:00:00",
+    "title": "CCTV Evidence Analysis",
+    "description": "Metro CCTV footage captured motorcycle registration fragment (KA-01-E-****).",
+    "officerName": "SI Suresh Babu"
   },
   {
-    "investigation_rowid": 1,
-    "event_type": "Witness Statement",
-    "event_date": "2026-06-16 11:00:00",
-    "title": "Eyewitness identifies suspects",
-    "description": "Auto driver witnessed the incident. Partial motorcycle registration noted: KA-01-XX-XXXX.",
-    "created_by": "Inspector Ramesh K"
+    "eventId": "EVT-003",
+    "investigationId": "KA/2026/00101",
+    "timestamp": "2026-06-16 09:00:00",
+    "title": "Suspect Apprehended",
+    "description": "Kiran Kumar (CRIM-001) intercepted during vehicle check in Vivek Nagar with stolen gold chain fragment.",
+    "officerName": "Inspector Ramesh K"
   },
   {
-    "investigation_rowid": 1,
-    "event_type": "Evidence Found",
-    "event_date": "2026-06-18 09:00:00",
-    "title": "Motorcycle traced via RTO records",
-    "description": "Registration traced to a motorcycle owned by Suresh M (alias Suresh Biker). Known associate of Ravi Kumar.",
-    "created_by": "SI Kavitha R"
+    "eventId": "EVT-004",
+    "investigationId": "KA/2026/00103",
+    "timestamp": "2026-06-20 06:00:00",
+    "title": "Armed Robbery Reported",
+    "description": "Devaraja PS team dispatched to Sayyaji Rao Road jewelry store looting site.",
+    "officerName": "Inspector Venkatesh N"
   },
   {
-    "investigation_rowid": 1,
-    "event_type": "Arrest",
-    "event_date": "2026-06-20 06:30:00",
-    "title": "Suresh M arrested",
-    "description": "Suresh M arrested from his residence in Majestic area. Stolen gold chain recovered from pawn shop in Chickpete.",
-    "created_by": "Inspector Ramesh K"
+    "eventId": "EVT-005",
+    "investigationId": "KA/2026/00103",
+    "timestamp": "2026-06-21 11:00:00",
+    "title": "Forensic Fingerprint Recovery",
+    "description": "Forensic team matched fingerprint FP-KA-2023-7712 belonging to Anil Poojary (CRIM-005).",
+    "officerName": "Forensic Expert Dr. Swamy"
   },
   {
-    "investigation_rowid": 2,
-    "event_type": "FIR Filed",
-    "event_date": "2026-06-20 06:00:00",
-    "title": "FIR KA/2026/00103 registered",
-    "description": "Armed robbery at jewelry store on Sayyaji Rao Road. Three masked suspects with machetes. Loot worth Rs 45 lakhs.",
-    "created_by": "Inspector Venkatesh N"
+    "eventId": "EVT-006",
+    "investigationId": "KA/2026/00104",
+    "timestamp": "2026-05-10 16:00:00",
+    "title": "Narcotics Raid Execution",
+    "description": "Special squad raided Koramangala apartment, seizing 5kg cannabis.",
+    "officerName": "SI Anand Kumar"
   },
   {
-    "investigation_rowid": 2,
-    "event_type": "Evidence Found",
-    "event_date": "2026-06-20 10:00:00",
-    "title": "Fingerprints collected",
-    "description": "Forensic team collected fingerprints from the store counter. One set matched Anil D'Souza (FP-KA-00156).",
-    "created_by": "Forensic Team"
+    "eventId": "EVT-007",
+    "investigationId": "KA/2026/00105",
+    "timestamp": "2026-06-22 08:00:00",
+    "title": "Warehouse Burglary FIR",
+    "description": "Suburban PS registered burglary case for stolen electronics in Hubballi.",
+    "officerName": "Inspector Patil B S"
   },
   {
-    "investigation_rowid": 2,
-    "event_type": "Witness Statement",
-    "event_date": "2026-06-21 09:00:00",
-    "title": "Store owner's detailed statement",
-    "description": "Owner described 3 suspects: leader was tall, muscular, with a scar on left cheek. Spoke in Tulu.",
-    "created_by": "Inspector Venkatesh N"
+    "eventId": "EVT-008",
+    "investigationId": "KA/2026/00106",
+    "timestamp": "2026-06-25 11:30:00",
+    "title": "Extortion Case Chargesheet",
+    "description": "Formal chargesheet submitted against Coastal Syndicate leader Rajesh Shetty.",
+    "officerName": "Inspector Francis D'Souza"
   },
   {
-    "investigation_rowid": 2,
-    "event_type": "Evidence Found",
-    "event_date": "2026-06-23 15:00:00",
-    "title": "Getaway vehicle found",
-    "description": "White Maruti Eeco van used in robbery found abandoned in Srirangapatna. Partial DNA recovered.",
-    "created_by": "SI Manjunath G"
+    "eventId": "EVT-009",
+    "investigationId": "KA/2026/00108",
+    "timestamp": "2026-07-01 02:30:00",
+    "title": "Assault Investigation Initiated",
+    "description": "Indiranagar PS initiated investigation into club brawl and iron rod assault.",
+    "officerName": "Inspector Manjunath G"
   },
   {
-    "investigation_rowid": 2,
-    "event_type": "Hearing",
-    "event_date": "2026-07-05 10:00:00",
-    "title": "Court hearing for remand extension",
-    "description": "Remand extension granted for 14 days for continued investigation. Prosecution presented CCTV and fingerprint evidence.",
-    "created_by": "Inspector Venkatesh N"
+    "eventId": "EVT-010",
+    "investigationId": "KA/2026/00109",
+    "timestamp": "2026-07-05 04:00:00",
+    "title": "Highway Interdiction Seizure",
+    "description": "Market PS Belagavi seized transport vehicle carrying contraband near NH-48 toll plaza.",
+    "officerName": "Inspector Shivaram R"
+  },
+  {
+    "eventId": "EVT-011",
+    "investigationId": "KA/2026/00110",
+    "timestamp": "2026-07-08 12:00:00",
+    "title": "Cybercrime SIM Swap Traced",
+    "description": "CEN Police Kalaburagi traced compromised SIM registration to Naveen Reddy (CRIM-0012).",
+    "officerName": "SI Deepa K"
+  },
+  {
+    "eventId": "EVT-012",
+    "investigationId": "KA/2026/00111",
+    "timestamp": "2026-07-12 09:30:00",
+    "title": "Copper Wire Theft Spot Inspection",
+    "description": "Doddapet PS team conducted spot inspection at Shivamogga commercial warehouse.",
+    "officerName": "Inspector Prakash M"
+  },
+  {
+    "eventId": "EVT-013",
+    "investigationId": "KA/2026/00112",
+    "timestamp": "2026-07-15 05:00:00",
+    "title": "Highway Cargo Hijack Chargesheet",
+    "description": "Kyathasandra PS submitted chargesheet against Ramanjaneya V (CRIM-0014).",
+    "officerName": "Inspector Mohan Das"
+  },
+  {
+    "eventId": "EVT-014",
+    "investigationId": "KA/2026/00113",
+    "timestamp": "2026-07-18 10:00:00",
+    "title": "Villa Break-In Lock Inspection",
+    "description": "Manipal PS team recovered lock picking tools near Manipal residence.",
+    "officerName": "SI Sunitha Rao"
+  },
+  {
+    "eventId": "EVT-015",
+    "investigationId": "KA/2026/00115",
+    "timestamp": "2026-07-21 16:30:00",
+    "title": "Crypto Scam Wallet Frozen",
+    "description": "Electronic City PS issued freeze request for fraudulent crypto exchange wallet.",
+    "officerName": "Inspector Varun Teja"
+  },
+  {
+    "eventId": "EVT-016",
+    "investigationId": "KA/2026/00116",
+    "timestamp": "2026-07-23 18:00:00",
+    "title": "VoIP Threat Log Analysis",
+    "description": "Commercial Street PS initiated IP trace on encrypted extortion VoIP calls.",
+    "officerName": "Inspector Nagesh Rao"
   }
 ]
