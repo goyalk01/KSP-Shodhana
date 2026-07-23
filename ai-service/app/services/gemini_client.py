@@ -39,7 +39,7 @@ class GeminiClient:
         """
         from google.genai import types
 
-        candidate_models = [self.model, "gemini-2.5-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
+        candidate_models = [self.model]
         # Remove duplicates while preserving order
         unique_models = []
         for m in candidate_models:
@@ -100,7 +100,7 @@ class GeminiClient:
         """Generate plain text from Gemini with model fallback."""
         from google.genai import types
 
-        candidate_models = [self.model, "gemini-2.0-flash", "gemini-2.5-flash", "gemini-1.5-flash"]
+        candidate_models = [self.model]
         unique_models = []
         for m in candidate_models:
             if m and m not in unique_models:
