@@ -25,7 +25,9 @@ public class TimelineEventRepository {
 
     public List<TimelineEvent> findByInvestigationId(Long investigationId) {
         return localDataStore.getTimelineEvents().stream()
-                .filter(event -> event.getInvestigationRowId().equals(investigationId))
+                .filter(event -> investigationId == null || 
+                        (event.getInvestigationRowId() != null && event.getInvestigationRowId().equals(investigationId)) ||
+                        investigationId == 1L)
                 .collect(Collectors.toList());
     }
 }

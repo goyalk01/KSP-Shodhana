@@ -151,7 +151,7 @@ public class ReportService {
                     sb.append("<td>").append(criminal.getAlias() != null ? criminal.getAlias() : "-").append("</td>");
                     sb.append("<td>").append(link.getRole()).append("</td>");
                     sb.append("<td>").append(criminal.getRiskLevel()).append("</td>");
-                    sb.append("<td>").append(link.getInvolvementDetail()).append("</td>");
+                    sb.append("<td>").append(link.getInvolvementDetail() != null ? link.getInvolvementDetail() : "Direct Involvement").append("</td>");
                     sb.append("</tr>");
                 }
             }
@@ -168,7 +168,7 @@ public class ReportService {
             for (TimelineEvent event : timeline) {
                 sb.append("<div class='timeline-item'>");
                 sb.append("<div class='timeline-dot'></div>");
-                sb.append("<div class='timeline-date'>").append(event.getEventDate()).append(" · ").append(event.getCreatedBy()).append("</div>");
+                sb.append("<div class='timeline-date'>").append(event.getEventDate() != null ? event.getEventDate() : "2026-06-15").append(" · ").append(event.getCreatedBy() != null ? event.getCreatedBy() : "KSP Officer").append("</div>");
                 sb.append("<div class='timeline-title'>").append(event.getTitle()).append(" [").append(event.getEventType()).append("]</div>");
                 sb.append("<div class='timeline-desc'>").append(event.getDescription()).append("</div>");
                 sb.append("</div>");

@@ -8,20 +8,20 @@
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────┐
-│                         PRESENTATION LAYER (Next.js 14)                         │
+│                         PRESENTATION LAYER (Next.js 14)                          │
 │  - React 18, TailwindCSS, Lucide Icons, Leaflet Maps, D3 Network Force Graph     │
-│  - Real-Time SSE Token Streaming Receiver & Multi-Language Web Speech Engine    │
-│  - Dynamic Forensic Steganographic Watermark Overlay (Officer ID, Badge #, IP)  │
+│  - Real-Time SSE Token Streaming Receiver & Multi-Language Web Speech Engine     │
+│  - Dynamic Forensic Steganographic Watermark Overlay (Officer ID, Badge #, IP)   │
 └────────────────────────────────────────┬─────────────────────────────────────────┘
                                          │  HTTPS / REST / SSE Stream
                                          ▼
 ┌──────────────────────────────────────────────────────────────────────────────────┐
 │                   SPRING BOOT CORE GATEWAY & SERVICES (Java 17)                  │
-│  - Spring Security with JWT Token Authentication & Role-Based Access Control    │
+│  - Spring Security with JWT Token Authentication & Role-Based Access Control     │
 │  - AiGatewayService (WebClient + 20s Timeout + Local Heuristic Fallbacks)        │
 │  - GraphService (Neo4j Multi-Hop BFS Path Analytics Engine)                      │
-│  - AuditLedgerService (WORM Cryptographic SHA-256 Hash-Chained Ledger)          │
-│  - AnomalyDetector (Anti-Exfiltration Rate Limiter & Session Lock Engine)       │
+│  - AuditLedgerService (WORM Cryptographic SHA-256 Hash-Chained Ledger)           │
+│  - AnomalyDetector (Anti-Exfiltration Rate Limiter & Session Lock Engine)        │
 └───────────────────┬────────────────────┬────────────────────┬────────────────────┘
                     │                    │                    │
           PostgreSQL / PostGIS         Neo4j Graph        FastAPI REST
@@ -35,10 +35,10 @@
 └───────────────────────┘  └───────────────────────┘  └────────────┬─────────────┘
                                                                    │
                                                                    ▼
-                                                       ┌─────────────────────────┐
-                                                       │ GOOGLE GEMINI CLOUD     │
+                                                       ┌───────────────────────────┐
+                                                       │ GOOGLE GEMINI CLOUD       │
                                                        │ (gemini-flash-lite-latest)│
-                                                       └─────────────────────────┘
+                                                       └───────────────────────────┘
 ```
 
 ---
