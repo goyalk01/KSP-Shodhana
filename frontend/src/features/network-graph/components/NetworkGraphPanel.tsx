@@ -13,10 +13,10 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const graphRef = useRef<any>(null);
 
-  // Auto-fit graph on data change
+  // Auto-fit graph on data change with ample padding for text labels
   useEffect(() => {
     if (graphRef.current && data && data.nodes.length > 0) {
-      setTimeout(() => graphRef.current?.zoomToFit(400, 60), 300);
+      setTimeout(() => graphRef.current?.zoomToFit(400, 120), 350);
     }
   }, [data]);
 
@@ -58,7 +58,7 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
       </div>
 
       {/* Legend */}
-      <div className="flex gap-4 px-5 py-2.5 border-b border-[var(--color-border)]/50 bg-white/50">
+      <div className="flex gap-4 px-5 py-2.5 border-b border-[var(--color-border)]/50 bg-white/50 shrink-0">
         <LegendItem color="#A85448" label="High Risk" />
         <LegendItem color="#C18C5D" label="Crime / Medium" />
         <LegendItem color="#5D7052" label="Low Risk" />
@@ -66,7 +66,7 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
       </div>
 
       {/* Graph */}
-      <div className="flex-1 relative">
+      <div className="flex-1 relative min-h-0 overflow-hidden">
         <ForceGraph2D
           ref={graphRef}
           graphData={{
@@ -94,7 +94,7 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
           }}
           cooldownTicks={100}
           width={containerRef.current?.clientWidth || 600}
-          height={(containerRef.current?.clientHeight || 400) - 80}
+          height={(containerRef.current?.clientHeight || 450) - 95}
         />
       </div>
     </div>

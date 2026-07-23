@@ -18,7 +18,7 @@ export default function ChatPanel() {
   return (
     <div className="flex flex-col h-full rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
       {/* Chat Header */}
-      <div className="border-b border-[var(--color-border)]/50 px-5 py-3.5 flex items-center justify-between">
+      <div className="border-b border-[var(--color-border)]/50 px-5 py-3.5 flex items-center justify-between bg-white z-10 shrink-0 relative">
         <h2 className="text-xs font-bold uppercase tracking-widest text-[var(--color-primary)]">
           Investigation Chat
         </h2>

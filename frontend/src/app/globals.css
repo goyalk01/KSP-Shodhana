@@ -190,7 +190,8 @@ button:active, a:active {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 20px;
+  padding: 12px 18px;
+  background: var(--color-surface);
   border-bottom: 1px solid rgba(226, 224, 219, 0.5);
   font-family: var(--font-sans);
   font-size: 0.8125rem;
@@ -198,6 +199,7 @@ button:active, a:active {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--color-primary);
+  flex-shrink: 0;
 }
 
 /* ===== LEAFLET OVERRIDES ===== */

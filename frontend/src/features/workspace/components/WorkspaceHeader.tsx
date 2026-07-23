@@ -6,19 +6,19 @@ export default function WorkspaceHeader() {
   const { clearWorkspace, isQuerying } = useWorkspaceStore();
 
   return (
-    <header className="flex h-[72px] items-center justify-between px-7 border-b border-[var(--color-border)]/50 bg-[var(--color-surface)] shrink-0">
+    <header className="flex h-[72px] items-center justify-between px-6 sm:px-8 border-b border-[var(--color-border)]/50 bg-[var(--color-surface)] shrink-0 min-w-0">
       {/* Title + Subtitle */}
-      <div>
-        <h1 className="font-serif text-xl font-extrabold tracking-tight text-[var(--color-text)] leading-tight">
+      <div className="min-w-0 pr-4">
+        <h1 className="font-serif text-lg sm:text-xl font-extrabold tracking-tight text-[var(--color-text)] leading-tight truncate">
           KSP Shodhana — Investigation Workspace
         </h1>
-        <p className="text-[11px] font-semibold text-[var(--color-text-muted)] mt-0.5">
+        <p className="text-[11px] font-semibold text-[var(--color-text-muted)] mt-0.5 truncate">
           Here&apos;s what&apos;s happening across Karnataka today.
         </p>
       </div>
 
       {/* Status + Actions */}
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
         {isQuerying && (
           <div className="flex items-center gap-2 rounded-lg border border-[var(--color-secondary)]/30 bg-[var(--color-secondary)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-secondary)]">
             <span className="relative flex h-2 w-2">
