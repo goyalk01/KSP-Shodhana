@@ -3,19 +3,29 @@
 import { useWorkspaceStore } from "@/stores/workspaceStore";
 
 export default function WorkspaceHeader() {
-  const { clearWorkspace, isQuerying } = useWorkspaceStore();
+  const { clearWorkspace, isQuerying, setActiveTab } = useWorkspaceStore();
+
+  const handleHomeClick = () => {
+    setActiveTab("dashboard");
+    clearWorkspace();
+  };
 
   return (
     <header className="flex h-[72px] items-center justify-between px-6 sm:px-8 border-b border-[var(--color-border)]/50 bg-[var(--color-surface)] shrink-0 min-w-0">
       {/* Title + Subtitle */}
-      <div className="min-w-0 pr-4 shrink">
-        <h1 className="font-serif text-base sm:text-lg lg:text-xl font-extrabold tracking-tight text-[var(--color-text)] leading-tight whitespace-nowrap">
+      <button
+        onClick={handleHomeClick}
+        aria-label="Return to Home Dashboard"
+        title="Return to Home Dashboard"
+        className="min-w-0 pr-4 shrink text-left cursor-pointer group"
+      >
+        <h1 className="font-serif text-base sm:text-lg lg:text-xl font-extrabold tracking-tight text-[var(--color-text)] leading-tight whitespace-nowrap group-hover:text-[var(--color-primary)] transition-colors">
           KSP Shodhana — Investigation Workspace
         </h1>
         <p className="text-[11px] font-semibold text-[var(--color-text-muted)] mt-0.5 whitespace-nowrap hidden sm:block">
           Here&apos;s what&apos;s happening across Karnataka today.
         </p>
-      </div>
+      </button>
 
       {/* Status + Actions */}
       <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
