@@ -50,6 +50,12 @@ async def root():
     return {"status": "ok", "service": "KSP Shodhana AI Service", "model": settings.gemini_model}
 
 
+@app.get("/health", tags=["Health"])
+async def health():
+    """Health check endpoint for Docker & load balancers."""
+    return {"status": "ok", "service": "ksp-shodhana-ai", "model": settings.gemini_model}
+
+
 @app.get("/ai/v1/health", tags=["Health"])
 async def health_check():
     """Health check endpoint."""

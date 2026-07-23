@@ -33,15 +33,15 @@ class Entity(BaseModel):
 
 class QueryFilters(BaseModel):
     """Structured filters extracted from the natural language query."""
-    crime_type: Optional[str] = Field(description="Filter by type of crime")
-    district: Optional[str] = Field(description="Filter by district")
-    station: Optional[str] = Field(description="Filter by station")
-    status: Optional[str] = Field(description="Filter by status")
-    severity: Optional[str] = Field(description="Filter by severity")
-    date_from: Optional[str] = Field(description="Filter start date yyyy-MM-dd")
-    date_to: Optional[str] = Field(description="Filter end date yyyy-MM-dd")
-    person_name: Optional[str] = Field(description="Filter by suspect or criminal name")
-    fir_number: Optional[str] = Field(description="Filter by FIR number")
+    crime_type: Optional[str] = Field(default=None, description="Filter by type of crime")
+    district: Optional[str] = Field(default=None, description="Filter by district")
+    station: Optional[str] = Field(default=None, description="Filter by station")
+    status: Optional[str] = Field(default=None, description="Filter by status")
+    severity: Optional[str] = Field(default=None, description="Filter by severity")
+    date_from: Optional[str] = Field(default=None, description="Filter start date yyyy-MM-dd")
+    date_to: Optional[str] = Field(default=None, description="Filter end date yyyy-MM-dd")
+    person_name: Optional[str] = Field(default=None, description="Filter by suspect or criminal name")
+    fir_number: Optional[str] = Field(default=None, description="Filter by FIR number")
 
 
 class UnderstandResponse(BaseModel):
@@ -55,12 +55,13 @@ class UnderstandResponse(BaseModel):
         "crime_stats",
         "general_question",
     ]
-    entities: list[Entity] = Field(description="Extracted entities")
-    filters: QueryFilters = Field(description="Extracted query filters")
+    entities: list[Entity] = Field(default_factory=list, description="Extracted entities")
+    filters: QueryFilters = Field(default_factory=QueryFilters, description="Extracted query filters")
     visualizations: list[Literal["network_graph", "heatmap", "timeline", "evidence"]] = Field(
+        default_factory=list,
         description="Recommended visualizations"
     )
     summary: str = Field(
+        default="Parsed natural language query into structured investigation parameters.",
         description="Brief natural language summary of what was understood",
     )
-

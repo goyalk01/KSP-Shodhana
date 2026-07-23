@@ -9,7 +9,7 @@ from pydantic import BaseModel, Field
 
 class AnalyzeRequest(BaseModel):
     """Input to the /ai/v1/analyze endpoint."""
-    data: dict[str, Any] = Field(
+    data: Any = Field(
         ..., description="Crime/criminal data fetched from the database"
     )
     original_query: str = Field(

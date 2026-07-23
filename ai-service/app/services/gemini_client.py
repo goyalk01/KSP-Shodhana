@@ -19,9 +19,10 @@ class GeminiClient:
     def __init__(self) -> None:
         from google import genai
 
-        self._client = genai.Client(api_key=settings.gemini_api_key)
-        self._model = settings.gemini_model
-        logger.info("GeminiClient initialized with model: %s", self._model)
+        self.api_key = settings.gemini_api_key
+        self.model = settings.gemini_model
+        self._client = genai.Client(api_key=self.api_key)
+        logger.info("GeminiClient initialized with model: %s", self.model)
 
     async def generate_structured(
         self,
@@ -29,7 +30,7 @@ class GeminiClient:
         system_instruction: str,
         response_schema: type,
         temperature: float = 0.2,
-        max_retries: int = 2,
+        max_retries: int = 1,
     ) -> Any:
         """
         Generate a structured JSON response from Gemini.
@@ -43,27 +44,29 @@ class GeminiClient:
         for attempt in range(max_retries + 1):
             start_time = time.time()
             try:
-                response = await asyncio.to_thread(
-                    self._client.models.generate_content,
-                    model=self._model,
-                    contents=prompt,
-                    config=types.GenerateContentConfig(
-                        system_instruction=system_instruction,
-                        response_mime_type="application/json",
-                        response_schema=response_schema,
-                        temperature=temperature,
-                        max_output_tokens=settings.gemini_max_tokens,
+                # Wrap API call with an 8-second timeout to prevent hangs
+                response = await asyncio.wait_for(
+                    asyncio.to_thread(
+                        self._client.models.generate_content,
+                        model=self.model,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(
+                            system_instruction=system_instruction,
+                            response_mime_type="application/json",
+                            response_schema=response_schema,
+                            temperature=temperature,
+                            max_output_tokens=settings.gemini_max_tokens,
+                        ),
                     ),
+                    timeout=8.0,
                 )
 
                 elapsed_ms = (time.time() - start_time) * 1000
                 logger.info(
-                    "Gemini call completed in %.0fms | model=%s | attempt=%d | tokens_in=%s | tokens_out=%s",
+                    "Gemini call completed in %.0fms | model=%s | attempt=%d",
                     elapsed_ms,
-                    self._model,
+                    self.model,
                     attempt + 1,
-                    getattr(response.usage_metadata, "prompt_token_count", "?"),
-                    getattr(response.usage_metadata, "candidates_token_count", "?"),
                 )
 
                 # Parse the structured response
@@ -78,7 +81,7 @@ class GeminiClient:
                         "Gemini call failed after %.0fms (attempt %d/%d): %s. Retrying...",
                         elapsed_ms, attempt + 1, max_retries + 1, str(e),
                     )
-                    await asyncio.sleep(0.5 * (attempt + 1))  # Brief backoff
+                    await asyncio.sleep(0.3 * (attempt + 1))
                 else:
                     logger.error(
                         "Gemini call failed after %.0fms (all %d attempts exhausted): %s",
@@ -99,15 +102,18 @@ class GeminiClient:
         """
         from google.genai import types
 
-        response = await asyncio.to_thread(
-            self._client.models.generate_content,
-            model=self._model,
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                system_instruction=system_instruction,
-                temperature=temperature,
-                max_output_tokens=settings.gemini_max_tokens,
+        response = await asyncio.wait_for(
+            asyncio.to_thread(
+                self._client.models.generate_content,
+                model=self.model,
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    system_instruction=system_instruction,
+                    temperature=temperature,
+                    max_output_tokens=settings.gemini_max_tokens,
+                ),
             ),
+            timeout=8.0,
         )
         return response.text
 
@@ -117,9 +123,8 @@ _client: GeminiClient | None = None
 
 
 def get_gemini_client() -> GeminiClient:
-    """Get or create the Gemini client singleton. Lazy initialization avoids
-    crashes on startup when GEMINI_API_KEY is not yet configured."""
+    """Get or create the Gemini client singleton."""
     global _client
-    if _client is None:
+    if _client is None or _client.api_key != settings.gemini_api_key or _client.model != settings.gemini_model:
         _client = GeminiClient()
     return _client
