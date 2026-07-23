@@ -35,12 +35,12 @@ export default function ChatMessage({ message, index }: ChatMessageProps) {
 
          {/* Message Bubble */}
         <div
-          className={`max-w-[80%] min-w-0 px-4 py-2.5 text-xs font-semibold leading-relaxed shadow-soft break-words ${
+          className={`max-w-[80%] min-w-0 px-4.5 py-2.5 text-xs font-semibold leading-relaxed shadow-sm break-words ${
             isUser
-              ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)] rounded-[20px] rounded-tr-[4px]"
+              ? "bg-[var(--color-primary)] text-[var(--color-primary-foreground)] rounded-xl rounded-tr-xs"
               : isSystem
-                ? "bg-[var(--color-danger)]/10 text-[var(--color-danger)] border border-[var(--color-danger)]/20 rounded-[20px] rounded-tl-[4px]"
-                : "bg-white text-[var(--color-text)] border border-[var(--color-border)]/50 rounded-[20px] rounded-tl-[4px]"
+                ? "bg-[var(--color-danger)]/10 text-[var(--color-danger)] border border-[var(--color-danger)]/20 rounded-xl rounded-tl-xs"
+                : "bg-white text-[var(--color-text)] border border-[var(--color-border)]/50 rounded-xl rounded-tl-xs"
           }`}
         >
           {isLoading ? (

@@ -25,7 +25,7 @@ export default function EvidencePanel({ data }: EvidencePanelProps) {
     <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
       <div className="panel-header">
         <span>📊 Explainable Evidence</span>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2 py-0.5 rounded-md">
+        <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap border border-[var(--color-primary)]/20">
           {data.length} items
         </span>
       </div>
@@ -70,19 +70,19 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
       style={{ animationDelay: `${index * 0.1}s` }}
     >
       {/* Header: Type + Confidence */}
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-[9px] font-extrabold uppercase tracking-widest text-[var(--color-primary)]">
+      <div className="flex items-center justify-between gap-2 mb-2">
+        <span className="text-[9px] font-extrabold uppercase tracking-widest text-[var(--color-primary)] truncate">
           {typeLabel}
         </span>
-        <div className="flex items-center gap-2">
-          <span className={`text-[11px] font-bold ${confidenceClass}`}>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className={`text-[11px] font-bold ${confidenceClass} whitespace-nowrap shrink-0`}>
             {formatConfidence(item.confidence)}
           </span>
         </div>
       </div>
 
       {/* Claim */}
-      <p className="text-xs font-bold leading-relaxed text-[var(--color-text)] mb-3">
+      <p className="text-xs font-bold leading-relaxed text-[var(--color-text)] mb-3 break-words">
         {item.claim}
       </p>
 
