@@ -65,7 +65,7 @@ class GeminiClient:
                                 max_output_tokens=settings.gemini_max_tokens,
                             ),
                         ),
-                        timeout=8.0,
+                        timeout=3.5,
                     )
 
                     elapsed_ms = (time.time() - start_time) * 1000

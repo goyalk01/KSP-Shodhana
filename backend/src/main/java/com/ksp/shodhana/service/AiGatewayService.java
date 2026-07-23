@@ -64,7 +64,7 @@ public class AiGatewayService {
                     ))
                     .retrieve()
                     .bodyToMono(UnderstandResponse.class)
-                    .block();
+                    .block(java.time.Duration.ofSeconds(2));
 
             log.info("Parsed intent: {}, visualizations: {}", understand.getIntent(), understand.getVisualizations());
 
@@ -81,7 +81,7 @@ public class AiGatewayService {
                     ))
                     .retrieve()
                     .bodyToMono(AnalyzeResponse.class)
-                    .block();
+                    .block(java.time.Duration.ofSeconds(2));
 
             log.info("Analysis complete with confidence: {}", analysis.getConfidence());
 
