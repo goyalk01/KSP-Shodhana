@@ -278,18 +278,22 @@ public class AiGatewayService {
     private String extractSuspectNameFromText(String rawQuery) {
         if (rawQuery == null) return null;
         String q = rawQuery.toLowerCase();
-        if (q.contains("anil")) return "Anil";
-        if (q.contains("ganesh")) return "Ganesh";
-        if (q.contains("suresh")) return "Suresh";
+        if (q.contains("rajesh") || q.contains("shetty") || q.contains("raja")) return "Rajesh";
         if (q.contains("farooq")) return "Farooq";
-        if (q.contains("lakshmi")) return "Lakshmi";
-        if (q.contains("vikram") || q.contains("vicky")) return "Vikram";
-        if (q.contains("pradeep") || q.contains("paddi")) return "Pradeep";
+        if (q.contains("anil")) return "Anil";
+        if (q.contains("suresh")) return "Suresh";
         if (q.contains("kiran")) return "Kiran";
-        if (q.contains("zubair") || q.contains("zuba")) return "Zubair";
-        if (q.contains("anitha")) return "Anitha";
-        if (q.contains("patil") || q.contains("dharmesh")) return "Dharmesh";
-        if (q.contains("ravi")) return "Ravi";
+        if (q.contains("vikram") || q.contains("vicky")) return "Vikram";
+        if (q.contains("deepak")) return "Deepak";
+        if (q.contains("basavaraj") || q.contains("patil")) return "Basavaraj";
+        if (q.contains("santhosh")) return "Santhosh";
+        if (q.contains("mohammed") || q.contains("zaid")) return "Mohammed";
+        if (q.contains("shivaji")) return "Shivaji";
+        if (q.contains("naveen")) return "Naveen";
+        if (q.contains("chandru")) return "Chandru";
+        if (q.contains("ramanjaneya") || q.contains("ramu")) return "Ramanjaneya";
+        if (q.contains("praveen")) return "Praveen";
+        if (q.contains("venkatesh") || q.contains("venky")) return "Venkatesh";
         return null;
     }
 
@@ -315,13 +319,13 @@ public class AiGatewayService {
         AnalyzeResponse mockAnalyze = new AnalyzeResponse();
         Map<String, Object> data = new HashMap<>();
 
-        if (matchesAny(query, "network", "gang", "associate", "connection", "link", "ravi", "suresh", "anil", "ganesh", "vikram", "zubair", "farooq", "pradeep",
-                "ಸಂಬಂಧ", "ರವಿ", "ಗ್ಯಾಂಗ್", "ಜಾಲ")) {
+        if (matchesAny(query, "network", "gang", "associate", "connection", "link", "rajesh", "shetty", "farooq", "anil", "suresh", "kiran", "vikram", "deepak", "basavaraj", "santhosh", "mohammed", "zaid", "shivaji", "naveen", "chandru", "ramanjaneya", "praveen", "venkatesh",
+                "ಸಂಬಂಧ", "ರವಿ", "ರಾಜೇಶ್", "ಗ್ಯಾಂಗ್", "ಜಾಲ")) {
             mockUnderstand.setIntent("show_network");
             mockUnderstand.setVisualizations(List.of("network_graph", "evidence"));
 
             String personName = extractSuspectNameFromText(query);
-            if (personName == null) personName = "Ravi Kumar";
+            if (personName == null) personName = "Rajesh Shetty";
 
             data = fetchDataForIntent("show_network", QueryFilters.builder().personName(personName).build(), query);
 

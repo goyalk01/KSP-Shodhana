@@ -50,7 +50,7 @@ Parse the investigator's query into a structured intelligence intent with extrac
    - general_question: General intelligence or procedural inquiry
 
 2. Extract ENTITIES:
-   - person (e.g., "Ravi Kumar", "Suresh M")
+   - person (Extract exact suspect or officer name mentioned in the query, e.g., "Rajesh Shetty", "Farooq Ahmed", "Anil Poojary", "Kiran Kumar")
    - location (e.g., "Bengaluru Urban", "Cubbon Park", "Mysuru")
    - crime_type (e.g., "Theft", "Robbery", "Chain Snatching")
    - fir_number (e.g., "KA/2026/00101")
