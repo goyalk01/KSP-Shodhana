@@ -68,7 +68,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="flex w-[72px] flex-col items-center justify-between border-r border-[var(--color-border)]/50 bg-[var(--color-surface)] py-6">
+    <aside className="relative z-40 flex w-[72px] shrink-0 flex-col items-center justify-between border-r border-[var(--color-border)]/50 bg-[var(--color-surface)] py-6">
       {/* Logo */}
       <div className="flex flex-col items-center gap-6">
         <button
@@ -98,7 +98,7 @@ export default function Sidebar() {
             >
               {item.icon}
               {/* Tooltip */}
-              <span className="pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded-lg bg-[var(--color-text)] px-2.5 py-1 text-[10px] font-bold text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+              <span className="pointer-events-none absolute left-full ml-3 z-50 whitespace-nowrap rounded-lg bg-[var(--color-text)] px-2.5 py-1 text-[10px] font-bold text-white opacity-0 shadow-xl transition-opacity group-hover:opacity-100">
                 {item.label}
               </span>
             </button>
