@@ -1,6 +1,7 @@
 "use client";
 
 import type { ChatMessage as ChatMessageType } from "@/types/api";
+import SpeakAloudButton from "@/components/common/SpeakAloudButton";
 
 interface ChatMessageProps {
   message: ChatMessageType;
@@ -33,7 +34,7 @@ export default function ChatMessage({ message, index }: ChatMessageProps) {
           {isUser ? "You" : isSystem ? "!" : "AI"}
         </div>
 
-         {/* Message Bubble */}
+        {/* Message Bubble */}
         <div
           className={`max-w-[80%] min-w-0 px-4.5 py-2.5 text-xs font-semibold leading-relaxed shadow-sm break-words ${
             isUser
@@ -58,17 +59,23 @@ export default function ChatMessage({ message, index }: ChatMessageProps) {
         </div>
       </div>
 
-      {/* Timestamp */}
-      <p
-        className={`mt-1 text-[10px] text-[var(--color-text-dim)] ${
-          isUser ? "text-right mr-10" : "ml-10"
+      {/* Timestamp & Speak Aloud Controls */}
+      <div
+        className={`mt-1.5 flex items-center gap-3 ${
+          isUser ? "justify-end mr-10" : "ml-11"
         }`}
       >
-        {new Date(message.timestamp).toLocaleTimeString("en-IN", {
-          hour: "2-digit",
-          minute: "2-digit",
-        })}
-      </p>
+        <span className="text-[10px] text-[var(--color-text-dim)] font-semibold">
+          {new Date(message.timestamp).toLocaleTimeString("en-IN", {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}
+        </span>
+
+        {!isUser && !isLoading && message.content && (
+          <SpeakAloudButton text={message.content} />
+        )}
+      </div>
     </div>
   );
 }

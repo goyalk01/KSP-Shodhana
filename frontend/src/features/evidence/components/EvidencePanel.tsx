@@ -2,6 +2,7 @@
 
 import type { Evidence } from "@/types/domain";
 import { formatConfidence } from "@/lib/utils";
+import SpeakAloudButton from "@/components/common/SpeakAloudButton";
 
 interface EvidencePanelProps {
   data: Evidence[] | null;
@@ -69,12 +70,13 @@ function EvidenceCard({ item, index }: { item: Evidence; index: number }) {
       className="rounded-xl border border-[var(--color-border)]/50 bg-[var(--color-surface)] p-4 transition-all duration-200 hover:shadow-md hover:border-[var(--color-primary)]/30 animate-fade-in"
       style={{ animationDelay: `${index * 0.1}s` }}
     >
-      {/* Header: Type + Confidence */}
+      {/* Header: Type + Confidence + Speak Aloud */}
       <div className="flex items-center justify-between gap-2 mb-2">
         <span className="text-[9px] font-extrabold uppercase tracking-widest text-[var(--color-primary)] truncate">
           {typeLabel}
         </span>
         <div className="flex items-center gap-2 shrink-0">
+          <SpeakAloudButton text={item.claim} />
           <span className={`text-[11px] font-bold ${confidenceClass} whitespace-nowrap shrink-0`}>
             {formatConfidence(item.confidence)}
           </span>
