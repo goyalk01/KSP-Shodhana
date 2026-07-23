@@ -1,7 +1,7 @@
 package com.ksp.shodhana.controller;
 
+import com.ksp.shodhana.dto.response.ApiResponse;
 import com.ksp.shodhana.security.AuditLedgerService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -13,7 +13,6 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/api/v1/audit")
-@CrossOrigin(origins = "*")
 public class AuditController {
 
     private final AuditLedgerService auditLedgerService;
@@ -23,11 +22,11 @@ public class AuditController {
     }
 
     @GetMapping("/ledger")
-    public ResponseEntity<Map<String, Object>> getAuditLedger() {
+    public ApiResponse<Map<String, Object>> getAuditLedger() {
         Map<String, Object> response = new HashMap<>();
         response.put("ledger", auditLedgerService.getLedger());
         response.put("integrityVerified", auditLedgerService.verifyLedgerIntegrity());
         response.put("count", auditLedgerService.getLedger().size());
-        return ResponseEntity.ok(response);
+        return ApiResponse.ok(response);
     }
 }

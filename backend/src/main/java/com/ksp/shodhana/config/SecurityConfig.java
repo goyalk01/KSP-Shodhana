@@ -46,6 +46,7 @@ public class SecurityConfig {
                                 "/api/v1/timeline/**",
                                 "/api/v1/reports/**",
                                 "/api/v1/settings",
+                                "/api/v1/audit/**",
                                 "/error",
                                 "/actuator/**"
                         ).permitAll()

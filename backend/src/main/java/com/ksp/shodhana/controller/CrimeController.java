@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * REST controller for Crime CRUD operations.
+ * REST controller for Crime management endpoints.
  */
 @RestController
 @RequestMapping("/api/v1/crimes")
@@ -28,14 +28,7 @@ public class CrimeController {
         return ApiResponse.ok(crimes);
     }
 
-    /** Get a single crime by ROWID */
-    @GetMapping("/{id}")
-    public ApiResponse<Crime> getCrime(@PathVariable Long id) {
-        Crime crime = crimeService.findById(id);
-        return ApiResponse.ok(crime);
-    }
-
-    /** PostGIS ST_DWithin Spatial Radius Search */
+    /** PostGIS ST_DWithin Spatial Radius Search (Static route mapped before /{id}) */
     @GetMapping("/spatial/radius")
     public ApiResponse<List<Crime>> getCrimesSpatialRadius(
             @RequestParam(defaultValue = "12.9716") double lat,
@@ -43,5 +36,12 @@ public class CrimeController {
             @RequestParam(defaultValue = "15.0") double radiusKm) {
         List<Crime> crimes = crimeService.findSpatialWithinRadius(lat, lng, radiusKm);
         return ApiResponse.ok(crimes);
+    }
+
+    /** Get a single crime by ROWID */
+    @GetMapping("/{id}")
+    public ApiResponse<Crime> getCrime(@PathVariable Long id) {
+        Crime crime = crimeService.findById(id);
+        return ApiResponse.ok(crime);
     }
 }

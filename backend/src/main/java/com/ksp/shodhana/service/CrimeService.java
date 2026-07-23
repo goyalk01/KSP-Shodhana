@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Service layer for Crime operations.
- * Handles business logic and delegates to repository for data access.
+ * Service for Crime domain operations.
  */
 @Service
 public class CrimeService {
@@ -25,7 +24,7 @@ public class CrimeService {
     }
 
     /**
-     * Find all crimes matching the given filters.
+     * Find all crimes matching the given filter criteria.
      */
     public List<Crime> findAll(CrimeFilterRequest filters) {
         log.debug("Finding crimes with filters: {}", filters);
@@ -57,7 +56,8 @@ public class CrimeService {
      */
     public List<Crime> findSpatialWithinRadius(double centerLat, double centerLng, double radiusKm) {
         log.info("Executing PostGIS ST_DWithin spatial radius query: center=({}, {}), radius={}km", centerLat, centerLng, radiusKm);
-        return crimeRepository.findAll(null).stream()
+        CrimeFilterRequest emptyFilters = new CrimeFilterRequest();
+        return crimeRepository.findAll(emptyFilters).stream()
                 .filter(c -> c.getLatitude() != null && c.getLongitude() != null)
                 .filter(c -> {
                     double lat1 = Math.toRadians(centerLat);
@@ -74,6 +74,6 @@ public class CrimeService {
                     double distanceKm = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                     return distanceKm <= radiusKm;
                 })
-                .collect(java.util.stream.Collectors.toList());
+                .toList();
     }
 }
