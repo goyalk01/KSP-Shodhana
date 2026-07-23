@@ -29,7 +29,7 @@ class GeminiClient:
         prompt: str,
         system_instruction: str,
         response_schema: type,
-        temperature: float = 0.2,
+        temperature: float = 0.4,
         max_retries: int = 1,
     ) -> Any:
         """
@@ -63,10 +63,12 @@ class GeminiClient:
 
                 elapsed_ms = (time.time() - start_time) * 1000
                 logger.info(
-                    "Gemini call completed in %.0fms | model=%s | attempt=%d",
+                    "Gemini call completed in %.0fms | model=%s | attempt=%d | tokens_in=%s | tokens_out=%s",
                     elapsed_ms,
                     self.model,
                     attempt + 1,
+                    getattr(response.usage_metadata, "prompt_token_count", "?"),
+                    getattr(response.usage_metadata, "candidates_token_count", "?"),
                 )
 
                 # Parse the structured response
