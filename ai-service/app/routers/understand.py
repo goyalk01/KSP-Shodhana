@@ -9,6 +9,8 @@ from fastapi import APIRouter, HTTPException
 from app.schemas.query import UnderstandRequest, UnderstandResponse
 from app.services.query_engine import QueryEngine
 
+from app.services.guardrails import guardrail_inspector
+
 router = APIRouter()
 query_engine = QueryEngine()
 
@@ -17,17 +19,11 @@ query_engine = QueryEngine()
 async def understand_query(request: UnderstandRequest) -> UnderstandResponse:
     """
     Parse a natural language query into structured intent and parameters.
-
-    This endpoint is called by Spring Boot when an investigator submits a query.
-    It uses Gemini to extract:
-    - Intent (what the user wants to do)
-    - Entities (people, locations, crime types, dates)
-    - Filters (structured query parameters)
-    - Visualizations (which UI panels to activate)
     """
     try:
+        clean_text = guardrail_inspector.sanitize_and_validate(request.text)
         result = await query_engine.understand(
-            text=request.text,
+            text=clean_text,
             conversation_history=request.conversation_history,
         )
         return result

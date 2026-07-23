@@ -1,6 +1,7 @@
 "use client";
 
 import { useWorkspaceStore } from "@/stores/workspaceStore";
+import { RoleSelector } from "@/components/security/RoleSelector";
 
 export default function WorkspaceHeader() {
   const { clearWorkspace, isQuerying, setActiveTab } = useWorkspaceStore();
@@ -20,15 +21,17 @@ export default function WorkspaceHeader() {
         className="min-w-0 pr-4 shrink text-left cursor-pointer group"
       >
         <h1 className="font-serif text-base sm:text-lg lg:text-xl font-extrabold tracking-tight text-[var(--color-text)] leading-tight whitespace-nowrap group-hover:text-[var(--color-primary)] transition-colors">
-          KSP Shodhana  Investigation Workspace
+          KSP Shodhana Investigation Workspace
         </h1>
         <p className="text-[11px] font-semibold text-[var(--color-text-muted)] mt-0.5 whitespace-nowrap hidden sm:block">
-          Here&apos;s what&apos;s happening across Karnataka today.
+          AI-Powered Crime Intelligence Platform & Multi-Hop Network Workspace
         </p>
       </button>
 
-      {/* Status + Actions */}
+      {/* Role Switcher + Status + Actions */}
       <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
+        <RoleSelector />
+
         {isQuerying && (
           <div className="flex items-center gap-2 rounded-lg border border-[var(--color-secondary)]/30 bg-[var(--color-secondary)]/10 px-3 py-1.5 text-xs font-bold text-[var(--color-secondary)] whitespace-nowrap shrink-0">
             <span className="relative flex h-2 w-2">

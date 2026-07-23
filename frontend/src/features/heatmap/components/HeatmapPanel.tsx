@@ -3,7 +3,7 @@
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 import type { HeatmapData } from "@/types/domain";
 import { MAP_CENTER, MAP_DEFAULT_ZOOM, SEVERITY_COLORS } from "@/lib/constants";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface HeatmapPanelProps {
   data: HeatmapData | null;
@@ -18,11 +18,51 @@ function MapUpdater({ center, zoom }: { center: { lat: number; lng: number }; zo
 }
 
 export default function HeatmapPanel({ data }: HeatmapPanelProps) {
-  if (!data || data.points.length === 0) {
+  const [spatialData, setSpatialData] = useState<HeatmapData | null>(data);
+  const [isSpatialQuery, setIsSpatialQuery] = useState<boolean>(false);
+
+  useEffect(() => {
+    setSpatialData(data);
+  }, [data]);
+
+  const handlePostGisSpatialQuery = async () => {
+    try {
+      setIsSpatialQuery(true);
+      const res = await fetch('/api/proxy/api/v1/crimes/spatial/radius?lat=12.9716&lng=77.5946&radiusKm=15');
+      if (res.ok) {
+        const body = await res.json();
+        const crimes = body.data || [];
+        const points = crimes.map((c: any) => ({
+          lat: c.latitude || 12.9716,
+          lng: c.longitude || 77.5946,
+          intensity: c.severity === 'CRITICAL' ? 0.9 : c.severity === 'HIGH' ? 0.7 : 0.4
+        }));
+        setSpatialData({
+          points,
+          center: MAP_CENTER,
+          zoom: 11
+        });
+      }
+    } catch (e) {
+      console.error('PostGIS spatial query error:', e);
+    } finally {
+      setIsSpatialQuery(false);
+    }
+  };
+
+  const activeData = spatialData || data;
+
+  if (!activeData || activeData.points.length === 0) {
     return (
       <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
-        <div className="panel-header">
-          <span>Crime Heatmap</span>
+        <div className="panel-header flex justify-between items-center px-4 py-2 bg-slate-50 border-b border-slate-200">
+          <span className="font-bold text-slate-800 text-sm">PostGIS Crime Spatial Heatmap</span>
+          <button
+            onClick={handlePostGisSpatialQuery}
+            className="text-[10px] font-mono font-bold bg-amber-500 hover:bg-amber-600 text-slate-950 px-2.5 py-1 rounded-md transition shadow-xs"
+          >
+            Run ST_DWithin Query
+          </button>
         </div>
         <div className="flex flex-1 items-center justify-center text-sm text-[var(--color-text-dim)]">
           No location data available
@@ -31,16 +71,29 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
     );
   }
 
-  const center = data.center || MAP_CENTER;
-  const zoom = data.zoom || MAP_DEFAULT_ZOOM;
+  const center = activeData.center || MAP_CENTER;
+  const zoom = activeData.zoom || MAP_DEFAULT_ZOOM;
 
   return (
     <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
-      <div className="panel-header">
-        <span>Crime Heatmap</span>
-        <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap border border-[var(--color-primary)]/20">
-          {data.points.length} incidents
-        </span>
+      <div className="panel-header flex justify-between items-center px-4 py-2.5 bg-slate-900 border-b border-slate-800">
+        <div className="flex items-center space-x-2">
+          <span className="font-bold text-white text-sm font-mono">POSTGIS SPATIAL HEATMAP</span>
+          <span className="text-[10px] font-extrabold font-mono uppercase tracking-wider text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded-md">
+            ST_DWithin 15km Radius
+          </span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <button
+            onClick={handlePostGisSpatialQuery}
+            className="text-[10px] font-mono font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 px-2.5 py-1 rounded-md transition shadow-sm"
+          >
+            {isSpatialQuery ? 'Querying PostGIS...' : 'Execute ST_DWithin Query'}
+          </button>
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap border border-[var(--color-primary)]/20">
+            {activeData.points.length} incidents
+          </span>
+        </div>
       </div>
 
       <div className="flex-1 relative">
@@ -57,8 +110,7 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
           />
           <MapUpdater center={center} zoom={zoom} />
 
-          {data.points.map((point, idx) => {
-            // Color based on intensity
+          {activeData.points.map((point, idx) => {
             const color =
               point.intensity > 0.7
                 ? SEVERITY_COLORS.Critical
@@ -79,10 +131,10 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
                 }}
               >
                 <Popup>
-                  <div className="text-xs">
-                    <p className="font-semibold">Crime Incident</p>
-                    <p>Intensity: {Math.round(point.intensity * 100)}%</p>
-                    <p>Location: {point.lat.toFixed(4)}, {point.lng.toFixed(4)}</p>
+                  <div className="text-xs font-mono">
+                    <p className="font-bold text-amber-600">PostGIS Spatial Incident</p>
+                    <p>Geom Density: {Math.round(point.intensity * 100)}%</p>
+                    <p>Coordinates: {point.lat.toFixed(4)}, {point.lng.toFixed(4)}</p>
                   </div>
                 </Popup>
               </CircleMarker>

@@ -47,6 +47,10 @@ public class AuditLedgerService {
         return entry;
     }
 
+    public List<AuditEntry> getLedger() {
+        return Collections.unmodifiableList(new ArrayList<>(ledger));
+    }
+
     public synchronized boolean verifyLedgerIntegrity() {
         String expectedPreviousHash = "GENESIS_HASH_KSP_SHODHANA_2026_VAULT";
 

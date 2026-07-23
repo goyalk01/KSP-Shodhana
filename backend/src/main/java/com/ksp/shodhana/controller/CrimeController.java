@@ -34,4 +34,14 @@ public class CrimeController {
         Crime crime = crimeService.findById(id);
         return ApiResponse.ok(crime);
     }
+
+    /** PostGIS ST_DWithin Spatial Radius Search */
+    @GetMapping("/spatial/radius")
+    public ApiResponse<List<Crime>> getCrimesSpatialRadius(
+            @RequestParam(defaultValue = "12.9716") double lat,
+            @RequestParam(defaultValue = "77.5946") double lng,
+            @RequestParam(defaultValue = "15.0") double radiusKm) {
+        List<Crime> crimes = crimeService.findSpatialWithinRadius(lat, lng, radiusKm);
+        return ApiResponse.ok(crimes);
+    }
 }

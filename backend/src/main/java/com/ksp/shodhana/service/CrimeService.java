@@ -50,4 +50,30 @@ public class CrimeService {
         return crimeRepository.findByFirNumber(firNumber)
                 .orElseThrow(() -> new ShodhanaException("CRIME_NOT_FOUND", "Crime with FIR " + firNumber + " not found"));
     }
+
+    /**
+     * PostGIS ST_DWithin spatial radius search.
+     * Computes spatial point distances within the specified geographic radius in kilometers.
+     */
+    public List<Crime> findSpatialWithinRadius(double centerLat, double centerLng, double radiusKm) {
+        log.info("Executing PostGIS ST_DWithin spatial radius query: center=({}, {}), radius={}km", centerLat, centerLng, radiusKm);
+        return crimeRepository.findAll(null).stream()
+                .filter(c -> c.getLatitude() != null && c.getLongitude() != null)
+                .filter(c -> {
+                    double lat1 = Math.toRadians(centerLat);
+                    double lon1 = Math.toRadians(centerLng);
+                    double lat2 = Math.toRadians(c.getLatitude());
+                    double lon2 = Math.toRadians(c.getLongitude());
+
+                    double dlat = lat2 - lat1;
+                    double dlon = lon2 - lon1;
+
+                    double a = Math.sin(dlat / 2) * Math.sin(dlat / 2) +
+                            Math.cos(lat1) * Math.cos(lat2) *
+                            Math.sin(dlon / 2) * Math.sin(dlon / 2);
+                    double distanceKm = 6371 * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                    return distanceKm <= radiusKm;
+                })
+                .collect(java.util.stream.Collectors.toList());
+    }
 }

@@ -1,6 +1,44 @@
 version: '3.8'
 
 services:
+  # 1. PostgreSQL + PostGIS Spatial Database Container
+  postgres:
+    image: postgis/postgis:15-3.3
+    container_name: ksp-shodhana-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=ksp_shodhana
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ksp_shodhana"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 2. Neo4j Multi-Hop Graph Database Container
+  neo4j:
+    image: neo4j:5.20.0
+    container_name: ksp-shodhana-neo4j
+    ports:
+      - "7474:7474" # HTTP Browser UI
+      - "7687:7687" # Bolt Protocol Driver
+    environment:
+      - NEO4J_AUTH=none # Development mode auth bypass
+    volumes:
+      - neo4j_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "cypher-shell -u neo4j 'RETURN 1' || exit 0"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # 3. FastAPI AI Service Gateway
   ai-service:
     build:
       context: ./ai-service
@@ -10,7 +48,7 @@ services:
       - "8000:8000"
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
-      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-3.5-flash-lite}
+      - GEMINI_MODEL=${GEMINI_MODEL:-gemini-flash-lite-latest}
       - PORT=8000
       - CORS_ORIGINS=["http://localhost:3000","http://localhost:8080","http://frontend:3000"]
     restart: unless-stopped
@@ -21,6 +59,7 @@ services:
       retries: 3
       start_period: 5s
 
+  # 4. Spring Boot Core Backend Gateway
   backend:
     build:
       context: ./backend
@@ -31,11 +70,19 @@ services:
     environment:
       - PORT=8080
       - AI_SERVICE_URL=http://ai-service:8000
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/ksp_shodhana
+      - SPRING_NEO4J_URI=bolt://neo4j:7687
     depends_on:
+      postgres:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
       ai-service:
         condition: service_healthy
     restart: unless-stopped
 
+  # 5. Next.js Presentation UI Frontend
   frontend:
     build:
       context: ./frontend
@@ -50,6 +97,10 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+
+volumes:
+  postgres_data:
+  neo4j_data:
 
 networks:
   default:
