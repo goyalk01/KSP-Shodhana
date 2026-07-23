@@ -20,6 +20,18 @@ interface WorkspaceState {
   messages: ChatMessage[];
   isQuerying: boolean;
 
+  // Navigation / Tabs
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+
+  // Settings state
+  geminiModel: string;
+  geminiApiKey: string;
+  defaultDistrict: string;
+  localFallbackActive: boolean;
+  settingsLoading: boolean;
+  settingsSuccessMessage: string;
+
   // Active visualizations (driven by AI response)
   activeVisualizations: VisualizationType[];
 
@@ -36,12 +48,30 @@ interface WorkspaceState {
   sendQuery: (text: string) => Promise<void>;
   clearWorkspace: () => void;
   setActiveVisualizations: (vis: VisualizationType[]) => void;
+  fetchSettings: () => Promise<void>;
+  updateSettings: (settingsPayload: {
+    geminiModel: string;
+    geminiApiKey: string;
+    defaultDistrict: string;
+    localFallbackActive: boolean;
+  }) => Promise<void>;
 }
 
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   // Initial state
   messages: [],
   isQuerying: false,
+  activeTab: "dashboard",
+  setActiveTab: (tab: string) => set({ activeTab: tab }),
+
+  // Settings
+  geminiModel: "gemini-3.5-flash-lite",
+  geminiApiKey: "AIzaSyAegIfAXGyCo_jemy9kziLFWVVel1YNVIc",
+  defaultDistrict: "Bengaluru Urban",
+  localFallbackActive: false,
+  settingsLoading: false,
+  settingsSuccessMessage: "",
+
   activeVisualizations: [],
   networkData: null,
   heatmapData: null,
@@ -153,4 +183,49 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   // Manually toggle visualizations
   setActiveVisualizations: (vis: VisualizationType[]) =>
     set({ activeVisualizations: vis }),
+
+  // Fetch settings from API
+  fetchSettings: async () => {
+    set({ settingsLoading: true, settingsSuccessMessage: "" });
+    try {
+      const response = await apiClient.get("/api/v1/settings");
+      const data = response.data.data;
+      set({
+        geminiModel: data.gemini_model || "gemini-3.5-flash-lite",
+        geminiApiKey: data.gemini_api_key || "",
+        defaultDistrict: data.default_district || "Bengaluru Urban",
+        localFallbackActive: data.local_fallback_active || false,
+        settingsLoading: false,
+      });
+    } catch (error) {
+      console.error("Failed to fetch settings:", error);
+      set({ settingsLoading: false });
+    }
+  },
+
+  // Save settings via API
+  updateSettings: async (settingsPayload) => {
+    set({ settingsLoading: true, settingsSuccessMessage: "" });
+    try {
+      await apiClient.post("/api/v1/settings", {
+        gemini_model: settingsPayload.geminiModel,
+        gemini_api_key: settingsPayload.geminiApiKey,
+        default_district: settingsPayload.defaultDistrict,
+        local_fallback_active: settingsPayload.localFallbackActive,
+      });
+      set({
+        geminiModel: settingsPayload.geminiModel,
+        geminiApiKey: settingsPayload.geminiApiKey,
+        defaultDistrict: settingsPayload.defaultDistrict,
+        localFallbackActive: settingsPayload.localFallbackActive,
+        settingsLoading: false,
+        settingsSuccessMessage: "Settings saved successfully!",
+      });
+      // Clear success message after 3 seconds
+      setTimeout(() => set({ settingsSuccessMessage: "" }), 3000);
+    } catch (error) {
+      console.error("Failed to update settings:", error);
+      set({ settingsLoading: false });
+    }
+  },
 }));

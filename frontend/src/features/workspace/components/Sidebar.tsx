@@ -52,11 +52,10 @@ const NAV_ITEMS = [
 ];
 
 export default function Sidebar() {
-  const [activeNav, setActiveNav] = useState("dashboard");
-  const { sendQuery } = useWorkspaceStore();
+  const { activeTab, setActiveTab, sendQuery } = useWorkspaceStore();
 
   const handleNavClick = (id: string) => {
-    setActiveNav(id);
+    setActiveTab(id);
     // Trigger relevant queries for demo
     if (id === "analytics") sendQuery("Show crime hotspots in Karnataka");
     if (id === "cases") sendQuery("Show all theft cases in Bengaluru this month");
@@ -82,7 +81,7 @@ export default function Sidebar() {
               aria-label={item.label}
               title={item.label}
               className={`group relative flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-200 cursor-pointer ${
-                activeNav === item.id
+                activeTab === item.id
                   ? "bg-[var(--color-primary)] text-white shadow-md"
                   : "text-[var(--color-text-muted)] hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text)]"
               }`}

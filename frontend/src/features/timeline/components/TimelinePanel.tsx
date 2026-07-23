@@ -11,7 +11,7 @@ interface TimelinePanelProps {
 export default function TimelinePanel({ data }: TimelinePanelProps) {
   if (!data || data.length === 0) {
     return (
-      <div className="panel flex h-full flex-col">
+      <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
         <div className="panel-header">
           <span>📅 Investigation Timeline</span>
         </div>
@@ -34,10 +34,10 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
   });
 
   return (
-    <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
+    <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
       <div className="panel-header">
         <span>📅 Investigation Timeline</span>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-white px-2 py-0.5 rounded-full border border-[var(--color-border)]/50 shadow-soft">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2 py-0.5 rounded-md">
           {data.length} events
         </span>
       </div>
@@ -67,16 +67,16 @@ export default function TimelinePanel({ data }: TimelinePanelProps) {
                   <div 
                     tabIndex={0}
                     aria-label={`Timeline event: ${event.title}, ${formattedDateStr}`}
-                    className="flex-1 rounded-[1.5rem] border border-[var(--color-border)]/50 bg-white p-4 shadow-soft card-hover-lift hover:border-[var(--color-primary)]/30 focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
+                    className="flex-1 rounded-xl border border-[var(--color-border)]/50 bg-[var(--color-surface)] p-4 shadow-sm hover:shadow-md hover:border-[var(--color-primary)]/30 focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]"
                   >
                     <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex items-center gap-2">
                         <span className="text-sm">{icon}</span>
-                        <h4 className="text-xs font-bold text-[var(--color-text)] font-serif leading-tight">
+                        <h4 className="text-xs font-bold text-[var(--color-text)] leading-tight">
                           {event.title}
                         </h4>
                       </div>
-                      <span className="shrink-0 rounded-full bg-[var(--color-primary)]/10 px-3 py-1 text-[9px] font-extrabold tracking-wider uppercase text-[var(--color-primary)]">
+                      <span className="shrink-0 rounded-md bg-[var(--color-primary)]/10 px-2 py-0.5 text-[9px] font-extrabold tracking-wider uppercase text-[var(--color-primary)]">
                         {eventType}
                       </span>
                     </div>

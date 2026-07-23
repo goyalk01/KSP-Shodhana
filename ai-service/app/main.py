@@ -8,7 +8,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import understand, analyze
+from app.routers import understand, analyze, settings as settings_router
 
 
 @asynccontextmanager
@@ -41,6 +41,7 @@ app.add_middleware(
 # Register routers
 app.include_router(understand.router, prefix="/ai/v1", tags=["Query Understanding"])
 app.include_router(analyze.router, prefix="/ai/v1", tags=["Analysis"])
+app.include_router(settings_router.router, prefix="/ai/v1", tags=["Settings"])
 
 
 @app.get("/", tags=["Health"])

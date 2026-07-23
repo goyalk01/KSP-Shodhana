@@ -41,15 +41,15 @@ export default function VisualizationGrid() {
   // Dynamic grid layout based on number of active panels
   const gridClass =
     activePanels === 1
-      ? "grid-cols-1"
+      ? "grid-cols-1 grid-rows-1"
       : activePanels === 2
-        ? "grid-cols-1 lg:grid-cols-2"
+        ? "grid-cols-1 lg:grid-cols-2 grid-rows-1"
         : activePanels === 3
-          ? "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
-          : "grid-cols-1 lg:grid-cols-2";
+          ? "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid-rows-1"
+          : "grid-cols-1 lg:grid-cols-2 grid-rows-2";
 
   return (
-    <div className={`grid flex-1 gap-3 overflow-auto p-3 ${gridClass} auto-rows-fr`}>
+    <div className={`grid flex-1 h-full gap-3 overflow-auto p-3 ${gridClass} auto-rows-fr`}>
       {showNetwork && (
         <div className="animate-fade-in h-full">
           <NetworkGraphPanel data={networkData} />

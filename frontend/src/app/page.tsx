@@ -6,9 +6,10 @@ import VisualizationGrid from "@/features/workspace/components/VisualizationGrid
 import WorkspaceHeader from "@/features/workspace/components/WorkspaceHeader";
 import WelcomeState from "@/features/workspace/components/WelcomeState";
 import Sidebar from "@/features/workspace/components/Sidebar";
+import SettingsPanel from "@/features/workspace/components/SettingsPanel";
 
 export default function WorkspacePage() {
-  const { messages, activeVisualizations } = useWorkspaceStore();
+  const { messages, activeVisualizations, activeTab } = useWorkspaceStore();
 
   const hasMessages = messages.length > 0;
   const hasVisualizations = activeVisualizations.length > 0;
@@ -25,19 +26,25 @@ export default function WorkspacePage() {
 
         {/* Body */}
         <div className="flex flex-1 overflow-hidden">
-          {/* Chat Sidebar */}
-          <div className="flex w-[340px] min-w-[300px] flex-col p-3 pr-0">
-            <ChatPanel />
-          </div>
+          {activeTab === "settings" ? (
+            <SettingsPanel />
+          ) : (
+            <>
+              {/* Chat Sidebar */}
+              <div className="flex w-[340px] min-w-[300px] flex-col p-3 pr-0">
+                <ChatPanel />
+              </div>
 
-          {/* Visualization Area */}
-          <div className="flex flex-1 flex-col overflow-hidden">
-            {hasVisualizations ? (
-              <VisualizationGrid />
-            ) : (
-              <WelcomeState showMinimal={hasMessages} />
-            )}
-          </div>
+              {/* Visualization Area */}
+              <div className="flex flex-1 flex-col overflow-hidden">
+                {hasVisualizations ? (
+                  <VisualizationGrid />
+                ) : (
+                  <WelcomeState showMinimal={hasMessages} />
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

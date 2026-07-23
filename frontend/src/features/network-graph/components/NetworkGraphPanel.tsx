@@ -37,7 +37,7 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
 
   if (!data || data.nodes.length === 0) {
     return (
-      <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden">
+      <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
         <div className="panel-header">
           <span>🕸️ Criminal Network</span>
         </div>
@@ -49,10 +49,10 @@ export default function NetworkGraphPanel({ data }: NetworkGraphPanelProps) {
   }
 
   return (
-    <div className="panel flex h-full flex-col rounded-[2rem] border border-[var(--color-border)]/50 bg-[#F0EBE5]/10 shadow-soft overflow-hidden" ref={containerRef}>
+    <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden" ref={containerRef}>
       <div className="panel-header">
         <span>🕸️ Criminal Network</span>
-        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-white px-2 py-0.5 rounded-full border border-[var(--color-border)]/50 shadow-soft">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2 py-0.5 rounded-md">
           {data.nodes.length} nodes · {data.links.length} links
         </span>
       </div>
