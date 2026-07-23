@@ -30,7 +30,7 @@ class GeminiClient:
         system_instruction: str,
         response_schema: type,
         temperature: float = 0.2,
-        max_retries: int = 1,
+        max_retries: int = 2,
     ) -> Any:
         """
         Generate a structured JSON response from Gemini.
@@ -65,7 +65,7 @@ class GeminiClient:
                                 max_output_tokens=settings.gemini_max_tokens,
                             ),
                         ),
-                        timeout=3.5,
+                        timeout=15.0,
                     )
 
                     elapsed_ms = (time.time() - start_time) * 1000
@@ -87,7 +87,7 @@ class GeminiClient:
                         target_model, elapsed_ms, attempt + 1, max_retries + 1, str(e),
                     )
                     if attempt < max_retries:
-                        await asyncio.sleep(0.2 * (attempt + 1))
+                        await asyncio.sleep(0.3 * (attempt + 1))
 
         raise last_error  # type: ignore
 
@@ -100,8 +100,11 @@ class GeminiClient:
         """Generate plain text from Gemini with model fallback."""
         from google.genai import types
 
-        candidate_models = [self.model, "gemini-2.5-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
-        unique_models = [m for idx, m in enumerate(candidate_models) if m and m not in candidate_models[:idx]]
+        candidate_models = [self.model, "gemini-2.0-flash", "gemini-2.5-flash", "gemini-1.5-flash"]
+        unique_models = []
+        for m in candidate_models:
+            if m and m not in unique_models:
+                unique_models.append(m)
 
         last_err = None
         for target_model in unique_models:
@@ -117,7 +120,7 @@ class GeminiClient:
                             max_output_tokens=settings.gemini_max_tokens,
                         ),
                     ),
-                    timeout=8.0,
+                    timeout=15.0,
                 )
                 return response.text
             except Exception as e:

@@ -64,7 +64,7 @@ public class AiGatewayService {
                     ))
                     .retrieve()
                     .bodyToMono(UnderstandResponse.class)
-                    .block(java.time.Duration.ofSeconds(2));
+                    .block(java.time.Duration.ofSeconds(20));
 
             log.info("Parsed intent: {}, visualizations: {}", understand.getIntent(), understand.getVisualizations());
 
@@ -81,7 +81,7 @@ public class AiGatewayService {
                     ))
                     .retrieve()
                     .bodyToMono(AnalyzeResponse.class)
-                    .block(java.time.Duration.ofSeconds(2));
+                    .block(java.time.Duration.ofSeconds(20));
 
             log.info("Analysis complete with confidence: {}", analysis.getConfidence());
 
@@ -106,6 +106,14 @@ public class AiGatewayService {
                 Long primaryCriminalId = criminals.get(0).getRowId();
                 data.put("network", networkService.getNetworkByCriminal(primaryCriminalId, 2));
             }
+        } else if ("find_criminal".equals(intent)) {
+            // Fetch criminal profiles matching filters
+            String name = filters != null ? filters.getPersonName() : null;
+            String status = filters != null ? filters.getStatus() : null;
+            String risk = filters != null ? filters.getSeverity() : null;
+            String district = filters != null ? filters.getDistrict() : null;
+            List<Criminal> criminals = criminalService.findAll(district, risk, status, name);
+            data.put("criminals", criminals);
         } else if ("timeline".equals(intent)) {
             // Fetch investigation timeline
             String fir = filters != null ? filters.getFirNumber() : null;
@@ -113,14 +121,19 @@ public class AiGatewayService {
                 try {
                     Crime crime = crimeService.findByFirNumber(fir);
                     data.put("crime", crime);
-                    // Match to investigation
-                    data.put("timeline", timelineService.getTimeline(1L)); // Default to demo investigation 1
+                    data.put("timeline", timelineService.getTimeline(1L));
                 } catch (Exception e) {
                     data.put("timeline", timelineService.getTimeline(1L));
                 }
             } else {
                 data.put("timeline", timelineService.getTimeline(1L));
             }
+        } else if ("general_question".equals(intent)) {
+            // Provide full overview data for general questions
+            List<Criminal> criminals = criminalService.findAll(null, null, null, null);
+            data.put("criminals", criminals);
+            List<Crime> crimes = crimeService.findAll(new CrimeFilterRequest());
+            data.put("crimes", crimes);
         } else {
             // Default: search crimes
             CrimeFilterRequest filterRequest = CrimeFilterRequest.builder()
@@ -132,6 +145,9 @@ public class AiGatewayService {
                     .build();
             List<Crime> crimes = crimeService.findAll(filterRequest);
             data.put("crimes", crimes);
+            // Also include criminals for broader context
+            List<Criminal> criminals = criminalService.findAll(null, null, null, null);
+            data.put("criminals", criminals);
         }
 
         return data;

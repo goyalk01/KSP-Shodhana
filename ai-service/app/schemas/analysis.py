@@ -1,6 +1,7 @@
 """
 Pydantic schemas for the analysis endpoint.
 These define the contract for AI-generated insights and evidence.
+Uses no default values to remain compatible with Gemini structured output.
 """
 
 from typing import Any, Optional
@@ -23,14 +24,10 @@ class AnalyzeRequest(BaseModel):
 class EvidenceItem(BaseModel):
     """A single piece of evidence supporting an AI claim."""
     id: str
-    claim: str = Field(..., description="The factual claim being made")
-    sources: list[str] = Field(
-        description="FIR numbers, record IDs, or data points supporting this claim",
-    )
+    claim: str = Field(description="The factual claim being made")
+    sources: list[str] = Field(description="FIR numbers, record IDs, or data points supporting this claim")
     confidence: float = Field(ge=0.0, le=1.0, description="Confidence score 0-1")
-    type: str = Field(
-        description="Evidence type: criminal_link, pattern, location, modus_operandi, temporal",
-    )
+    type: str = Field(description="Evidence type: criminal_link, pattern, location, modus_operandi, temporal")
 
 
 class InsightItem(BaseModel):
@@ -42,13 +39,9 @@ class InsightItem(BaseModel):
 
 
 class AnalyzeResponse(BaseModel):
-    """Output from the /ai/v1/analyze endpoint."""
-    summary: str = Field(..., description="Natural language summary of the analysis")
+    """Output from the /ai/v1/analyze endpoint. Used as Gemini structured output schema."""
+    summary: str = Field(description="Natural language summary of the analysis")
     insights: list[InsightItem] = Field(description="List of analytical insights")
     evidence: list[EvidenceItem] = Field(description="List of supporting evidence")
-    confidence: float = Field(
-        ge=0.0, le=1.0, description="Overall confidence in the analysis"
-    )
-    suggested_followups: list[str] = Field(
-        description="Suggested follow-up questions for the investigator",
-    )
+    confidence: float = Field(ge=0.0, le=1.0, description="Overall confidence in the analysis")
+    suggested_followups: list[str] = Field(description="Suggested follow-up questions for the investigator")
