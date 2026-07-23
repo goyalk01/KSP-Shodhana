@@ -86,7 +86,7 @@ public class AiGatewayService {
             log.info("Analysis complete with confidence: {}", analysis.getConfidence());
 
             // Step 4: Assemble WorkspacePayload dynamically
-            return assemblePayload(understand, analysis, data, understand.getFilters());
+            return assemblePayload(understand, analysis, data, understand.getFilters(), request.getText());
 
         } catch (Throwable t) {
             log.warn("FastAPI pipeline failed: {}. Falling back to local offline demo processor...", t.getMessage());
@@ -97,13 +97,15 @@ public class AiGatewayService {
     private Map<String, Object> fetchDataForIntent(String intent, QueryFilters filters, String rawQuery) {
         Map<String, Object> data = new HashMap<>();
 
-        // Extract person name or FIR search terms from filters or raw query
         String personName = filters != null ? filters.getPersonName() : null;
         String firNumber = filters != null ? filters.getFirNumber() : null;
+        String district = filters != null ? filters.getDistrict() : null;
 
-        // Fallback extract suspect name from raw text if Gemini didn't populate filter
         if (personName == null || personName.trim().isEmpty()) {
             personName = extractSuspectNameFromText(rawQuery);
+        }
+        if (district == null || district.trim().isEmpty()) {
+            district = extractDistrictFromText(rawQuery);
         }
 
         if ("show_network".equals(intent) || personName != null) {
@@ -113,13 +115,11 @@ public class AiGatewayService {
                 Long primaryCriminalId = criminals.get(0).getRowId();
                 data.put("network", networkService.getNetworkByCriminal(primaryCriminalId, 2));
             } else {
-                // If no specific criminal found by name, default center to first criminal in DB
                 data.put("network", networkService.getNetworkByCriminal(1L, 2));
             }
         } else if ("find_criminal".equals(intent)) {
             String status = filters != null ? filters.getStatus() : null;
             String risk = filters != null ? filters.getSeverity() : null;
-            String district = filters != null ? filters.getDistrict() : null;
             List<Criminal> criminals = criminalService.findAll(district, risk, status, personName);
             data.put("criminals", criminals);
             if (!criminals.isEmpty()) {
@@ -143,17 +143,17 @@ public class AiGatewayService {
             List<Crime> crimes = crimeService.findAll(new CrimeFilterRequest());
             data.put("crimes", crimes);
         } else {
-            // Default: search crimes with dynamic filters
+            // Search crimes with dynamic district & criteria filters
             CrimeFilterRequest filterRequest = CrimeFilterRequest.builder()
                     .crimeType(filters != null ? filters.getCrimeType() : null)
-                    .district(filters != null ? filters.getDistrict() : null)
+                    .district(district)
                     .station(filters != null ? filters.getStation() : null)
                     .status(filters != null ? filters.getStatus() : null)
                     .severity(filters != null ? filters.getSeverity() : null)
                     .build();
             List<Crime> crimes = crimeService.findAll(filterRequest);
             data.put("crimes", crimes);
-            List<Criminal> criminals = criminalService.findAll(filters != null ? filters.getDistrict() : null, null, null, null);
+            List<Criminal> criminals = criminalService.findAll(district, null, null, null);
             data.put("criminals", criminals);
             if (!criminals.isEmpty()) {
                 data.put("network", networkService.getNetworkByCriminal(criminals.get(0).getRowId(), 2));
@@ -163,7 +163,7 @@ public class AiGatewayService {
         return data;
     }
 
-    private WorkspacePayload assemblePayload(UnderstandResponse understand, AnalyzeResponse analysis, Map<String, Object> data, QueryFilters filters) {
+    private WorkspacePayload assemblePayload(UnderstandResponse understand, AnalyzeResponse analysis, Map<String, Object> data, QueryFilters filters, String rawQuery) {
         WorkspacePayload.WorkspacePayloadBuilder builder = WorkspacePayload.builder()
                 .message(analysis.getSummary())
                 .visualizations(understand.getVisualizations())
@@ -181,21 +181,24 @@ public class AiGatewayService {
             }
         }
 
-        // Dynamic Heatmap resolution based on filtered crimes
+        // Dynamic Heatmap resolution based on exact location/district filter
         if (understand.getVisualizations().contains("heatmap")) {
+            String targetDistrict = filters != null ? filters.getDistrict() : null;
+            if (targetDistrict == null || targetDistrict.trim().isEmpty()) {
+                targetDistrict = extractDistrictFromText(rawQuery);
+            }
+
             CrimeFilterRequest filterRequest = CrimeFilterRequest.builder()
                     .crimeType(filters != null ? filters.getCrimeType() : null)
-                    .district(filters != null ? filters.getDistrict() : null)
+                    .district(targetDistrict)
                     .station(filters != null ? filters.getStation() : null)
                     .status(filters != null ? filters.getStatus() : null)
                     .severity(filters != null ? filters.getSeverity() : null)
                     .build();
 
             List<Crime> crimes = crimeService.findAll(filterRequest);
-            if (crimes.isEmpty()) {
-                crimes = crimeService.findAll(new CrimeFilterRequest());
-            }
 
+            // Map incidents to geographic points
             List<WorkspacePayload.HeatmapPoint> points = crimes.stream()
                     .filter(c -> c.getLatitude() != null && c.getLongitude() != null)
                     .map(c -> WorkspacePayload.HeatmapPoint.builder()
@@ -205,17 +208,49 @@ public class AiGatewayService {
                             .build())
                     .collect(Collectors.toList());
 
-            double centerLat = 12.9716;
-            double centerLng = 77.5946;
-            if (!points.isEmpty()) {
-                centerLat = points.get(0).getLat();
-                centerLng = points.get(0).getLng();
+            // Determine optimal map center and zoom level based on district
+            double centerLat = 14.2000;
+            double centerLng = 75.8000;
+            int zoomLevel = 7; // Default Karnataka state view
+
+            if (targetDistrict != null && !targetDistrict.isEmpty()) {
+                if (targetDistrict.toLowerCase().contains("bengaluru")) {
+                    centerLat = 12.9716;
+                    centerLng = 77.5946;
+                    zoomLevel = 11;
+                } else if (targetDistrict.toLowerCase().contains("mysuru") || targetDistrict.toLowerCase().contains("mysore")) {
+                    centerLat = 12.2958;
+                    centerLng = 76.6394;
+                    zoomLevel = 12;
+                } else if (targetDistrict.toLowerCase().contains("hubballi") || targetDistrict.toLowerCase().contains("hubli")) {
+                    centerLat = 15.3647;
+                    centerLng = 75.1240;
+                    zoomLevel = 12;
+                } else if (targetDistrict.toLowerCase().contains("dakshina") || targetDistrict.toLowerCase().contains("mangaluru")) {
+                    centerLat = 12.9141;
+                    centerLng = 74.8560;
+                    zoomLevel = 12;
+                } else if (!points.isEmpty()) {
+                    centerLat = points.get(0).getLat();
+                    centerLng = points.get(0).getLng();
+                    zoomLevel = 11;
+                }
+            } else if (!points.isEmpty()) {
+                // Average center coordinates for filtered subset
+                double sumLat = 0, sumLng = 0;
+                for (WorkspacePayload.HeatmapPoint p : points) {
+                    sumLat += p.getLat();
+                    sumLng += p.getLng();
+                }
+                centerLat = sumLat / points.size();
+                centerLng = sumLng / points.size();
+                zoomLevel = points.size() < 4 ? 11 : 8;
             }
 
             builder.heatmap(WorkspacePayload.HeatmapData.builder()
                     .points(points)
                     .center(WorkspacePayload.GeoCenter.builder().lat(centerLat).lng(centerLng).build())
-                    .zoom(points.size() < 3 ? 12 : 10)
+                    .zoom(zoomLevel)
                     .build());
         }
 
@@ -258,6 +293,18 @@ public class AiGatewayService {
         return null;
     }
 
+    private String extractDistrictFromText(String rawQuery) {
+        if (rawQuery == null) return null;
+        String q = rawQuery.toLowerCase();
+        if (q.contains("bengaluru") || q.contains("bangalore") || q.contains("ಬೆಂಗಳೂರು")) return "Bengaluru Urban";
+        if (q.contains("mysuru") || q.contains("mysore") || q.contains("ಮೈಸೂರು")) return "Mysuru";
+        if (q.contains("hubballi") || q.contains("hubli") || q.contains("dharwad") || q.contains("ಹುಬ್ಬಳ್ಳಿ")) return "Hubballi-Dharwad";
+        if (q.contains("mangaluru") || q.contains("mangalore") || q.contains("mangaluru")) return "Dakshina Kannada";
+        if (q.contains("udupi") || q.contains("ಉಡುಪಿ")) return "Udupi";
+        if (q.contains("belagavi") || q.contains("belgaum") || q.contains("ಬೆಳಗಾವಿ")) return "Belagavi";
+        return null;
+    }
+
     /**
      * Local offline heuristics processor to ensure high reliability during demos.
      */
@@ -294,7 +341,8 @@ public class AiGatewayService {
                 "ಸ್ಥಳ", "ನಕ್ಷೆ", "ಪ್ರದೇಶ", "ಎಲ್ಲಿ")) {
             mockUnderstand.setIntent("crime_hotspots");
             mockUnderstand.setVisualizations(List.of("heatmap", "evidence"));
-            data = fetchDataForIntent("crime_hotspots", null, query);
+            String district = extractDistrictFromText(query);
+            data = fetchDataForIntent("crime_hotspots", QueryFilters.builder().district(district).build(), query);
 
             mockAnalyze.setSummary("Crime density map of Karnataka generated for target query. " +
                     "Displays geographic concentration across active districts in Karnataka.");
@@ -322,7 +370,7 @@ public class AiGatewayService {
             ));
         }
 
-        return assemblePayload(mockUnderstand, mockAnalyze, data, null);
+        return assemblePayload(mockUnderstand, mockAnalyze, data, null, query);
     }
 
     private boolean matchesAny(String query, String... keywords) {
