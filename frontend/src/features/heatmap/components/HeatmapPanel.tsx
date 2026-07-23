@@ -55,13 +55,13 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
   if (!activeData || activeData.points.length === 0) {
     return (
       <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
-        <div className="panel-header flex justify-between items-center px-4 py-2 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50">
-          <span className="font-serif font-bold text-[var(--color-text)] text-sm">Crime Hotspots Map</span>
+        <div className="flex justify-between items-center px-4 py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50 min-h-[44px]">
+          <span className="font-serif font-bold text-[var(--color-text)] text-sm tracking-normal capitalize">Crime Hotspots</span>
           <button
             onClick={handlePostGisSpatialQuery}
-            className="text-xs font-bold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3 py-1.5 rounded-lg transition shadow-xs cursor-pointer whitespace-nowrap shrink-0"
+            className="text-xs font-semibold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3 py-1 rounded-lg transition shadow-xs cursor-pointer whitespace-nowrap shrink-0 normal-case tracking-normal"
           >
-            Filter 15km Radius
+            Filter 15km
           </button>
         </div>
         <div className="flex flex-1 items-center justify-center text-sm text-[var(--color-text-dim)]">
@@ -76,21 +76,18 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
 
   return (
     <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
-      <div className="panel-header flex justify-between items-center px-4 py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50">
-        <div className="flex items-center space-x-2 min-w-0">
-          <span className="font-serif font-bold text-[var(--color-text)] text-sm whitespace-nowrap shrink-0">Crime Hotspots Map</span>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 border border-[var(--color-primary)]/20 px-2 py-0.5 rounded-md whitespace-nowrap shrink-0">
-            15km Radius Zone
-          </span>
+      <div className="flex justify-between items-center px-4 py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50 min-h-[44px]">
+        <div className="flex items-center min-w-0 pr-2">
+          <span className="font-serif font-bold text-[var(--color-text)] text-sm whitespace-nowrap truncate tracking-normal">Crime Hotspots</span>
         </div>
         <div className="flex items-center space-x-2 shrink-0">
           <button
             onClick={handlePostGisSpatialQuery}
-            className="text-xs font-bold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3.5 py-1.5 rounded-lg transition shadow-sm cursor-pointer whitespace-nowrap shrink-0"
+            className="text-xs font-semibold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3 py-1 rounded-lg transition shadow-xs cursor-pointer whitespace-nowrap shrink-0 normal-case tracking-normal"
           >
-            {isSpatialQuery ? 'Filtering Radius...' : 'Filter 15km Radius'}
+            {isSpatialQuery ? 'Filtering...' : 'Filter 15km Radius'}
           </button>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap border border-[var(--color-primary)]/20">
+          <span className="text-[11px] font-bold text-[var(--color-primary)] bg-[var(--color-primary)]/10 px-2.5 py-1 rounded-md shrink-0 whitespace-nowrap border border-[var(--color-primary)]/20 normal-case tracking-normal">
             {activeData.points.length} Incidents
           </span>
         </div>
