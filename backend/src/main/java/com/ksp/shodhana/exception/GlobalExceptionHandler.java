@@ -22,8 +22,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ShodhanaException.class)
     public ResponseEntity<ApiResponse<Void>> handleShodhanaException(ShodhanaException ex) {
         log.error("Business error [{}]: {}", ex.getErrorCode(), ex.getMessage());
+        HttpStatus status = "RATE_LIMIT_EXCEEDED".equals(ex.getErrorCode()) 
+                ? HttpStatus.TOO_MANY_REQUESTS 
+                : HttpStatus.BAD_REQUEST;
+
         return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
+                .status(status)
                 .body(ApiResponse.error(ex.getErrorCode(), ex.getMessage()));
     }
 
