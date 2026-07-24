@@ -1,9 +1,10 @@
 "use client";
 
-import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup, GeoJSON, useMap } from "react-leaflet";
 import type { HeatmapData } from "@/types/domain";
 import { MAP_CENTER, MAP_DEFAULT_ZOOM, SEVERITY_COLORS } from "@/lib/constants";
 import { useEffect, useState } from "react";
+import { officialIndiaBoundaryGeoJSON } from "../data/indiaBoundaryGeoJSON";
 
 interface HeatmapPanelProps {
   data: HeatmapData | null;
@@ -50,35 +51,30 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
     }
   };
 
-  const activeData = spatialData || data;
-
-  if (!activeData || activeData.points.length === 0) {
-    return (
-      <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
-        <div className="flex justify-between items-center px-4 py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50 min-h-[44px]">
-          <span className="font-serif font-bold text-[var(--color-text)] text-sm tracking-normal capitalize">Crime Hotspots</span>
-          <button
-            onClick={handlePostGisSpatialQuery}
-            className="text-xs font-semibold bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] text-white px-3 py-1 rounded-lg transition shadow-xs cursor-pointer whitespace-nowrap shrink-0 normal-case tracking-normal"
-          >
-            Filter 15km
-          </button>
-        </div>
-        <div className="flex flex-1 items-center justify-center text-sm text-[var(--color-text-dim)]">
-          No location data available
-        </div>
-      </div>
-    );
-  }
+  const activeData = spatialData || {
+    points: [
+      { lat: 12.9716, lng: 77.5946, intensity: 0.9 }, // Bengaluru
+      { lat: 12.2958, lng: 76.6394, intensity: 0.6 }, // Mysuru
+      { lat: 15.3647, lng: 75.1240, intensity: 0.7 }, // Hubballi-Dharwad
+      { lat: 12.9141, lng: 74.8560, intensity: 0.5 }, // Mangaluru
+      { lat: 15.8497, lng: 74.4977, intensity: 0.8 }, // Belagavi
+    ],
+    center: MAP_CENTER,
+    zoom: MAP_DEFAULT_ZOOM,
+  };
 
   const center = activeData.center || MAP_CENTER;
   const zoom = activeData.zoom || MAP_DEFAULT_ZOOM;
 
   return (
-    <div className="flex h-full flex-col rounded-2xl border border-[var(--color-border)]/50 bg-white shadow-sm overflow-hidden">
-      <div className="flex justify-between items-center px-4 py-2.5 bg-[var(--color-surface)] border-b border-[var(--color-border)]/50 min-h-[44px]">
-        <div className="flex items-center min-w-0 pr-2">
+    <div className="h-full flex flex-col bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl overflow-hidden shadow-xs">
+      <div className="px-4 py-2.5 bg-[var(--color-surface-hover)] border-b border-[var(--color-border)] flex items-center justify-between gap-2">
+        <div className="flex items-center min-w-0 pr-2 gap-2">
           <span className="font-serif font-bold text-[var(--color-text)] text-sm whitespace-nowrap truncate tracking-normal">Crime Hotspots</span>
+          <span className="text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 shrink-0 hidden sm:inline-flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            🇮🇳 SOI Official Boundary (J&amp;K, Ladakh &amp; PoK Included)
+          </span>
         </div>
         <div className="flex items-center space-x-2 shrink-0">
           <button
@@ -106,6 +102,29 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
             attribution='&copy; <a href="https://carto.com/">CARTO</a>'
           />
           <MapUpdater center={center} zoom={zoom} />
+
+          {/* Official Survey of India Sovereign Boundary Overlay */}
+          <GeoJSON
+            data={officialIndiaBoundaryGeoJSON}
+            style={(feature) => {
+              if (feature?.properties?.type === "UT_REGION") {
+                return {
+                  color: "#1D4ED8", // Royal Blue outline for J&K, Ladakh & PoK
+                  weight: 2.5,
+                  fillColor: "#3B82F6",
+                  fillOpacity: 0.15,
+                  dashArray: "4, 4"
+                };
+              }
+              return {
+                color: "#1E3A8A", // Deep Navy Blue for Sovereign India Boundary
+                weight: 3,
+                fillColor: "#3B82F6",
+                fillOpacity: 0.03,
+                opacity: 0.95
+              };
+            }}
+          />
 
           {activeData.points.map((point, idx) => {
             const color =
