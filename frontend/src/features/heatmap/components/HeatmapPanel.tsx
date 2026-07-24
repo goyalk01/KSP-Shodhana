@@ -1,9 +1,8 @@
 "use client";
 
-import { MapContainer, TileLayer, CircleMarker, Popup, GeoJSON, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 import type { HeatmapData } from "@/types/domain";
 import { MAP_CENTER, MAP_DEFAULT_ZOOM, SEVERITY_COLORS } from "@/lib/constants";
-import { KARNATAKA_STATE_GEOJSON } from "@/features/heatmap/data/karnatakaBoundary";
 import { useEffect, useState } from "react";
 
 interface HeatmapPanelProps {
@@ -107,17 +106,6 @@ export default function HeatmapPanel({ data }: HeatmapPanelProps) {
             attribution='&copy; <a href="https://carto.com/">CARTO</a>'
           />
           <MapUpdater center={center} zoom={zoom} />
-
-          <GeoJSON
-            data={KARNATAKA_STATE_GEOJSON}
-            style={{
-              color: "#0284c7",
-              weight: 2,
-              fillColor: "#0284c7",
-              fillOpacity: 0.04,
-              dashArray: "4 4",
-            }}
-          />
 
           {activeData.points.map((point, idx) => {
             const color =
