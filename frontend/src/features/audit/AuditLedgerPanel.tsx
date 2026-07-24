@@ -25,7 +25,7 @@ export const AuditLedgerPanel: React.FC = () => {
   const fetchLedger = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8080/api/v1/audit/ledger');
+      const res = await fetch('/api/proxy/api/v1/audit/ledger');
       if (res.ok) {
         const data = await res.json();
         setLogs(data.ledger || []);
