@@ -13,97 +13,126 @@
 
 ---
 
-## Executive Overview
+## Technical Overview
 
-**KSP Shodhana (ಶೋಧನೆ)** is an enterprise-grade AI-powered intelligence workspace engineered specifically for police officers and crime investigators across Karnataka State.
+**KSP Shodhana (ಶೋಧನೆ)** is a full-stack AI-assisted crime intelligence workspace built for police officers and crime investigators across Karnataka State.
 
-Instead of navigating legacy vaults, fragmented spreadsheet registries, and disconnected FIR logs, investigators query intelligence using natural language in **English or Kannada**. The workspace autonomously parses query intent, extracts structured entities, and renders interactive spatial heatmaps, suspect co-accused network graphs, investigation timelines, and citation-backed evidence panels in real time.
-
----
-
-## Key Features & Enterprise Capabilities
-
-* **Multimodal AI Copilot**: Powered by Google Gemini `gemini-flash-lite-latest` with structured intent parsing for complex queries (`understand` & `analyze`).
-* **Real-Time Token Streaming (SSE)**: Server-Sent Events endpoint (`/api/v1/ai/stream`) enabling live token-by-token typing response streams in the chat interface.
-* **Geographic Crime Density Heatmap**: Dynamic Leaflet maps with automatic location centering, district filtering, and incident density overlays.
-* **Co-Accused Suspect Network Graph**: Multi-hop physics-directed graph mapping suspect links, gang structures, and FIR associations (`GraphService.java`).
-* **Semantic Vector Search (RAG)**: Cosine similarity vector store (`vector_store.py`) enabling semantic search across unstructured FIR documents and case notes.
-* **Pre-Inference PII Anonymization**: Automatic redaction of sensitive identities, Aadhaar/SSN numbers, phone numbers, and vehicle license plates (`pii_anonymizer.py`).
-* **PostgreSQL + PostGIS Spatial Schema**: Spatial PostGIS geometry indexing (`geom GEOMETRY(Point, 4326)`) and Row-Level Security (`V1` & `V2` migrations).
-* **Cryptographic Immutable WORM Audit Ledger**: SHA-256 hash-chained ledger (`Hash_N = SHA-256(Hash_{N-1} + Timestamp + OfficerID + Action)`).
-* **Bulk Export Anomaly Detection**: Anti-exfiltration rate limiter locking officer accounts if >20 criminal profile requests occur within 5 minutes (`AnomalyDetector.java`).
-* **Dynamic Forensics Watermarking**: Steganographic overlay embedding Officer Badge #, Timestamp, and Client IP address across high-sensitivity screens.
-* **Spring Security JWT & RBAC**: Role-based access control enforcing `ROLE_OFFICER`, `ROLE_INSPECTOR`, and `ROLE_SUPERINTENDENT`.
-* **Authentic Hindi & Kannada Voice Engine**: True script translation (`translator.ts`) in Web Speech TTS.
+Investigators can query crime records and suspect networks using natural language in **English or Kannada**. The system parses query intent, extracts structured entities, and renders interactive spatial heatmaps, suspect co-accused network graphs, investigation timelines, and citation-backed evidence panels.
 
 ---
 
-## Technology Stack
+## Dual Deployment Modes (Zero-Setup vs. Full Container Stack)
 
-| Layer | Technology | Version | Purpose |
-|---|---|---|---|
-| **Frontend UI** | Next.js (App Router) | `14.2` | Interactive Workspace Web Application |
-| **State Management** | Zustand | `5.0` | Global workspace state & panel layout control |
-| **Backend Core** | Spring Boot | `3.3.0` | Orchestration API, Security & Proxy Gateway |
-| **AI Gateway** | FastAPI + Uvicorn | `0.115.0` | Gemini Structured Extraction & PII Redaction Router |
-| **AI Model** | Google Gemini | `gemini-flash-lite-latest` | Intent understanding & analytical entity extraction |
-| **Database Layer** | PostgreSQL + PostGIS / Catalyst | `15+` | Spatial persistence & Row-Level Security layer |
-| **Graph Engine** | Neo4j / GraphService | - | Multi-hop suspect network traversal engine |
-| **Vector Engine** | RAG VectorStore | Python | Cosine similarity semantic search engine |
-| **Maps & Graphs** | Leaflet & React Force Graph 2D | `1.9` / `1.29` | Spatial maps & 2D physics suspect graph rendering |
+To ensure ease of technical evaluation and robust production readiness, the system implements a **dual-engine design**:
+
+| Component | Default Zero-Setup Mode (Out of the Box) | Full Docker Stack Mode (`docker-compose.yml`) |
+|---|---|---|
+| **Data Layer** | Spring Data JPA + H2 In-Memory DB (Auto-seeded by `JpaDataInitializer`) | PostgreSQL 15 + PostGIS (Flyway migrations `V1` & `V2`) |
+| **Spatial Queries** | LocationTech JTS Point Bounding-Box + Haversine Radius Filtering | Native PostGIS Spatial Queries (`ST_DWithin` on geometry column) |
+| **Graph Engine** | In-Memory Multi-Hop Breadth-First Search (BFS) Traversal | Real Neo4j Cypher Graph Queries (`GraphService` optional `Driver` bean) |
+| **Security & Auth** | Spring Security JWT Filter (`JwtAuthenticationFilter`) with `.permitAll()` on demo routes | Spring Security JWT + DB-backed Role Enforcement (`ROLE_SUPERINTENDENT`) |
+| **AI Gateway** | FastAPI + Gemini `gemini-flash-lite-latest` + Heuristic Offline Fallback | FastAPI + Gemini API + Vector RAG Store (`vector_store.py`) |
 
 ---
 
-## Architecture & Data Flow
+## Key Technical Features
+
+* **Multimodal AI Gateway**: FastAPI service integrating Google Gemini (`gemini-flash-lite-latest`) for structured intent understanding (`/ai/v1/understand`) and pattern analysis (`/ai/v1/analyze`).
+* **Real-Time Token Streaming (SSE)**: Server-Sent Events endpoint (`/api/v1/ai/stream`) delivering live typing streams to the Next.js chat interface.
+* **Spring Data JPA & Spatial Entities**: `Crime` and `Criminal` models annotated with `@Entity`, `@Table`, `@Id`, and LocationTech `Point location` (`geometry(Point, 4326)`).
+* **Graceful Neo4j Fallback**: `GraphService.java` dynamically checks if Neo4j is reachable; executes Cypher queries if available, and gracefully defaults to in-memory BFS traversal if not.
+* **Cryptographic WORM Audit Ledger**: SHA-256 hash-chained immutable logging (`AuditLedgerService.java`) with active chain verification (`verifyLedgerIntegrity()`).
+* **Pre-Inference PII Masking**: Automatic regex masking of sensitive identities, Aadhaar numbers, phone numbers, and license plates (`pii_anonymizer.py`).
+* **Semantic Vector Search (RAG)**: TF-IDF & Cosine similarity vector search (`vector_store.py`) over unstructured case notes and FIR documents.
+* **Bulk Export Anomaly Detection**: Rate-limiting guard (`AnomalyDetector.java`) that locks accounts if >20 criminal profile requests occur within 5 minutes.
+* **Dynamic Forensic Watermarking**: Steganographic overlay (`WatermarkOverlay.tsx`) embedding Officer Badge #, Timestamp, and IP address across sensitive UI panels.
+
+---
+
+## Technology Stack Architecture
 
 ```
-Browser (Next.js 14) -> Spring Boot Gateway (Port 8080) -> FastAPI AI Gateway (Port 8000) -> Google Gemini API
-                               |                                    |
-                    PostgreSQL + PostGIS & Neo4j             RAG VectorStore & PII Masker
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                         PRESENTATION LAYER (Next.js 14)                          │
+│  - App Router, TailwindCSS, Zustand, Leaflet Maps, React Force Graph 2D          │
+│  - Real-Time SSE Stream Receiver & Devanagari/Kannada Web Speech Engine          │
+└────────────────────────────────────────┬─────────────────────────────────────────┘
+                                         │  REST / SSE (Port 3000 -> 8080)
+                                         ▼
+┌──────────────────────────────────────────────────────────────────────────────────┐
+│                     SPRING BOOT CORE BACKEND ENGINE (Port 8080)                  │
+│  - Spring Security with JwtAuthenticationFilter & SecurityFilterChain            │
+│  - Spring Data JPA + H2 In-Memory / PostgreSQL PostGIS DataSource                │
+│  - GraphService (Neo4j Driver with In-Memory BFS Fallback)                       │
+│  - AuditLedgerService (WORM Cryptographic SHA-256 Hash Chain)                    │
+└───────────────────┬────────────────────┬────────────────────┬────────────────────┘
+                    │                    │                    │
+          PostgreSQL / PostGIS         Neo4j Graph        FastAPI REST
+                    │                    │                    │
+                    ▼                    ▼                    ▼
+┌───────────────────────┐  ┌───────────────────────┐  ┌──────────────────────────┐
+│ POSTGIS CONTAINER     │  │ NEO4J GRAPH DB        │  │ FASTAPI AI SERVICE (8000)│
+│ - PostGIS (Point 4326)│  │ - Cypher Multi-Hop    │  │ - PII Anonymizer Masker  │
+│ - RLS Migrations V1/V2│  │ - Suspect Graph       │  │ - RAG Vector Store       │
+└───────────────────────┘  └───────────────────────┘  └────────────┬─────────────┘
+                                                                   │
+                                                                   ▼
+                                                       ┌───────────────────────────┐
+                                                       │ GOOGLE GEMINI CLOUD API   │
+                                                       └───────────────────────────┘
 ```
 
 ---
 
-## Microservices Quickstart
+## Quickstart Guide
 
-### 1. FastAPI AI Service (Port 8000)
+### Option A: Zero-Setup Local Execution (Default / Demo)
+
+Requires only Java 17+, Python 3.10+, and Node.js 18+.
+
 ```bash
+# 1. FastAPI AI Service (Terminal 1)
 cd ai-service
 python -m venv .venv
 # Windows: .venv\Scripts\activate | Linux/macOS: source .venv/bin/activate
 pip install -r requirements.txt
 uvicorn app.main:app --host 0.0.0.0 --port 8000
-```
 
-### 2. Spring Boot Core Backend (Port 8080)
-```bash
+# 2. Spring Boot Core Backend (Terminal 2)
 cd backend
 mvn spring-boot:run
-```
 
-### 3. Next.js Frontend Workspace (Port 3000)
-```bash
+# 3. Next.js Presentation UI (Terminal 3)
 cd frontend
 npm install
 npm run dev
 ```
-
 Open **`http://localhost:3000`** in your browser.
 
 ---
 
-## Environment Variables (`ai-service/.env`)
-```env
-GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-flash-lite-latest
-PORT=8000
-HOST=0.0.0.0
-CORS_ORIGINS=["http://localhost:3000","http://localhost:8080"]
-BACKEND_URL=http://localhost:8080
+### Option B: Full Containerized Stack (`docker-compose.yml`)
+
+Runs PostgreSQL/PostGIS, Neo4j, Spring Boot, FastAPI, and Next.js as Docker containers.
+
+```bash
+docker-compose up --build
+```
+
+---
+
+## Repository Structure
+
+```
+├── frontend/             # Next.js 14 App Router, Leaflet, React Force Graph UI
+├── backend/              # Spring Boot 3.3, Spring Data JPA, Security & Graph Services
+├── ai-service/           # FastAPI, Gemini Client, PII Anonymizer, Vector RAG
+├── docs/                 # System Architecture & Technical Specifications
+└── docker-compose.yml    # Multi-container orchestration (PostGIS, Neo4j, App Services)
 ```
 
 ---
 
 ## License & Accreditation
 
-Developed for **Karnataka State Police**. Created for KSP Hackathon 2026.
+Developed for **Karnataka State Police**. Built for KSP Hackathon 2026.
